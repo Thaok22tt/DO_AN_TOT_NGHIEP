@@ -1,0 +1,10 @@
+{
+  "name": "quan-ly-quan-ca-phe",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix frontend run dev",
+    "dev": "npm --prefix backend run dev",
+    "start:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev"
+  }
+}

@@ -1,0 +1,5740 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+.workstation-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 252px minmax(0, 1fr);
+  background: #f6f3ea;
+  color: #201a16;
+  font-family: 'Work Sans', Arial, sans-serif;
+}
+
+.workstation-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px;
+  border-right: 1px solid #d8c8ba;
+  background: #fffaf2;
+}
+
+.workstation-brand,
+.workstation-user,
+.workstation-logout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.workstation-brand {
+  min-height: 58px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e4d8cd;
+}
+
+.workstation-brand svg {
+  width: 34px;
+  height: 34px;
+  color: #6f4e37;
+}
+
+.workstation-brand strong,
+.workstation-header h1,
+.workstation-section-title h2 {
+  font-family: 'Literata', Georgia, serif;
+}
+
+.workstation-brand strong {
+  display: block;
+  color: #3b2a20;
+  font-size: 1.22rem;
+}
+
+.workstation-brand span,
+.workstation-user span,
+.workstation-header p,
+.workstation-section-title span {
+  color: #6b5d52;
+}
+
+.workstation-user {
+  min-height: 66px;
+  padding: 12px;
+  border: 1px solid #e0d3c8;
+  border-radius: 8px;
+  background: #f7efe3;
+}
+
+.workstation-user svg {
+  width: 24px;
+  height: 24px;
+  color: #7a583f;
+}
+
+.workstation-user strong {
+  display: block;
+  color: #33241b;
+}
+
+.workstation-logout {
+  min-height: 42px;
+  justify-content: center;
+  margin-top: auto;
+  border: 1px solid #cbb8aa;
+  border-radius: 8px;
+  background: transparent;
+  color: #6f4e37;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.workstation-main {
+  min-width: 0;
+  padding: 28px;
+}
+
+.workstation-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #d8c8ba;
+}
+
+.workstation-header h1 {
+  margin: 0;
+  color: #352216;
+  font-size: 2.55rem;
+  line-height: 1.15;
+}
+
+.workstation-header p {
+  margin: 8px 0 0;
+  font-size: 1rem;
+}
+
+.workstation-header-stat {
+  min-width: 132px;
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid #d8c8ba;
+  border-radius: 8px;
+  background: #fffaf2;
+}
+
+.workstation-header-stat svg {
+  color: #7a583f;
+}
+
+.workstation-header-stat span {
+  color: #6b5d52;
+  font-weight: 700;
+}
+
+.workstation-header-stat strong {
+  color: #33241b;
+  font-size: 1.6rem;
+}
+
+.staff-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(360px, 1.25fr) minmax(320px, 0.9fr);
+  gap: 18px;
+  margin-top: 22px;
+  align-items: start;
+}
+
+.staff-panel,
+.staff-cart,
+.barista-board {
+  border: 1px solid #d8c8ba;
+  border-radius: 8px;
+  background: #fffaf2;
+}
+
+.workstation-section-title,
+.barista-board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid #e2d5ca;
+}
+
+.workstation-section-title h2 {
+  margin: 0;
+  color: #352216;
+  font-size: 1.22rem;
+}
+
+.workstation-section-title span {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.workstation-alert {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid #d8c8ba;
+  border-radius: 8px;
+  background: #fffaf2;
+  color: #4b3628;
+  font-weight: 700;
+}
+
+.workstation-alert-error {
+  border-color: rgba(185, 28, 28, 0.2);
+  background: rgba(255, 228, 230, 0.8);
+  color: #9f1239;
+}
+
+.workstation-form {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.workstation-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.workstation-form label > span {
+  color: #6b5d52;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.workstation-form input,
+.workstation-form select,
+.workstation-form textarea,
+.workstation-note-field textarea,
+.workstation-payment select,
+.workstation-payment input {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #d8c8ba;
+  border-radius: 8px;
+  background: #fff;
+  color: #201a16;
+  font: inherit;
+}
+
+.workstation-form input,
+.workstation-form select,
+.workstation-payment select,
+.workstation-payment input {
+  padding: 0 12px;
+}
+
+.workstation-form textarea,
+.workstation-note-field textarea {
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.workstation-wide {
+  grid-column: 1 / -1;
+}
+
+.workstation-radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.workstation-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid #d8c8ba;
+  border-radius: 999px;
+  background: #fffaf2;
+}
+
+.workstation-radio input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.staff-filters-wide {
+  padding: 16px;
+}
+
+.workstation-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.workstation-summary div,
+.workstation-payment-info div {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid #e0d3c8;
+  border-radius: 8px;
+  background: #fbf6ee;
+}
+
+.workstation-summary span,
+.workstation-payment-info span,
+.workstation-note-field span {
+  color: #6b5d52;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.workstation-summary strong,
+.workstation-payment-info strong {
+  color: #352216;
+}
+
+.workstation-note-field {
+  display: grid;
+  gap: 8px;
+  padding: 0 16px 16px;
+}
+
+.workstation-note-field button {
+  justify-self: start;
+}
+
+.workstation-cart-item {
+  display: grid;
+  gap: 10px;
+}
+
+.workstation-cart-item-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+.workstation-cart-item-foot {
+  display: grid;
+  gap: 8px;
+}
+
+.workstation-cart-item-foot span {
+  color: #352216;
+  font-weight: 800;
+}
+
+.workstation-cart-actions-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.workstation-cart-actions-inline button {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d8c8ba;
+  border-radius: 6px;
+  background: #fff;
+  color: #6f4e37;
+}
+
+.workstation-danger {
+  color: #9f1239 !important;
+}
+
+.workstation-payment {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-top: 1px solid #e2d5ca;
+}
+
+.workstation-payment-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.workstation-qr {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 18px;
+  border: 1px dashed #cbb8aa;
+  border-radius: 8px;
+  background: #fffaf2;
+  text-align: center;
+}
+
+.workstation-qr svg {
+  width: 42px;
+  height: 42px;
+  color: #6f4e37;
+}
+
+.workstation-qr strong {
+  color: #352216;
+}
+
+.workstation-qr small {
+  color: #6b5d52;
+  font-weight: 800;
+}
+
+.staff-invoice-grid {
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+}
+
+.staff-table-grid,
+.staff-menu-grid {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+}
+
+.staff-table-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.staff-table-card,
+.staff-product-card {
+  min-height: 116px;
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid #e0d3c8;
+  border-radius: 8px;
+  background: #fbf6ee;
+  color: #352216;
+  text-align: left;
+  cursor: pointer;
+}
+
+.staff-table-card.active {
+  border-color: #7a583f;
+  background: #f1dfc4;
+}
+
+.staff-table-card svg {
+  color: #7a583f;
+}
+
+.staff-table-card strong,
+.staff-product-card strong {
+  font-size: 1rem;
+}
+
+.staff-table-card span,
+.staff-product-card span,
+.staff-product-card small,
+.staff-cart-item span,
+.staff-total span,
+.barista-ticket-meta span,
+.barista-ticket-items span {
+  color: #6b5d52;
+  font-weight: 700;
+}
+
+.workstation-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.workstation-chip.available,
+.workstation-chip.done {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.workstation-chip.occupied,
+.workstation-chip.making {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.workstation-chip.preparing,
+.workstation-chip.waiting {
+  background: #fef3c7;
+  color: #a16207;
+}
+
+.staff-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 142px;
+  gap: 10px;
+  padding: 16px 16px 0;
+}
+
+.staff-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.staff-search svg {
+  position: absolute;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  color: #7f7168;
+}
+
+.staff-search input,
+.staff-filters select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #d8c8ba;
+  border-radius: 8px;
+  background: #fff;
+  color: #201a16;
+  font: inherit;
+}
+
+.staff-search input {
+  padding: 0 12px 0 40px;
+}
+
+.staff-filters select {
+  padding: 0 10px;
+}
+
+.staff-menu-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.staff-product-card {
+  min-height: 104px;
+}
+
+.staff-product-card:hover,
+.staff-table-card:hover {
+  border-color: #7a583f;
+}
+
+.staff-cart {
+  position: sticky;
+  top: 22px;
+}
+
+.staff-cart-list {
+  display: grid;
+  gap: 10px;
+  min-height: 250px;
+  padding: 16px;
+}
+
+.workstation-empty {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  color: #6b5d52;
+  text-align: center;
+}
+
+.workstation-empty svg {
+  width: 30px;
+  height: 30px;
+}
+
+.workstation-empty strong {
+  color: #352216;
+}
+
+.staff-cart-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e0d3c8;
+  border-radius: 8px;
+  background: #fbf6ee;
+}
+
+.staff-cart-item strong {
+  display: block;
+  color: #352216;
+}
+
+.staff-quantity {
+  display: inline-grid;
+  grid-template-columns: 30px 28px 30px;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+}
+
+.staff-quantity button {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d8c8ba;
+  border-radius: 6px;
+  background: #fff;
+  color: #6f4e37;
+  cursor: pointer;
+}
+
+.staff-quantity svg {
+  width: 16px;
+  height: 16px;
+}
+
+.staff-total {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid #e2d5ca;
+}
+
+.staff-total div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.staff-total strong {
+  color: #352216;
+}
+
+.staff-total-final {
+  padding-top: 10px;
+  border-top: 1px solid #e2d5ca;
+}
+
+.staff-total-final strong {
+  font-size: 1.2rem;
+}
+
+.staff-cart-actions,
+.barista-ticket-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px 16px;
+}
+
+.barista-ticket-actions:has(> :nth-child(3)) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.barista-ticket-actions:has(> :nth-child(4)) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.workstation-primary,
+.workstation-secondary {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.workstation-primary {
+  border: 0;
+  background: #3f2d21;
+  color: #fff;
+}
+
+.workstation-secondary {
+  border: 1px solid #cbb8aa;
+  background: #fffaf2;
+  color: #6f4e37;
+}
+
+.workstation-primary:disabled,
+.workstation-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.workstation-primary svg,
+.workstation-secondary svg {
+  width: 18px;
+  height: 18px;
+}
+
+.barista-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.barista-stats article {
+  min-height: 112px;
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid #d8c8ba;
+  border-radius: 8px;
+  background: #fffaf2;
+}
+
+.barista-stats svg {
+  color: #7a583f;
+}
+
+.barista-stats span {
+  color: #6b5d52;
+  font-weight: 800;
+}
+
+.barista-stats strong {
+  color: #352216;
+  font-size: 2rem;
+}
+
+.barista-board {
+  margin-top: 18px;
+}
+
+.barista-order-board {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.barista-board-header {
+  align-items: flex-end;
+}
+
+.barista-board-tools {
+  display: grid;
+  gap: 12px;
+  justify-items: stretch;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.barista-search {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+.barista-search input {
+  min-height: 44px;
+  border-radius: 12px;
+}
+
+.barista-tabs {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.barista-tabs button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid #d8c8ba;
+  border-radius: 999px;
+  background: #fffaf2;
+  color: #6b5d52;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.barista-tabs button.active {
+  background: #3f2d21;
+  color: #fff;
+}
+
+.barista-status-control {
+  display: grid;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.barista-status-control span {
+  color: #6b5d52;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.barista-status-control select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid #d8c8ba;
+  border-radius: 8px;
+  background: #fff;
+  color: #201a16;
+  font: inherit;
+  padding: 0 10px;
+}
+
+.barista-ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 14px;
+  padding: 16px;
+}
+
+.barista-empty {
+  grid-column: 1 / -1;
+}
+
+.barista-ticket {
+  display: grid;
+  gap: 14px;
+  border: 1px solid #e0d3c8;
+  border-radius: 8px;
+  background: #fbf6ee;
+}
+
+.barista-ticket.waiting {
+  border-top: 5px solid #d97706;
+}
+
+.barista-ticket.making {
+  border-top: 5px solid #2563eb;
+}
+
+.barista-ticket.done {
+  border-top: 5px solid #16a34a;
+}
+
+.barista-ticket.cancelled {
+  border-top: 5px solid #ba1a1a;
+  background: #fff3f1;
+}
+
+.barista-ticket.cancelled .barista-ticket-head small {
+  background: #ffdad6;
+  color: #93000a;
+}
+
+.barista-ticket-head,
+.barista-ticket-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px 0;
+}
+
+.barista-ticket-head span {
+  color: #6b5d52;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.barista-ticket-head h3 {
+  margin: 3px 0 0;
+  color: #352216;
+  font-size: 1.18rem;
+}
+
+.barista-ticket-meta {
+  padding-top: 0;
+}
+
+.barista-ticket-meta strong {
+  color: #a16207;
+}
+
+.barista-ticket-items {
+  display: grid;
+  gap: 8px;
+  padding: 0 14px;
+}
+
+.barista-ticket-items div {
+  display: grid;
+  gap: 2px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fffaf2;
+}
+
+.barista-ticket-items strong {
+  color: #352216;
+}
+
+.barista-detail {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 16px;
+}
+
+.barista-detail-items {
+  padding: 0 16px;
+}
+
+@media (max-width: 1180px) {
+  .staff-layout {
+    grid-template-columns: minmax(260px, 0.9fr) minmax(360px, 1.1fr);
+  }
+
+  .staff-cart {
+    grid-column: 1 / -1;
+    position: static;
+  }
+
+  .barista-ticket-grid {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .workstation-page {
+    grid-template-columns: 1fr;
+  }
+
+  .workstation-sidebar {
+    position: static;
+    height: auto;
+  }
+
+  .workstation-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .barista-board-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .barista-board-tools,
+  .barista-status-control {
+    width: 100%;
+  }
+
+  .staff-layout,
+  .barista-stats,
+  .barista-ticket-grid,
+  .barista-board-tools {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .workstation-main {
+    padding: 18px;
+  }
+
+  .staff-table-grid,
+  .staff-menu-grid,
+  .staff-filters,
+  .staff-cart-actions,
+  .barista-ticket-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .workstation-header h1 {
+    font-size: 2rem;
+  }
+}
+
+.staff-pos-shell {
+  --staff-bg: #faf9f5;
+  --staff-surface: #ffffff;
+  --staff-surface-low: #f4f4f0;
+  --staff-surface-mid: #eeeeea;
+  --staff-border: #d3c3c0;
+  --staff-text: #1a1c1a;
+  --staff-muted: #655d5a;
+  --staff-primary: #271310;
+  --staff-primary-soft: #ece0dc;
+  --staff-gold: #ffe08f;
+  --staff-sidebar: #221a16;
+  --staff-sidebar-active: #342821;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  background: var(--staff-bg);
+  color: var(--staff-text);
+  font-family: Manrope, Inter, Arial, sans-serif;
+}
+
+.staff-pos-shell button,
+.staff-pos-shell input,
+.staff-pos-shell select {
+  font: inherit;
+}
+
+.staff-pos-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 14px;
+  border-right: 0;
+  background: var(--staff-sidebar);
+  z-index: 20;
+}
+
+.staff-pos-brand {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  padding: 0 8px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+}
+
+.staff-pos-brand svg {
+  display: none;
+}
+
+.staff-pos-brand strong {
+  color: #ffffff;
+  font-size: 1.18rem;
+  line-height: 1.1;
+}
+
+.staff-pos-brand span {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.staff-pos-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.staff-pos-nav button,
+.staff-pos-logout {
+  min-height: 56px;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  justify-items: start;
+  gap: 10px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.58);
+  cursor: pointer;
+  text-align: left;
+}
+
+.staff-pos-nav button.active {
+  border-left: 3px solid var(--staff-gold);
+  padding-left: 11px;
+  background: rgba(255, 224, 143, 0.16);
+  color: #ffffff;
+  font-weight: 900;
+  transform: none;
+}
+
+.staff-pos-nav button:hover,
+.staff-pos-logout:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.staff-pos-nav button.active:hover {
+  background: rgba(255, 224, 143, 0.16);
+  color: #ffffff;
+}
+
+.staff-pos-nav svg,
+.staff-pos-logout svg {
+  width: 20px;
+  height: 20px;
+}
+
+.staff-pos-nav span,
+.staff-pos-logout span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.staff-pos-logout {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  padding-top: 18px;
+}
+
+.staff-pos-logout:hover {
+  color: var(--staff-gold);
+}
+
+.staff-pos-content {
+  min-width: 0;
+  position: relative;
+}
+
+.staff-pos-topbar {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 32px;
+  background: var(--staff-bg);
+}
+
+.staff-pos-topbar.no-subtitle {
+  height: 66px;
+}
+
+.staff-pos-topbar h1 {
+  margin: 0;
+  color: #000;
+  font-family: 'Literata', 'Playfair Display', Georgia, serif;
+  font-size: 2.55rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.staff-pos-topbar p {
+  margin: 3px 0 0;
+  color: var(--staff-muted);
+}
+
+.staff-pos-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: right;
+}
+
+.staff-topbar-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.staff-notification-button {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid #ded1cc;
+  border-radius: 999px;
+  background: #eee3df;
+  color: #6f625d;
+  cursor: pointer;
+}
+
+.staff-notification-button:hover {
+  border-color: #d8c8c2;
+  background: #eadfdb;
+}
+
+.staff-notification-button svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.2;
+}
+
+.staff-notification-button span {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 19px;
+  height: 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  border: 2px solid var(--staff-bg);
+  border-radius: 999px;
+  background: #ba1a1a;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.staff-notification-panel {
+  position: fixed;
+  top: 92px;
+  right: 32px;
+  z-index: 80;
+  width: min(440px, calc(100vw - 48px));
+  max-height: calc(100vh - 116px);
+  overflow-y: auto;
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(34, 26, 22, 0.16);
+}
+
+.staff-notification-panel button {
+  position: relative;
+  width: 100%;
+  min-height: 70px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #f1b0aa;
+  border-radius: 10px;
+  background: #fff5f4;
+  color: #1c1c19;
+  text-align: left;
+  cursor: pointer;
+}
+
+.staff-notification-panel button:hover {
+  border-color: #ba1a1a;
+  background: #fff1f1;
+}
+
+.staff-notification-panel button.unread {
+  border: 1px solid #ef4444;
+  background: #fff1f1;
+}
+
+.staff-notification-panel button.read {
+  border-color: #f1b0aa;
+  background: #fff7f6;
+}
+
+.staff-notification-panel button > svg {
+  width: 20px;
+  height: 20px;
+  color: #785d00;
+  stroke-width: 2;
+}
+
+.staff-notification-panel strong,
+.staff-notification-panel small,
+.staff-notification-panel em {
+  display: block;
+}
+
+.staff-notification-panel strong {
+  color: #000;
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+
+.staff-notification-panel small {
+  margin-top: 5px;
+  color: #655d5a;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.staff-notification-panel em {
+  grid-column: 2;
+  color: #4e4541;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.staff-notification-panel i {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #ba1a1a;
+}
+
+.staff-order-ticket.notification-focused {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: translateY(-3px);
+  box-shadow: 0 22px 46px rgba(37, 99, 235, 0.22);
+}
+
+.staff-order-ticket.notification-dimmed {
+  opacity: 0.45 !important;
+  filter: saturate(0.6);
+}
+
+.staff-notification-panel p {
+  margin: 0;
+  padding: 18px 12px;
+  color: #655d5a;
+  font-weight: 800;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .staff-notification-panel {
+    right: 12px;
+    width: calc(100vw - 24px);
+    top: 76px;
+    padding: 14px;
+  }
+
+  .staff-notification-panel button {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  .staff-notification-panel em {
+    grid-column: 2;
+  }
+}
+
+.staff-pos-user strong,
+.staff-pos-user span {
+  display: block;
+}
+
+.staff-pos-user strong {
+  color: var(--staff-primary);
+  font-size: 0.96rem;
+}
+
+.staff-pos-user span {
+  color: var(--staff-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.staff-pos-user svg {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 999px;
+  background: var(--staff-primary-soft);
+  color: #6b6360;
+}
+
+.staff-user-button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.staff-user-button:hover svg {
+  background: #ded7d1;
+}
+
+.staff-toast {
+  position: fixed;
+  top: 92px;
+  left: 216px;
+  z-index: 50;
+  max-width: 520px;
+  padding: 11px 14px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface);
+  color: var(--staff-primary);
+  box-shadow: 0 12px 28px rgba(39, 19, 16, 0.1);
+  font-weight: 800;
+}
+
+.staff-toast.error {
+  border-color: rgba(186, 26, 26, 0.25);
+  color: #ba1a1a;
+}
+
+.staff-pos-sales {
+  height: calc(100vh - 80px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 480px;
+  overflow: hidden;
+}
+
+.staff-menu-area {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: 20px 24px;
+  background: rgba(244, 244, 240, 0.45);
+  overflow: hidden;
+}
+
+.staff-menu-tools {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.staff-pos-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 560px;
+}
+
+.staff-pos-search svg {
+  position: absolute;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  color: #827472;
+}
+
+.staff-pos-search input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px 0 48px;
+  border: 1px solid var(--staff-border);
+  border-radius: 12px;
+  outline: 0;
+  background: var(--staff-surface);
+  color: var(--staff-text);
+}
+
+.staff-pos-search input:focus {
+  border-color: var(--staff-primary);
+  box-shadow: 0 0 0 3px rgba(39, 19, 16, 0.12);
+}
+
+.staff-pos-shell input[type='number']::-webkit-inner-spin-button,
+.staff-pos-shell input[type='number']::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.staff-pos-shell [class*='service']::before,
+.staff-pos-shell [class*='service']::after,
+.staff-pos-shell [class*='card']::before,
+.staff-pos-shell [class*='card']::after {
+  content: none !important;
+}
+
+.staff-category-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.staff-category-row button {
+  min-height: 40px;
+  white-space: nowrap;
+  padding: 0 18px;
+  border: 1px solid var(--staff-border);
+  border-radius: 999px;
+  background: var(--staff-surface);
+  color: var(--staff-muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.staff-category-row button.active {
+  border-color: var(--staff-primary);
+  background: var(--staff-primary);
+  color: #fff;
+}
+
+.staff-product-grid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 16px;
+  align-content: start;
+  overflow-y: auto;
+  padding-right: 6px;
+  padding-bottom: 24px;
+}
+
+.staff-product-tile {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--staff-border);
+  border-radius: 12px;
+  background: var(--staff-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.staff-product-tile:hover {
+  border-color: rgba(39, 19, 16, 0.45);
+  box-shadow: 0 14px 32px rgba(39, 19, 16, 0.1);
+  transform: translateY(-2px);
+}
+
+.staff-product-media {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--staff-surface-mid);
+}
+
+.staff-product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+  transition: transform 420ms ease;
+}
+
+.staff-product-tile:hover img {
+  transform: scale(1.08);
+}
+
+.staff-product-media svg {
+  width: 38px;
+  height: 38px;
+  color: #745853;
+}
+
+.staff-product-tile span {
+  color: var(--staff-muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.staff-product-tile strong {
+  min-height: 40px;
+  color: var(--staff-primary);
+  font-size: 0.98rem;
+}
+
+.staff-product-tile b {
+  color: var(--staff-primary);
+  font-size: 1.08rem;
+}
+
+.staff-product-tile:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.staff-order-panel {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  border-left: 1px solid var(--staff-border);
+  background: var(--staff-surface);
+  box-shadow: -18px 0 40px rgba(39, 19, 16, 0.07);
+  overflow: hidden;
+}
+
+.staff-order-create,
+.staff-checkout {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--staff-border);
+}
+
+.staff-order-create.compact {
+  padding-bottom: 14px;
+}
+
+.staff-order-title,
+.staff-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.staff-order-title h2,
+.staff-card-head h2 {
+  margin: 0;
+  color: var(--staff-primary);
+  font-size: 1.32rem;
+}
+
+.staff-order-title span,
+.staff-open-invoices > span,
+.staff-checkout label span,
+.staff-card-head span,
+.staff-order-card p {
+  color: var(--staff-muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.staff-order-title svg {
+  color: #745853;
+}
+
+.staff-order-identity {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.staff-order-identity-number {
+  min-height: 148px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  border-radius: 8px;
+  background: var(--staff-primary);
+  color: #fff;
+}
+
+.staff-order-identity-number span,
+.staff-order-identity-details span {
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.staff-order-identity-number strong {
+  font-size: 3.6rem;
+  line-height: 0.95;
+}
+
+.staff-order-identity-details {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+}
+
+.staff-order-identity-details div {
+  display: grid;
+  grid-template-columns: minmax(92px, auto) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+}
+
+.staff-order-identity-details span {
+  color: var(--staff-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.staff-order-identity-details strong {
+  min-width: 0;
+  color: var(--staff-primary);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.staff-order-create form,
+.staff-checkout {
+  display: grid;
+  gap: 12px;
+}
+
+.staff-segmented,
+.staff-payment-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--staff-surface-low);
+}
+
+.staff-segmented.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.staff-segmented button,
+.staff-payment-toggle button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--staff-muted);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.staff-segmented button.active,
+.staff-payment-toggle button.active {
+  background: var(--staff-surface);
+  color: var(--staff-primary);
+  box-shadow: 0 1px 6px rgba(39, 19, 16, 0.08);
+}
+
+.staff-payment-toggle button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.staff-payment-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.staff-create-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.staff-ship-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.staff-service-number-field {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid rgba(111, 78, 55, 0.28);
+  border-radius: 8px;
+  background: #fff7e8;
+}
+
+.staff-service-number-field span {
+  color: var(--staff-primary);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.staff-service-number-field input {
+  min-height: 84px;
+  border: 2px solid rgba(111, 78, 55, 0.3);
+  background: #fff;
+  color: var(--staff-primary);
+  font-size: 3.2rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.staff-service-number-field input::placeholder {
+  color: rgba(111, 78, 55, 0.24);
+}
+
+.staff-order-create input,
+.staff-order-create select,
+.staff-checkout input,
+.staff-checkout select,
+.staff-note-input input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface);
+  color: var(--staff-text);
+  outline: 0;
+}
+
+.staff-order-create input,
+.staff-order-create select,
+.staff-checkout input,
+.staff-checkout select {
+  padding: 0 12px;
+}
+
+.staff-primary-action,
+.staff-secondary-action {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.staff-primary-action {
+  border: 1px solid var(--staff-primary);
+  background: var(--staff-primary);
+  color: #fff;
+}
+
+.staff-secondary-action {
+  border: 1px solid var(--staff-primary);
+  background: var(--staff-surface);
+  color: var(--staff-primary);
+}
+
+.staff-primary-action:disabled,
+.staff-secondary-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.staff-primary-action svg,
+.staff-secondary-action svg {
+  width: 18px;
+  height: 18px;
+}
+
+.staff-secondary-action.full {
+  width: 100%;
+}
+
+.staff-open-invoices {
+  display: grid;
+  gap: 8px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--staff-border);
+}
+
+.staff-open-invoices div {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.staff-open-invoices button {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--staff-border);
+  border-radius: 999px;
+  background: var(--staff-surface-low);
+  color: var(--staff-muted);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.staff-open-invoices button.active {
+  background: var(--staff-primary);
+  color: #fff;
+}
+
+.staff-order-items {
+  grid-row: 2;
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.staff-order-item {
+  display: grid;
+  gap: 10px;
+}
+
+.staff-order-item-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+
+.staff-order-item-head strong {
+  color: var(--staff-primary);
+}
+
+.staff-order-item-head span {
+  display: block;
+  color: var(--staff-muted);
+  font-size: 0.8rem;
+}
+
+.staff-order-item-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.staff-size-toggle {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 34px);
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface-low);
+}
+
+.staff-size-toggle button {
+  width: 34px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--staff-muted);
+  font-size: 0.82rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.staff-size-toggle button.active {
+  background: var(--staff-primary);
+  color: #fff;
+}
+
+.staff-size-toggle button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.staff-size-badge {
+  min-height: 32px;
+  display: inline-flex !important;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface-low);
+  color: var(--staff-primary) !important;
+  font-size: 0.78rem !important;
+  font-weight: 900 !important;
+  white-space: nowrap;
+}
+
+.staff-remove-item-button {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #ba1a1a;
+  cursor: pointer;
+}
+
+.staff-order-item-head svg {
+  width: 18px;
+  height: 18px;
+}
+
+.staff-order-item-tools {
+  display: grid;
+  grid-template-columns: auto minmax(120px, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.staff-qty-control {
+  display: inline-grid;
+  grid-template-columns: 34px 42px 34px;
+  align-items: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--staff-surface-mid);
+}
+
+.staff-qty-control button {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--staff-border);
+  border-radius: 6px;
+  background: var(--staff-surface);
+  color: var(--staff-primary);
+  cursor: pointer;
+}
+
+.staff-qty-control svg {
+  width: 16px;
+  height: 16px;
+}
+
+.staff-qty-control span,
+.staff-order-item-tools strong {
+  color: var(--staff-primary);
+  font-weight: 900;
+}
+
+.staff-note-input {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.staff-note-input input {
+  min-height: 42px;
+  padding: 0 34px 0 12px;
+  background: var(--staff-surface-low);
+}
+
+.staff-note-input svg {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  color: var(--staff-muted);
+  transform: translateY(-50%);
+}
+
+.staff-checkout {
+  grid-row: 3;
+  border-top: 1px solid var(--staff-border);
+  border-bottom: 0;
+}
+
+.barista-page .workstation-header {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  min-height: auto;
+  padding-bottom: 10px;
+}
+
+.barista-page .workstation-main > .workstation-alert:first-child,
+.barista-page .barista-stats,
+.barista-page .barista-board {
+  border-top: 0;
+}
+
+.staff-checkout label {
+  display: grid;
+  gap: 6px;
+}
+
+.staff-total-lines {
+  display: grid;
+  gap: 8px;
+}
+
+.staff-total-lines div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--staff-muted);
+}
+
+.staff-total-lines strong {
+  color: var(--staff-primary);
+}
+
+.staff-total-lines .final {
+  padding-top: 8px;
+  color: var(--staff-primary);
+}
+
+.staff-total-lines .final span,
+.staff-total-lines .final strong {
+  color: var(--staff-primary);
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.staff-checkout-promotion {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0 10px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface);
+  color: var(--staff-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: 0;
+}
+
+.staff-payment-method-summary {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 16px;
+  border: 1px solid rgba(151, 141, 136, 0.34);
+  border-radius: 8px;
+  background: var(--staff-surface-low);
+}
+
+.staff-payment-method-summary span {
+  color: var(--staff-muted);
+  font-weight: 900;
+}
+
+.staff-payment-method-summary strong {
+  color: var(--staff-primary);
+  font-size: 1.02rem;
+}
+
+.staff-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.staff-pos-empty {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  grid-column: 1 / -1;
+  color: var(--staff-muted);
+  text-align: center;
+  font-weight: 800;
+}
+
+.staff-orders-page {
+  min-height: calc(100vh - 72px);
+  background: var(--staff-surface);
+}
+
+.staff-orders-filter {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  padding: 18px 24px;
+  border-top: 1px solid rgba(211, 195, 192, 0.3);
+  border-bottom: 1px solid rgba(211, 195, 192, 0.3);
+  background: var(--staff-surface);
+}
+
+.staff-orders-filter .staff-pos-search {
+  width: min(100%, 920px);
+}
+
+.staff-order-board {
+  width: min(100%, 980px);
+  display: grid;
+  gap: 16px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.staff-order-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  border: 1px solid var(--staff-border);
+  border-radius: 12px;
+  background: var(--staff-surface);
+  overflow: hidden;
+  transition: box-shadow 160ms ease;
+}
+
+.staff-order-card:hover {
+  box-shadow: 0 12px 28px rgba(39, 19, 16, 0.08);
+}
+
+.staff-order-card-main {
+  display: grid;
+  gap: 12px;
+  padding: 20px 24px;
+}
+
+.staff-order-card-actions {
+  display: grid;
+  gap: 10px;
+  align-content: center;
+  padding: 18px;
+  border-left: 1px solid rgba(211, 195, 192, 0.45);
+  background: var(--staff-surface-low);
+}
+
+.staff-card-head strong {
+  display: block;
+  color: var(--staff-primary);
+  font-size: 1.1rem;
+}
+
+.staff-status-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  margin-top: 8px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: var(--staff-primary-soft);
+  color: var(--staff-primary) !important;
+}
+
+.staff-order-card.waiting .staff-status-chip {
+  background: #fff7ed;
+  color: #c2410c !important;
+}
+
+.staff-order-card.making .staff-status-chip {
+  background: #eff6ff;
+  color: #2563eb !important;
+}
+
+.staff-order-card.completed .staff-status-chip,
+.staff-order-card.paid .staff-status-chip {
+  background: #ecfdf5;
+  color: #15803d !important;
+}
+
+.staff-orders-page {
+  min-height: calc(100vh - 80px);
+  padding: 18px 32px 32px;
+  background: #fcf9f4;
+}
+
+.staff-orders-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.staff-shift-summary {
+  margin-bottom: 18px;
+}
+
+.staff-shift-summary .staff-orders-stats {
+  margin-bottom: 0;
+}
+
+.staff-shift-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.staff-shift-search {
+  min-width: 0;
+  max-width: 420px;
+  margin-bottom: 24px;
+}
+
+.staff-shift-search input {
+  min-height: 48px;
+  font-weight: 700;
+}
+
+.staff-shift-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 30px;
+}
+
+.staff-shift-filter .staff-shift-search {
+  width: min(100%, 560px);
+  max-width: 560px;
+  flex: 0 1 560px;
+  margin: 0;
+}
+
+.staff-shift-filter .staff-shift-search input {
+  min-height: 46px;
+  border-radius: 999px;
+}
+
+.staff-shift-filter .staff-category-row {
+  justify-content: flex-end;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.staff-orders-stats article {
+  min-height: 122px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.staff-orders-stats svg {
+  margin-top: 3px;
+  color: #785d00;
+}
+
+.staff-orders-stats span {
+  color: #1c1c19;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.staff-orders-stats strong {
+  display: block;
+  margin-top: 18px;
+  color: #000;
+  font-family: 'Literata', Georgia, serif;
+  font-size: 2.8rem;
+  line-height: 0.9;
+}
+
+.staff-orders-stats small {
+  align-self: start;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: #ffddb8;
+  color: #2b1700;
+  font-weight: 900;
+}
+
+.staff-orders-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 30px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px 12px 0 0;
+  background: #fff;
+}
+
+.staff-orders-filter .staff-category-row {
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.staff-orders-filter .staff-category-row button {
+  min-height: 44px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: #f0ede9;
+  color: #1c1c19;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.staff-orders-filter .staff-category-row button.active {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
+.staff-orders-search {
+  width: min(100%, 360px);
+  flex: 0 0 auto;
+}
+
+.staff-orders-search input {
+  min-height: 44px;
+  border-radius: 999px;
+  background: #fcf9f4;
+}
+
+.staff-order-board {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 30px;
+  border: 1px solid #d1c4be;
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  background: #fff;
+}
+
+.staff-table-management {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 18px;
+  padding: 30px;
+  border: 1px solid #d1c4be;
+  border-top: 0;
+  background: #fff;
+}
+
+.staff-table-management-card,
+.staff-tool-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface);
+}
+
+.staff-table-management-card.available {
+  border-top: 5px solid #16a34a;
+}
+
+.staff-table-management-card.occupied {
+  border-top: 5px solid #d97706;
+}
+
+.staff-table-management-card.preparing {
+  border-top: 5px solid #2563eb;
+}
+
+.staff-table-management-card span,
+.staff-table-current-order span,
+.staff-tool-card span,
+.staff-profile-form span {
+  color: var(--staff-muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.staff-table-management-card h3,
+.staff-tool-card h2 {
+  margin: 4px 0;
+  color: #000;
+  font-family: 'Literata', Georgia, serif;
+}
+
+.staff-table-management-card b {
+  color: var(--staff-primary);
+}
+
+.staff-table-current-order {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--staff-surface-low);
+}
+
+.staff-table-current-order strong {
+  color: #d67b34;
+}
+
+.staff-table-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.staff-table-actions button,
+.staff-tool-card select,
+.staff-profile-form input {
+  min-height: 40px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface);
+  color: var(--staff-text);
+  font: inherit;
+}
+
+.staff-table-actions button {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.staff-table-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.staff-table-tools {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 30px;
+}
+
+.staff-tool-card select,
+.staff-profile-form input {
+  padding: 0 12px;
+}
+
+.staff-profile-modal {
+  width: min(100%, 720px);
+}
+
+.staff-profile-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.staff-profile-form label {
+  display: grid;
+  gap: 7px;
+}
+
+.staff-profile-modal {
+  width: min(100%, 760px);
+  border-radius: 8px;
+  background: #efece5;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+}
+
+.staff-profile-modal .staff-payment-modal-head {
+  padding: 24px 28px;
+  background: #a12c2c;
+}
+
+.staff-profile-modal .staff-payment-modal-head h2 {
+  color: #fff;
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+}
+
+.staff-profile-modal .staff-payment-modal-head button {
+  color: #fff;
+}
+
+.staff-profile-modal .staff-payment-modal-head button:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.staff-profile-modal .staff-payment-modal-body {
+  gap: 0;
+  padding: 0;
+  background: #efece5;
+}
+
+.staff-profile-modal .staff-segmented {
+  display: flex;
+  grid-template-columns: none;
+  gap: 0;
+  padding: 0;
+  border-bottom: 1px solid #d6d3cc;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.staff-profile-modal .staff-segmented::after {
+  content: '';
+  flex: 1;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.staff-profile-modal .staff-segmented button {
+  min-height: 48px;
+  min-width: 190px;
+  padding: 0 28px;
+  border-right: 1px solid #d6d3cc;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.5);
+  color: #5f5b54;
+  box-shadow: none;
+}
+
+.staff-profile-modal .staff-segmented button.active {
+  border-bottom: 2px solid #a12c2c;
+  background: #efece5;
+  color: #2d2925;
+  box-shadow: none;
+}
+
+.staff-profile-modal .staff-payment-warning {
+  margin: 20px 28px 0;
+}
+
+.staff-profile-modal .staff-profile-form {
+  gap: 22px 28px;
+  padding: 28px;
+}
+
+.staff-profile-modal .staff-profile-form span {
+  color: #5f5b54;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.staff-profile-modal .staff-profile-form input {
+  min-height: 41px;
+  padding: 0 14px;
+  border-color: #d6d3cc;
+  background: #f5f3ef;
+}
+
+.staff-profile-modal .staff-profile-form input:focus {
+  border-color: #a12c2c;
+  box-shadow: 0 0 0 1px #a12c2c;
+  outline: none;
+}
+
+.staff-profile-modal .staff-profile-form input:disabled {
+  background: #eeeae3;
+  color: #5f5b54;
+  cursor: not-allowed;
+}
+
+.staff-profile-modal .staff-payment-modal-actions {
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px 28px 28px;
+  border-top: 0;
+  background: #efece5;
+}
+
+.staff-profile-modal .staff-payment-modal-actions button {
+  flex: 0 0 auto;
+  min-width: 132px;
+  min-height: 44px;
+  border-color: #000;
+  border-radius: 8px;
+  background: #000;
+  color: #fff;
+}
+
+.staff-profile-modal .staff-payment-modal-actions button:hover {
+  background: #1f1f1f;
+}
+
+@media (max-width: 640px) {
+  .staff-profile-modal .staff-segmented {
+    flex-direction: column;
+  }
+
+  .staff-profile-modal .staff-segmented::after {
+    display: none;
+  }
+
+  .staff-profile-modal .staff-segmented button {
+    width: 100%;
+    border-right: 0;
+  }
+
+  .staff-profile-modal .staff-profile-form {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .staff-profile-modal .staff-payment-modal-actions {
+    padding: 20px;
+  }
+
+  .staff-profile-modal .staff-payment-modal-actions button {
+    width: 100%;
+  }
+}
+
+.staff-order-ticket {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px;
+  border: 0;
+  border-top: 4px solid #d1c4be;
+  border-radius: 12px;
+  background: #f6f3ee;
+  box-shadow: 0 8px 18px rgba(28, 28, 25, 0.05);
+}
+
+.staff-order-ticket.waiting {
+  border-top-color: #ba1a1a;
+}
+
+.staff-order-ticket.making {
+  border-top-color: #f3bc7c;
+}
+
+.staff-order-ticket.paid {
+  border-top-color: #d1c4be;
+}
+
+.staff-order-ticket.completed {
+  border-top-color: #67a7d8;
+  background: #eef7ff;
+}
+
+.staff-order-ticket.cancelled {
+  border-top-color: #f2a7a7;
+  background: #fff1f1;
+}
+
+.staff-order-ticket.served {
+  border-top-color: #86cfa4;
+  background: #f6f3ee;
+}
+
+.staff-order-ticket.locked {
+  opacity: 0.68;
+}
+
+.staff-order-ticket.cancelled .barista-ticket-head small {
+  background: #ffe1e1;
+  color: #a11d1d;
+}
+
+.staff-order-ticket.served .barista-ticket-head small {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.staff-order-ticket .barista-ticket-head,
+.staff-order-ticket .barista-ticket-meta {
+  padding: 0;
+}
+
+.staff-order-ticket .barista-ticket-head span {
+  color: #655d5a;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.staff-order-ticket .barista-ticket-head h3 {
+  margin-top: 12px;
+  color: #000;
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1.3rem;
+}
+
+.staff-order-ticket .barista-ticket-head small {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffddb8;
+  color: #2b1700;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.staff-order-ticket.waiting .barista-ticket-head small {
+  background: #ffdad6;
+  color: #93000a;
+}
+
+.staff-order-ticket.paid .barista-ticket-head small,
+.staff-order-ticket.served .barista-ticket-head small {
+  background: #ecfdf5;
+  color: #15803d;
+}
+
+.staff-order-ticket.completed .barista-ticket-head small {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.staff-order-ticket .barista-ticket-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4e4541;
+  font-size: 0.96rem;
+  font-weight: 500;
+}
+
+.staff-order-ticket .barista-ticket-meta svg {
+  width: 16px;
+  height: 16px;
+  color: #1c1c19;
+}
+
+.staff-order-ticket .barista-ticket-meta strong {
+  color: #755b00;
+  font-size: 1.05rem;
+}
+
+.staff-order-ticket-customer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.staff-order-ticket-customer span {
+  color: #655d5a;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.staff-order-ticket-customer strong {
+  color: #1c1c19;
+}
+
+.staff-order-ticket-customer small {
+  grid-column: 1;
+  color: #655d5a;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.staff-order-ticket-customer b {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  color: #755b00;
+  font-size: 1.05rem;
+}
+
+.staff-order-ticket .barista-ticket-items {
+  gap: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.staff-order-ticket .barista-ticket-items div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ebe8e3;
+}
+
+.staff-order-ticket .barista-ticket-items div:last-child {
+  border-bottom: 0;
+}
+
+.staff-order-ticket .barista-ticket-items strong {
+  color: #1c1c19;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.staff-order-ticket .barista-ticket-items em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  margin-right: 10px;
+  border-radius: 6px;
+  background: #ffe08f;
+  color: #241a00;
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.staff-order-ticket .barista-ticket-items span {
+  padding-left: 40px;
+  color: #a97b41;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.staff-order-ticket-empty {
+  min-height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #fff;
+  color: #655d5a;
+  font-weight: 800;
+}
+
+.staff-order-ticket .barista-ticket-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0;
+  width: 100%;
+  margin-top: auto;
+}
+
+.staff-order-ticket .workstation-primary,
+.staff-order-ticket .workstation-secondary {
+  height: 44px;
+  min-height: 44px;
+  align-self: start;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.staff-order-ticket .workstation-primary {
+  grid-column: 1 / -1;
+  border: 2px solid #000;
+  background: #000;
+  color: #fff;
+}
+
+.staff-order-ticket .workstation-secondary {
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+}
+
+.staff-order-action-note {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #d8d0c7;
+  border-radius: 8px;
+  background: #f7f3ef;
+  color: #4d4540;
+  font-size: 0.92rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.staff-order-pagination {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 24px;
+  padding: 14px 24px;
+  border: 1px solid #ebe8e3;
+  border-radius: 0 0 10px 10px;
+  background: #fff;
+}
+
+.staff-order-pagination span {
+  color: #1c1c19;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.staff-order-pagination div {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staff-order-pagination button {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ebe8e3;
+  border-radius: 6px;
+  background: #fff;
+  color: #6b625e;
+  cursor: pointer;
+}
+
+.staff-order-pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.staff-order-pagination button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.staff-order-pagination strong {
+  min-width: 56px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #000;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.staff-shift-ticket .barista-ticket-actions {
+  grid-template-columns: 1fr;
+}
+
+.staff-shift-ticket .workstation-secondary {
+  width: 100%;
+  max-width: 228px;
+  height: 48px;
+  justify-self: start;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+  transition: background-color 0.16s ease, color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.staff-shift-ticket .workstation-secondary:hover {
+  background: #000;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+  transform: translateY(-1px);
+}
+
+.staff-payment-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(26, 28, 26, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+.staff-payment-modal {
+  width: min(100%, 640px);
+  max-height: min(90vh, 820px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--staff-surface);
+  box-shadow: 0 28px 80px rgba(26, 28, 26, 0.28);
+}
+
+.staff-invoice-detail-modal {
+  width: min(100%, 720px);
+}
+
+.staff-payment-modal-head,
+.staff-payment-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 28px;
+}
+
+.staff-payment-modal-head h2 {
+  margin: 0;
+  color: var(--staff-primary);
+  font-size: 1.55rem;
+}
+
+.staff-invoice-detail-subtitle {
+  display: block;
+  margin-top: 6px;
+  color: var(--staff-muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.staff-payment-modal-head button {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--staff-text);
+  cursor: pointer;
+}
+
+.staff-payment-modal-head button:hover {
+  background: var(--staff-surface-mid);
+}
+
+.staff-payment-modal-head svg {
+  width: 20px;
+  height: 20px;
+}
+
+.staff-payment-modal-body {
+  display: grid;
+  gap: 22px;
+  overflow-y: auto;
+  padding: 0 28px 24px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.staff-payment-modal-body::-webkit-scrollbar {
+  display: none;
+}
+
+.staff-payment-order-card {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--staff-border);
+  border-radius: 18px;
+  background: var(--staff-surface-low);
+}
+
+.staff-payment-order-card > span,
+.staff-payment-section-label,
+.staff-cash-panel label span {
+  margin: 0;
+  color: var(--staff-muted);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.staff-payment-items {
+  display: grid;
+  gap: 10px;
+}
+
+.staff-payment-items div,
+.staff-payment-modal-total,
+.staff-cash-result div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.staff-payment-items p {
+  margin: 0;
+  color: var(--staff-text);
+}
+
+.staff-payment-items strong {
+  color: var(--staff-primary);
+}
+
+.staff-invoice-detail-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.staff-invoice-detail-summary div {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+  border: 1px solid var(--staff-border);
+  border-radius: 12px;
+  background: var(--staff-surface-low);
+}
+
+.staff-invoice-detail-summary span,
+.staff-invoice-detail-totals span {
+  color: var(--staff-muted);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.staff-invoice-detail-summary strong {
+  color: var(--staff-primary);
+}
+
+.staff-invoice-detail-item {
+  align-items: flex-start !important;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--staff-border);
+}
+
+.staff-invoice-detail-item:last-child {
+  border-bottom: 0;
+}
+
+.staff-invoice-detail-item p {
+  display: grid;
+  gap: 4px;
+}
+
+.staff-invoice-detail-item small {
+  color: var(--staff-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.staff-invoice-detail-empty {
+  justify-content: center !important;
+  min-height: 80px;
+  color: var(--staff-muted);
+  font-weight: 800;
+}
+
+.staff-invoice-detail-totals {
+  display: grid;
+  gap: 9px;
+  padding-top: 14px;
+  border-top: 1px solid var(--staff-border);
+}
+
+.staff-invoice-detail-promotion {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.staff-invoice-detail-promotion input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface);
+  color: var(--staff-text);
+  outline: 0;
+}
+
+.staff-promotion-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  background: var(--staff-surface);
+  color: var(--staff-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: 0;
+}
+
+.staff-invoice-detail-totals div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.staff-invoice-detail-totals strong {
+  color: var(--staff-primary);
+}
+
+.staff-invoice-detail-totals .final {
+  padding-top: 8px;
+}
+
+.staff-invoice-detail-totals .final span,
+.staff-invoice-detail-totals .final strong {
+  color: var(--staff-primary);
+  font-size: 1.18rem;
+}
+
+.staff-payment-modal-total {
+  padding-top: 14px;
+  border-top: 1px solid var(--staff-border);
+}
+
+.staff-payment-modal-total span {
+  color: var(--staff-primary);
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.staff-payment-modal-total strong {
+  color: #d67b34;
+  font-size: 1.9rem;
+  line-height: 1.15;
+}
+
+.staff-payment-section-label {
+  margin-bottom: 12px;
+}
+
+.staff-payment-methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.staff-payment-methods button {
+  min-height: 132px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid var(--staff-border);
+  border-radius: 18px;
+  background: var(--staff-surface);
+  color: var(--staff-muted);
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.staff-payment-methods button:hover {
+  border-color: var(--staff-primary);
+  transform: translateY(-1px);
+}
+
+.staff-payment-methods button.active {
+  border: 2px solid var(--staff-primary);
+  background: #e2e3df;
+  color: var(--staff-primary);
+}
+
+.staff-payment-methods svg {
+  width: 38px;
+  height: 38px;
+}
+
+.staff-payment-methods span {
+  font-size: 1.06rem;
+  font-weight: 900;
+}
+
+.staff-cash-panel,
+.staff-qr-panel {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--staff-border);
+  border-radius: 18px;
+  background: var(--staff-surface-low);
+}
+
+.staff-cash-panel label {
+  display: grid;
+  gap: 8px;
+}
+
+.staff-cash-panel input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--staff-border);
+  border-radius: 8px;
+  outline: 0;
+  background: var(--staff-surface);
+  color: var(--staff-text);
+  font: inherit;
+  font-size: 0.96rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.staff-cash-panel input:focus {
+  border-color: var(--staff-primary);
+  box-shadow: 0 0 0 3px rgba(50, 34, 20, 0.14);
+}
+
+.staff-cash-result {
+  display: grid;
+  gap: 10px;
+}
+
+.staff-cash-result div {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--staff-surface);
+}
+
+.staff-cash-result span {
+  color: var(--staff-muted);
+  font-weight: 800;
+}
+
+.staff-cash-result strong {
+  color: var(--staff-primary);
+  font-size: 1.12rem;
+}
+
+.staff-payment-warning {
+  margin: 0;
+  color: #ba1a1a;
+  font-weight: 900;
+}
+
+.staff-qr-panel {
+  justify-items: center;
+  padding: 28px;
+  border-style: dashed;
+  text-align: center;
+}
+
+.staff-qr-box {
+  width: 360px;
+  height: 320px;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  border: 1px solid var(--staff-border);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(26, 28, 26, 0.08);
+}
+
+.staff-qr-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateY(-4px);
+  image-rendering: pixelated;
+}
+
+.staff-qr-box small {
+  max-width: 100%;
+  color: var(--staff-primary);
+  font-size: 0.86rem;
+  font-weight: 900;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.staff-qr-panel p {
+  margin: 0;
+  color: var(--staff-muted);
+  font-weight: 800;
+}
+
+.staff-qr-panel strong {
+  color: var(--staff-primary);
+  font-size: 1.5rem;
+}
+
+.staff-qr-panel small {
+  color: var(--staff-muted);
+  font-weight: 900;
+}
+
+.staff-qr-info {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.staff-payment-modal-actions {
+  border-top: 1px solid var(--staff-border);
+  background: var(--staff-surface-mid);
+}
+
+.staff-payment-modal-actions button {
+  flex: 1;
+}
+
+.barista-page {
+  grid-template-columns: 200px minmax(0, 1fr);
+  background: #fcf9f4;
+  color: #1c1c19;
+  font-family: Inter, 'Work Sans', Arial, sans-serif;
+}
+
+.barista-page .workstation-sidebar {
+  position: sticky;
+  top: 0;
+  gap: 36px;
+  padding: 36px 0 28px;
+  border-right: 0;
+  background: #221a16;
+}
+
+.barista-page .workstation-brand {
+  min-height: auto;
+  padding: 0 24px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.barista-page .workstation-brand strong {
+  color: #fff;
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1.28rem;
+  line-height: 1.1;
+}
+
+.barista-page .workstation-brand span {
+  display: block;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.barista-side-nav {
+  display: grid;
+  gap: 0;
+}
+
+.barista-side-nav button,
+.barista-page .workstation-logout {
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.barista-side-nav button.active {
+  border-left: 4px solid #ffe08f;
+  background: rgba(255, 224, 143, 0.13);
+  color: #fff;
+}
+
+.barista-side-nav button:hover,
+.barista-page .workstation-logout:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.barista-side-nav svg,
+.barista-page .workstation-logout svg {
+  width: 20px;
+  height: 20px;
+}
+
+.barista-page .workstation-logout {
+  min-height: 52px;
+  margin: auto 16px 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.barista-page .workstation-main {
+  min-width: 0;
+  padding: 0;
+}
+
+.barista-page .workstation-header {
+  min-height: 80px;
+  align-items: center;
+  padding: 0 32px;
+  border-bottom: 1px solid #d1c4be;
+  background: #fcf9f4;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.barista-page .workstation-header h1 {
+  color: #000;
+  font-family: 'Literata', 'Playfair Display', Georgia, serif;
+  font-size: 2.55rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.barista-page .workstation-header p {
+  margin-top: 4px;
+  color: #1c1c19;
+  font-size: 1rem;
+}
+
+.barista-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.barista-topbar-actions > button {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #221a16;
+  cursor: pointer;
+}
+
+.barista-topbar-actions > button:hover {
+  background: #f0ede9;
+}
+
+.barista-topbar-actions svg {
+  width: 22px;
+  height: 22px;
+}
+
+.barista-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-align: right;
+}
+
+.barista-user-chip:hover .barista-avatar {
+  border-color: #d8c8c2;
+  background: #eadfdb;
+}
+
+.barista-user-chip strong,
+.barista-user-chip span {
+  display: block;
+}
+
+.barista-user-chip strong {
+  color: #000;
+  font-size: 1rem;
+}
+
+.barista-user-chip span {
+  margin-top: 3px;
+  color: #1c1c19;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.barista-avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ded1cc;
+  border-radius: 999px;
+  background: #eee3df;
+  color: #6f625d;
+  font-weight: 900;
+}
+
+.barista-avatar svg {
+  width: 21px;
+  height: 21px;
+  stroke-width: 2.2;
+}
+
+.barista-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.barista-top-notification-panel {
+  position: fixed;
+  top: 92px;
+  right: 32px;
+  left: 262px;
+  z-index: 90;
+  max-height: calc(100vh - 116px);
+  display: grid;
+  gap: 18px;
+  overflow-y: auto;
+  padding: 24px 28px;
+  border: 1px solid #d1c4be;
+  border-radius: 0 0 12px 12px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(34, 26, 22, 0.16);
+}
+
+.barista-top-notification-panel button {
+  position: relative;
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border: 1px solid #f1b0aa;
+  border-radius: 10px;
+  background: #fff7f6;
+  color: #1c1c19;
+  text-align: left;
+  cursor: pointer;
+}
+
+.barista-top-notification-panel button.unread {
+  border-color: #ef4444;
+  background: #fff1f1;
+}
+
+.barista-top-notification-panel button > svg {
+  width: 22px;
+  height: 22px;
+  color: #785d00;
+}
+
+.barista-top-notification-panel strong,
+.barista-top-notification-panel small,
+.barista-top-notification-panel em {
+  display: block;
+}
+
+.barista-top-notification-panel strong {
+  color: #000;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.barista-top-notification-panel small {
+  margin-top: 8px;
+  color: #655d5a;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.barista-top-notification-panel em {
+  color: #4e4541;
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.barista-top-notification-panel i {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #ba1a1a;
+}
+
+.barista-top-notification-panel p {
+  margin: 0;
+  padding: 18px 12px;
+  color: #655d5a;
+  font-weight: 800;
+  text-align: center;
+}
+
+.barista-page .workstation-alert {
+  margin: 18px 32px 0;
+}
+
+.barista-page .barista-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 32px 32px 0;
+}
+
+.barista-page .barista-stats article {
+  min-height: 122px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.barista-page .barista-stats svg {
+  margin-top: 3px;
+  color: #785d00;
+}
+
+.barista-page .barista-stats span {
+  color: #1c1c19;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.barista-page .barista-stats strong {
+  display: block;
+  margin-top: 18px;
+  color: #000;
+  font-family: 'Literata', Georgia, serif;
+  font-size: 2.8rem;
+  line-height: 0.9;
+}
+
+.barista-page .barista-stats small {
+  align-self: start;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: #ffdad6;
+  color: #93000a;
+  font-weight: 900;
+}
+
+.barista-page .barista-stats article:nth-child(2) small,
+.barista-page .barista-stats article:nth-child(3) small {
+  background: #ffddb8;
+  color: #2b1700;
+}
+
+.barista-page .staff-orders-stats.staff-shift-stats {
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
+.barista-page .barista-board {
+  margin: 10px 32px 0;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* data-board (Công thức) cho phép sticky — không clip overflow */
+.barista-page .barista-data-board {
+  overflow: visible;
+}
+
+.barista-page .barista-data-board .barista-board-header {
+  position: sticky;
+  top: 80px;
+  z-index: 5;
+  background: #fff;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid #e8e2dc;
+}
+
+.barista-page .barista-board-header {
+  padding: 26px 30px;
+  border-bottom: 0;
+}
+
+.barista-page .barista-board-tools {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.barista-page .barista-search {
+  width: min(100%, 520px);
+}
+
+.barista-page .barista-data-board .barista-search {
+  width: min(100%, 600px) !important;
+  max-width: 600px !important;
+  flex: 0 1 600px !important;
+}
+
+.barista-page .barista-search input {
+  min-height: 44px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.barista-page .barista-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.barista-page .barista-tabs button {
+  min-height: 44px;
+  padding: 0 24px;
+  border: 1px solid #d1c4be;
+  border-radius: 999px;
+  background: #f0ede9;
+  color: #1c1c19;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.barista-page .barista-tabs button.active {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
+.barista-page .barista-ticket-grid {
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 24px;
+  padding: 30px;
+}
+
+.barista-page .barista-ticket {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 360px;
+  padding: 22px;
+  border: 0;
+  border-top: 4px solid #d1c4be;
+  border-radius: 12px;
+  background: #f6f3ee;
+  box-shadow: 0 8px 18px rgba(28, 28, 25, 0.05);
+}
+
+.barista-page .barista-ticket.waiting {
+  border-top-color: #ba1a1a;
+}
+
+.barista-page .barista-ticket.making {
+  border-top-color: #f3bc7c;
+}
+
+.barista-page .barista-ticket.done {
+  border-top-color: #d1c4be;
+}
+
+.barista-page .barista-ticket.cancelled {
+  border-top-color: #ba1a1a;
+  background: #fff3f1;
+}
+
+.barista-page .barista-ticket-head,
+.barista-page .barista-ticket-meta {
+  padding: 0;
+}
+
+.barista-page .barista-ticket-head span {
+  color: #655d5a;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.barista-page .barista-ticket-head h3 {
+  margin-top: 12px;
+  color: #000;
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1.3rem;
+}
+
+.barista-page .barista-ticket-head small {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffdad6;
+  color: #93000a;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.barista-page .barista-ticket.making .barista-ticket-head small {
+  background: #ffddb8;
+  color: #2b1700;
+}
+
+.barista-page .barista-ticket.cancelled .barista-ticket-head small {
+  background: #ffdad6;
+  color: #93000a;
+}
+
+.barista-page .barista-ticket-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4e4541;
+  font-size: 0.96rem;
+  font-weight: 500;
+}
+
+.barista-page .barista-ticket-meta svg {
+  width: 16px;
+  height: 16px;
+  color: #1c1c19;
+}
+
+.barista-page .barista-ticket-meta strong {
+  color: #755b00;
+  font-size: 1.05rem;
+}
+
+.barista-page .barista-ticket-items {
+  gap: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.barista-page .barista-ticket-staff {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.barista-page .barista-ticket-staff span {
+  color: #655d5a;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.barista-page .barista-ticket-staff strong {
+  color: #1c1c19;
+  font-size: 0.98rem;
+}
+
+.barista-page .barista-ticket-staff small {
+  grid-column: 1;
+  color: #655d5a;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.barista-page .barista-ticket-staff b {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  align-self: center;
+  color: #755b00;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.barista-page .barista-ticket-items div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 10px 0;
+  border-radius: 0;
+  border-bottom: 1px solid #ebe8e3;
+  background: transparent;
+}
+
+.barista-page .barista-ticket-items div:last-child {
+  border-bottom: 0;
+}
+
+.barista-page .barista-ticket-items strong {
+  color: #1c1c19;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.barista-page .barista-ticket-items em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  margin-right: 10px;
+  border-radius: 6px;
+  background: #ffe08f;
+  color: #241a00;
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.barista-page .barista-ticket-items span {
+  padding-left: 40px;
+  color: #a97b41;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.barista-page .barista-ticket-items .barista-ticket-more {
+  color: #655d5a;
+  font-weight: 800;
+}
+
+.barista-page .barista-ticket-actions {
+  grid-template-columns: 1fr 1.45fr;
+  gap: 10px;
+  padding: 0;
+  width: 100%;
+  margin-top: auto;
+}
+
+.barista-page .workstation-primary,
+.barista-page .workstation-secondary {
+  height: 44px;
+  min-height: 44px;
+  align-self: start;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.barista-page .workstation-primary {
+  border: 2px solid #000;
+  background: #000;
+  color: #fff;
+}
+
+.barista-page .workstation-primary.complete {
+  border-color: #755b00;
+  background: #755b00;
+  color: #fff;
+}
+
+.barista-page .workstation-secondary {
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+}
+
+.barista-page .workstation-secondary.danger {
+  border-color: #ba1a1a;
+  color: #93000a;
+}
+
+.barista-load-more {
+  display: grid;
+  place-items: center;
+  margin: 0 30px;
+  padding: 32px 0;
+  border-top: 1px solid #d1c4be;
+}
+
+.barista-order-pagination {
+  margin: 0 30px;
+  border-top: 1px solid #d1c4be;
+}
+
+.barista-page .barista-notification-list article {
+  position: relative;
+  min-height: 90px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border: 1px solid #f1b0aa;
+  border-radius: 10px;
+  background: #fff7f6;
+  cursor: pointer;
+}
+
+.barista-page .barista-notification-list article.unread {
+  border-color: #ba1a1a;
+  background: #fff1f1;
+}
+
+.barista-page .barista-notification-list article i {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #ba1a1a;
+}
+
+.barista-page .barista-notification-list article > svg {
+  width: 22px;
+  height: 22px;
+  color: #785d00;
+}
+
+.barista-page .barista-notification-list article strong {
+  display: block;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.barista-page .barista-notification-list article span {
+  display: block;
+  margin-top: 8px;
+  color: #655d5a;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.barista-page .barista-notification-list article small {
+  color: #4e4541;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.staff-order-ticket.locked,
+.staff-order-ticket.cancelled,
+.staff-order-ticket.completed,
+.staff-order-ticket.paid,
+.barista-page .barista-ticket.done,
+.barista-page .barista-ticket.cancelled {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.staff-order-ticket.waiting {
+  border-top-color: #d9a441 !important;
+  background: #fff8e7 !important;
+}
+
+.staff-order-ticket.making {
+  border-top-color: #e98b3a !important;
+  background: #fff3e8 !important;
+}
+
+.staff-order-ticket.completed {
+  border-top-color: #6aa2d8 !important;
+  background: #eef7ff !important;
+}
+
+.staff-order-ticket.paid,
+.staff-order-ticket.locked {
+  border-top-color: #78c28d !important;
+  background: #f6f3ee !important;
+}
+
+.staff-order-ticket.cancelled {
+  border-top-color: #e89a9a !important;
+  background: #fff1f1 !important;
+}
+
+.staff-order-ticket.completed .barista-ticket-head small {
+  background: #dcecff !important;
+  color: #1d4ed8 !important;
+}
+
+.staff-order-ticket.paid .barista-ticket-head small,
+.staff-order-ticket.locked .barista-ticket-head small {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.staff-order-ticket.cancelled .barista-ticket-head small {
+  background: #ffe1e1 !important;
+  color: #a32020 !important;
+}
+
+.staff-orders-filter .staff-category-row button,
+.staff-shift-filter .staff-category-row button,
+.barista-page .barista-tabs button {
+  background: #f0ede9;
+  color: #1c1c19;
+}
+
+.staff-orders-filter .staff-category-row button:nth-child(1).active,
+.staff-shift-filter .staff-category-row button:nth-child(1).active,
+.barista-page .barista-tabs button:nth-child(1).active {
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.staff-orders-filter .staff-category-row button.active,
+.staff-shift-filter .staff-category-row button.active {
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.staff-orders-filter .staff-category-row button.tone-waiting {
+  border-color: #e2bd55;
+  background: #fff8e7;
+  color: #7a5300;
+}
+
+.staff-orders-filter .staff-category-row button.tone-making {
+  border-color: #f3bc7c;
+  background: #fff3e8;
+  color: #9a4d00;
+}
+
+.staff-orders-filter .staff-category-row button.tone-completed {
+  border-color: #93c5fd;
+  background: #eef7ff;
+  color: #1d4ed8;
+}
+
+.staff-orders-filter .staff-category-row button.tone-served {
+  border-color: #86cfa4;
+  background: #effaf3;
+  color: #166534;
+}
+
+.staff-orders-filter .staff-category-row button.tone-cancelled {
+  border-color: #f2a7a7;
+  background: #fff1f1;
+  color: #a32020;
+}
+
+.staff-orders-filter .staff-category-row button.tone-waiting.active {
+  border-color: #d9a441 !important;
+  background: #d9a441 !important;
+  color: #2b1700 !important;
+}
+
+.staff-orders-filter .staff-category-row button.tone-making.active {
+  border-color: #e98b3a !important;
+  background: #e98b3a !important;
+  color: #2b1700 !important;
+}
+
+.staff-orders-filter .staff-category-row button.tone-completed.active {
+  border-color: #3b82f6 !important;
+  background: #3b82f6 !important;
+  color: #fff !important;
+}
+
+.staff-orders-filter .staff-category-row button.tone-served.active {
+  border-color: #22c55e !important;
+  background: #22c55e !important;
+  color: #052e16 !important;
+}
+
+.staff-orders-filter .staff-category-row button.tone-cancelled.active {
+  border-color: #ef4444 !important;
+  background: #ef4444 !important;
+  color: #fff !important;
+}
+
+.barista-page .barista-tabs button.active {
+  border-color: #d1c4be !important;
+  background: #f0ede9 !important;
+  color: #1c1c19 !important;
+}
+
+.barista-page .barista-ticket.waiting {
+  border-top-color: #d9a441 !important;
+  background: #f6f3ee !important;
+}
+
+.barista-page .barista-ticket.making {
+  border-top-color: #e98b3a !important;
+  background: #f6f3ee !important;
+}
+
+.barista-page .barista-ticket.waiting .barista-ticket-head small,
+.staff-order-ticket.waiting .barista-ticket-head small {
+  background: #fff8e7 !important;
+  color: #7a5300 !important;
+}
+
+.barista-page .barista-ticket.making .barista-ticket-head small,
+.staff-order-ticket.making .barista-ticket-head small {
+  background: #fff3e8 !important;
+  color: #9a4d00 !important;
+}
+
+.barista-page .barista-ticket.done {
+  border-top-color: #78c28d !important;
+  background: #f6f3ee !important;
+}
+
+.barista-page .barista-ticket.done .barista-ticket-head small,
+.staff-order-ticket.paid .barista-ticket-head small,
+.staff-order-ticket.locked .barista-ticket-head small {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+/* Pha chế xong (kitchen completed) nhưng chưa thanh toán → xanh dương */
+.barista-page .barista-ticket.brewed {
+  border-top-color: #2563eb !important;
+  background: #f6f3ee !important;
+}
+
+.barista-page .barista-ticket.brewed .barista-ticket-head small {
+  background: #dbeafe !important;
+  color: #1e3a8a !important;
+}
+
+.barista-page .barista-ticket.cancelled {
+  border-top-color: #e89a9a !important;
+  background: #f6f3ee !important;
+}
+
+.barista-load-more button {
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 34px;
+  border: 1px solid #d1c4be;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font: inherit;
+  font-weight: 800;
+}
+
+.barista-load-more svg {
+  width: 18px;
+  height: 18px;
+}
+
+.barista-new-order-toast {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 290px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #221a16;
+  color: #fff;
+  box-shadow: 0 24px 70px rgba(34, 26, 22, 0.24);
+}
+
+.barista-new-order-toast > svg {
+  color: #ffe08f;
+}
+
+.barista-new-order-toast strong,
+.barista-new-order-toast span {
+  display: block;
+}
+
+.barista-new-order-toast span {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+}
+
+.barista-new-order-toast button {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1.2rem;
+}
+
+.barista-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(28, 20, 16, 0.42);
+  backdrop-filter: blur(6px);
+}
+
+.barista-detail-modal {
+  position: relative;
+  width: min(100%, 760px);
+  max-height: min(90vh, 840px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(28, 20, 16, 0.22);
+}
+
+.barista-recipe-floating-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid #d8c8c2;
+  border-radius: 999px;
+  background: #fff;
+  color: #3b2a22;
+  font-size: 1.35rem;
+  line-height: 1;
+  box-shadow: 0 8px 22px rgba(34, 26, 22, 0.12);
+}
+
+.barista-recipe-floating-close:hover {
+  background: #f6f3ee;
+  color: #000;
+}
+
+.barista-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid #d1c4be;
+}
+
+.barista-detail-close {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #221a16;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.barista-detail-close:hover {
+  background: #f0ede9;
+}
+
+.barista-detail-modal .barista-detail {
+  overflow-y: auto;
+  padding: 24px 28px 28px;
+}
+
+.barista-detail .barista-ticket-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.barista-data-board {
+  min-height: calc(100vh - 144px);
+}
+
+.barista-page .barista-data-board {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+  margin-top: 0;
+}
+
+.barista-page .barista-data-board .barista-board-header {
+  border-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 14px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.barista-page .barista-notifications-board .barista-board-header {
+  display: none;
+}
+
+.barista-refresh-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  border: 1px solid #d1c4be;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.barista-refresh-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.barista-recipe-grid,
+.barista-stock-table,
+.barista-notification-list {
+  display: grid;
+  gap: 18px;
+  padding: 18px 0 30px;
+}
+
+.barista-page .barista-notification-list {
+  padding-top: 0;
+}
+
+.barista-page .barista-notification-list .barista-empty {
+  min-height: 360px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.barista-recipe-grid {
+  grid-template-columns: repeat(3, minmax(320px, 1fr));
+  padding-top: 8px;
+}
+
+.barista-recipe-card {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-height: 230px;
+  padding: 26px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #f6f3ee;
+}
+
+.barista-recipe-detail-button {
+  width: 100%;
+  margin-top: auto;
+  border-color: #000;
+  color: #000;
+}
+
+.barista-recipe-detail-summary {
+  margin: 34px 0 6px;
+  padding-top: 22px;
+  padding-right: 52px;
+}
+
+.barista-recipe-detail-summary header {
+  padding-right: 0;
+}
+
+.barista-detail .barista-recipe-items {
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  margin-top: 10px;
+}
+
+.barista-detail .barista-recipe-items div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.barista-detail .barista-recipe-items strong {
+  color: #1c1c19;
+  font-size: 0.98rem;
+  font-weight: 900;
+}
+
+.barista-detail .barista-recipe-items span {
+  color: #755b00;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.barista-recipe-card header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.barista-recipe-card h3 {
+  margin: 8px 0 0;
+  color: #000;
+  font-family: 'Literata', Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.barista-recipe-card header span,
+.barista-recipe-card footer,
+.barista-recipe-card p {
+  color: #655d5a;
+}
+
+.barista-recipe-card header span {
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.barista-recipe-card header small {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #ffe08f;
+  color: #241a00;
+  font-weight: 900;
+}
+
+.barista-recipe-card p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.barista-recipe-items {
+  display: grid;
+  gap: 8px;
+}
+
+.barista-recipe-items div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.barista-recipe-items strong {
+  color: #1c1c19;
+}
+
+.barista-recipe-items span {
+  color: #755b00;
+  font-weight: 900;
+}
+
+.barista-recipe-card footer {
+  padding-top: 4px;
+  font-size: 0.86rem;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.barista-stock-alerts {
+  display: grid;
+  gap: 14px;
+  padding: 26px 30px 0;
+}
+
+.barista-stock-alerts h2 {
+  margin: 0;
+  color: #000;
+  font-size: 1.1rem;
+}
+
+.barista-stock-alerts > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.barista-stock-alerts article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 10px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 10px;
+  background: #fff7ed;
+  color: #7c2d12;
+}
+
+.barista-stock-alerts svg {
+  grid-row: span 2;
+  width: 20px;
+  height: 20px;
+}
+
+.barista-stock-alerts span,
+.barista-stock-alerts p {
+  color: #655d5a;
+  font-weight: 700;
+}
+
+.barista-stock-alerts p {
+  margin: 0;
+}
+
+.barista-stock-table {
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+}
+
+.barista-stock-table article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.barista-stock-table article.low {
+  border-color: #f97316;
+  background: #fff7ed;
+}
+
+.barista-stock-table strong,
+.barista-stock-table span {
+  display: block;
+}
+
+.barista-stock-table strong {
+  color: #000;
+}
+
+.barista-stock-table span,
+.barista-stock-table small {
+  margin-top: 4px;
+  color: #655d5a;
+  font-weight: 700;
+}
+
+.barista-stock-table b {
+  color: #755b00;
+  font-size: 1.05rem;
+}
+
+.barista-notification-list {
+  grid-template-columns: 1fr;
+}
+
+.barista-notification-list article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #d1c4be;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.barista-notification-list article.danger {
+  border-color: #ffb4ab;
+  background: #fff3f1;
+}
+
+.barista-notification-list article.warning {
+  border-color: #f3bc7c;
+  background: #fff7ed;
+}
+
+.barista-notification-list article.info {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.barista-notification-list svg {
+  color: #755b00;
+}
+
+.barista-notification-list strong,
+.barista-notification-list span {
+  display: block;
+}
+
+.barista-notification-list strong {
+  color: #000;
+}
+
+.barista-notification-list span,
+.barista-notification-list small {
+  margin-top: 4px;
+  color: #655d5a;
+  font-weight: 700;
+}
+
+.barista-reject-modal {
+  width: min(100%, 520px);
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(28, 20, 16, 0.22);
+}
+
+.barista-reject-modal header,
+.barista-reject-modal footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.barista-reject-modal h2 {
+  margin: 0;
+  color: #000;
+}
+
+.barista-reject-modal header span,
+.barista-reject-modal label span {
+  color: #655d5a;
+  font-weight: 800;
+}
+
+.barista-reject-modal header button {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #221a16;
+  cursor: pointer;
+}
+
+.barista-reject-modal label {
+  display: grid;
+  gap: 8px;
+}
+
+.barista-reject-modal textarea {
+  min-height: 120px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid #d1c4be;
+  border-radius: 10px;
+  background: #fcf9f4;
+  color: #1c1c19;
+  font: inherit;
+}
+
+.barista-reject-modal footer {
+  justify-content: flex-end;
+}
+
+@media (max-width: 1280px) {
+  .staff-orders-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .staff-shift-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-product-grid {
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
+
+  .barista-page .barista-ticket-grid {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
+
+  .barista-recipe-grid {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
+
+  .barista-stock-alerts > div {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 1020px) {
+  .staff-pos-sales {
+    grid-template-columns: 1fr;
+    overflow: auto;
+  }
+
+  .staff-menu-area {
+    overflow: visible;
+  }
+
+  .staff-product-grid {
+    overflow: visible;
+  }
+
+  .staff-order-panel {
+    min-height: 760px;
+    border-left: 0;
+    border-top: 1px solid var(--staff-border);
+  }
+
+  .staff-order-card {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-order-card-actions {
+    border-left: 0;
+    border-top: 1px solid rgba(211, 195, 192, 0.45);
+  }
+
+  .barista-page .barista-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .barista-page .barista-board-tools {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .barista-page .barista-search {
+    width: 100%;
+  }
+
+  .barista-page .barista-tabs {
+    justify-content: flex-start;
+  }
+
+  .barista-recipe-grid,
+  .barista-stock-table,
+  .barista-stock-alerts > div {
+    grid-template-columns: 1fr;
+  }
+
+  .barista-detail .barista-ticket-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .staff-orders-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-shift-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-order-pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .staff-order-pagination div {
+    justify-content: space-between;
+  }
+
+  .staff-pos-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-pos-sidebar {
+    position: static;
+    height: auto;
+    grid-template-columns: auto 1fr auto;
+    display: grid;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .staff-pos-brand {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .staff-pos-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .staff-pos-nav button,
+  .staff-pos-logout {
+    min-height: 58px;
+  }
+
+  .staff-pos-topbar {
+    height: auto;
+    min-height: 72px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .staff-pos-user {
+    text-align: left;
+  }
+
+  .staff-toast {
+    left: 16px;
+    right: 16px;
+    top: 16px;
+  }
+
+  .staff-menu-area {
+    padding: 14px;
+  }
+
+  .staff-product-grid {
+    grid-template-columns: repeat(2, minmax(130px, 1fr));
+    gap: 18px;
+  }
+
+  .staff-order-create,
+  .staff-checkout,
+  .staff-order-items,
+  .staff-open-invoices {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .staff-action-grid,
+  .staff-create-grid,
+  .staff-ship-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-order-identity {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-order-identity-details {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-order-identity-number {
+    min-height: 88px;
+  }
+
+  .staff-order-item-tools {
+    grid-template-columns: 1fr auto;
+  }
+
+  .staff-note-input {
+    grid-column: 1 / -1;
+  }
+
+  .staff-payment-backdrop {
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .staff-payment-modal {
+    max-height: calc(100vh - 24px);
+    border-radius: 18px;
+  }
+
+  .staff-payment-modal-head,
+  .staff-payment-modal-actions {
+    padding: 16px;
+  }
+
+  .staff-payment-modal-body {
+    padding: 0 16px 16px;
+  }
+
+  .staff-payment-methods,
+  .staff-payment-modal-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-payment-methods button {
+    min-height: 104px;
+  }
+
+  .staff-qr-box {
+    width: min(100%, 340px);
+    height: 302px;
+  }
+
+  .staff-qr-box img {
+    width: 100%;
+    height: auto;
+  }
+
+  .barista-page {
+    grid-template-columns: 1fr;
+  }
+
+  .barista-page .workstation-sidebar {
+    position: static;
+    height: auto;
+    padding: 18px 12px;
+  }
+
+  .barista-side-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .barista-page .workstation-logout {
+    margin: 8px 0 0;
+  }
+
+  .barista-page .workstation-header {
+    height: auto;
+    min-height: 84px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .barista-topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .barista-page .barista-stats,
+  .barista-page .barista-board {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+
+  .barista-page .barista-ticket-grid {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .barista-recipe-grid,
+  .barista-stock-table,
+  .barista-notification-list {
+    padding: 16px;
+  }
+
+  .barista-stock-alerts {
+    padding: 18px 16px 0;
+  }
+
+  .barista-stock-table article,
+  .barista-notification-list article {
+    grid-template-columns: 1fr;
+  }
+
+  .barista-reject-modal footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .barista-new-order-toast {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .barista-detail-backdrop {
+    padding: 12px;
+  }
+
+  .barista-detail-modal {
+    max-height: calc(100vh - 24px);
+  }
+
+  .barista-detail-head,
+  .barista-detail-modal .barista-detail {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (min-width: 901px) {
+  .staff-pos-shell,
+  .barista-page {
+    grid-template-columns: 230px minmax(0, 1fr);
+  }
+
+  .staff-pos-sidebar,
+  .barista-page .workstation-sidebar {
+    width: 230px;
+    gap: 14px;
+    padding: 24px 0;
+    background: #221a16;
+    font-family: 'Work Sans', Arial, sans-serif;
+  }
+
+  .staff-pos-brand,
+  .barista-page .workstation-brand {
+    min-height: 74px;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    padding: 0 24px 28px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+  }
+
+  .staff-pos-brand > div,
+  .barista-page .workstation-brand > div {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .staff-pos-brand > svg,
+  .barista-page .workstation-brand > svg {
+    width: 34px;
+    height: 34px;
+    display: block;
+    flex: 0 0 auto;
+    padding: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background: #eee3df;
+    color: #221a16;
+  }
+
+  .staff-pos-brand strong,
+  .barista-page .workstation-brand strong {
+    color: #fff;
+    font-family: 'Literata', Georgia, serif;
+    font-size: 1.18rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .staff-pos-brand span,
+  .barista-page .workstation-brand span {
+    margin-top: 0;
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .staff-pos-nav,
+  .barista-side-nav {
+    display: grid;
+    gap: 0;
+  }
+
+  .staff-pos-nav button,
+  .staff-pos-logout,
+  .barista-side-nav button,
+  .barista-page .workstation-logout {
+    min-height: 48px;
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.58);
+    font-family: 'Work Sans', Arial, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.15;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .staff-pos-nav svg,
+  .staff-pos-logout svg,
+  .barista-side-nav svg,
+  .barista-page .workstation-logout svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .staff-pos-nav button.active,
+  .barista-side-nav button.active {
+    border-left: 3px solid #ffe08f;
+    padding-left: 15px;
+    background: rgba(255, 224, 143, 0.16);
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .staff-pos-nav button:hover,
+  .staff-pos-logout:hover,
+  .barista-side-nav button:hover,
+  .barista-page .workstation-logout:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+
+  .staff-pos-logout,
+  .barista-page .workstation-logout {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (min-width: 901px) {
+  .staff-pos-sidebar .staff-pos-brand,
+  .barista-page .workstation-sidebar .workstation-brand {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    column-gap: 16px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    text-align: left !important;
+  }
+
+  .staff-pos-sidebar .staff-pos-brand > svg,
+  .barista-page .workstation-sidebar .workstation-brand > svg {
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .staff-pos-sidebar .staff-pos-brand > div,
+  .barista-page .workstation-sidebar .workstation-brand > div {
+    display: grid !important;
+    gap: 2px !important;
+    margin-left: 8px !important;
+    min-width: 0 !important;
+  }
+
+  .staff-pos-sidebar .staff-pos-nav button,
+  .staff-pos-sidebar .staff-pos-logout,
+  .barista-page .workstation-sidebar .barista-side-nav button,
+  .barista-page .workstation-sidebar .workstation-logout {
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 0 18px !important;
+    font-family: 'Work Sans', Arial, sans-serif !important;
+    font-size: 0.98rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+  }
+
+  .staff-pos-sidebar .staff-pos-nav button.active,
+  .barista-page .workstation-sidebar .barista-side-nav button.active {
+    padding-left: 15px !important;
+    font-weight: 700 !important;
+  }
+
+  .staff-pos-sidebar .staff-pos-nav svg,
+  .staff-pos-sidebar .staff-pos-logout svg,
+  .barista-page .workstation-sidebar .barista-side-nav svg,
+  .barista-page .workstation-sidebar .workstation-logout svg {
+    width: 21px !important;
+    height: 21px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .staff-pos-sidebar .staff-pos-nav span,
+  .staff-pos-sidebar .staff-pos-logout span,
+  .barista-page .workstation-sidebar .barista-side-nav span,
+  .barista-page .workstation-sidebar .workstation-logout span {
+    font-family: 'Work Sans', Arial, sans-serif !important;
+    font-size: 0.98rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.15 !important;
+  }
+}
+.barista-page .barista-top-notification-panel {
+  position: fixed !important;
+  top: 88px !important;
+  left: auto !important;
+  right: 34px !important;
+  bottom: auto !important;
+  width: min(390px, calc(100vw - 48px)) !important;
+  max-height: min(76vh, 650px) !important;
+  padding: 10px !important;
+  overflow-y: auto !important;
+  border: 1px solid rgba(119, 91, 50, 0.22) !important;
+  border-radius: 12px !important;
+  background: #fffdf9 !important;
+  box-shadow: 0 18px 42px rgba(35, 25, 18, 0.18) !important;
+}
+
+.barista-page .barista-top-notification-panel button {
+  width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 0 8px !important;
+  padding: 12px 14px !important;
+  border: 1px solid #f0aaa0 !important;
+  border-radius: 8px !important;
+  display: grid !important;
+  grid-template-columns: 26px minmax(0, 1fr) !important;
+  align-items: start !important;
+  column-gap: 12px !important;
+  text-align: left !important;
+}
+
+.barista-page .barista-top-notification-panel button:last-child {
+  margin-bottom: 0 !important;
+}
+
+.barista-page .barista-top-notification-panel button > svg {
+  grid-column: 1 !important;
+  width: 18px !important;
+  height: 18px !important;
+  justify-self: center !important;
+  margin-top: 20px !important;
+}
+
+.barista-page .barista-top-notification-panel button > span {
+  grid-column: 2 !important;
+  min-width: 0 !important;
+}
+
+.barista-page .barista-top-notification-panel button strong,
+.barista-page .barista-top-notification-panel button small {
+  display: block !important;
+}
+
+.barista-page .barista-top-notification-panel button strong {
+  font-size: 0.92rem !important;
+  line-height: 1.35 !important;
+}
+
+.barista-page .barista-top-notification-panel button small {
+  margin: 4px 0 0 !important;
+  font-size: 0.84rem !important;
+  line-height: 1.35 !important;
+}
+
+.barista-page .barista-top-notification-panel button em {
+  grid-column: 2 !important;
+  justify-self: start !important;
+  margin: 1px 0 0 !important;
+  font-size: 0.82rem !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+.staff-category-row button.active,
+.staff-category-row button[class*='tone-'].active {
+  border-color: #2b1711 !important;
+  background: #2b1711 !important;
+  color: #fffdf9 !important;
+}
+
+.staff-orders-filter .staff-category-row button.active,
+.staff-orders-filter .staff-category-row button.tone-waiting.active,
+.staff-orders-filter .staff-category-row button.tone-making.active,
+.staff-orders-filter .staff-category-row button.tone-completed.active,
+.staff-orders-filter .staff-category-row button.tone-served.active,
+.staff-orders-filter .staff-category-row button.tone-cancelled.active {
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.staff-orders-filter .staff-category-row button.tone-waiting:not(.active),
+.staff-orders-filter .staff-category-row button.tone-making:not(.active),
+.staff-orders-filter .staff-category-row button.tone-completed:not(.active),
+.staff-orders-filter .staff-category-row button.tone-served:not(.active),
+.staff-orders-filter .staff-category-row button.tone-cancelled:not(.active) {
+  border-color: var(--staff-border) !important;
+  background: #f7f2ec !important;
+  color: #1f1712 !important;
+}
+
+.staff-order-ticket.waiting,
+.staff-order-ticket.making,
+.staff-order-ticket.completed,
+.staff-order-ticket.served,
+.staff-order-ticket.cancelled {
+  background: #fffdf9 !important;
+}
+
+.staff-shift-date-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.staff-shift-date-tools label {
+  display: grid;
+  gap: 4px;
+  color: #6f625a;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.staff-shift-date-tools input[type='date'] {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--staff-border);
+  border-radius: 10px;
+  background: #fffdf9;
+  color: #211915;
+  font-weight: 800;
+}
+
+.staff-shift-scope {
+  min-height: 42px;
+}
+
+.staff-shift-scope button {
+  min-height: 42px;
+  padding: 0 14px;
+}
+
+.staff-shift-filter .staff-shift-search {
+  width: min(100%, 320px) !important;
+  max-width: 320px !important;
+  flex: 0 0 320px !important;
+}
+
+.staff-shift-date-filter {
+  position: relative;
+  display: grid;
+  grid-template-columns: 144px 42px;
+  align-items: center;
+  gap: 8px;
+  color: #6f625a;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.staff-shift-date-text {
+  min-height: 42px;
+  width: 144px;
+  padding: 0 12px;
+  border: 1px solid var(--staff-border);
+  border-radius: 10px;
+  background: #fffdf9;
+  color: #211915;
+  font-weight: 800;
+}
+
+.staff-shift-date-button {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--staff-border);
+  border-radius: 10px;
+  background: #fffdf9;
+  color: #211915;
+  cursor: pointer;
+}
+
+.staff-shift-date-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.staff-shift-date-native {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 42px;
+  height: 42px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.staff-shift-ticket .barista-ticket-actions {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+.staff-shift-ticket .barista-ticket-actions .workstation-primary {
+  grid-column: 1 / -1 !important;
+}
+
+.staff-shift-ticket .barista-ticket-actions .workstation-secondary:hover:not(:disabled) {
+  border-color: #8f8a84 !important;
+  background: #eeeeec !important;
+  color: #1f1712 !important;
+}
+
+.barista-board-tools .barista-search {
+  max-width: 320px;
+  flex: 0 0 320px;
+  min-height: 46px;
+  border: 1px solid #d8c9bf;
+  border-radius: 999px;
+  background: #fffdf9;
+  box-shadow: none;
+}
+
+.barista-board-tools {
+  justify-content: flex-start !important;
+  column-gap: 10px;
+}
+
+.barista-board-tools .barista-date-filter {
+  margin-left: 0;
+}
+
+.barista-board-tools .barista-tabs,
+.barista-board-tools .staff-category-row {
+  margin-left: auto;
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.barista-board-tools .barista-tabs button {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.barista-board-tools .barista-tabs button.active {
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.barista-board-tools .barista-search svg {
+  color: #877b72;
+}
+
+.barista-board-tools .barista-search input {
+  color: #2a1b13;
+  font-weight: 700;
+}
+
+.barista-board-tools .barista-search:focus-within {
+  border-color: #9a8a7f;
+  background: #fffdf9;
+  box-shadow: 0 0 0 3px rgba(128, 112, 98, 0.12);
+}
+
+.barista-date-filter input[type='date'] {
+  min-height: 46px;
+  width: 168px;
+  padding: 0 12px;
+  border: 1px solid #d8c9bf;
+  border-radius: 10px;
+  background: #fffdf9;
+  color: #211915;
+  font-weight: 800;
+}
+
+.barista-scope-filter {
+  min-height: 42px;
+}
+
+.barista-scope-filter button {
+  min-height: 42px;
+  padding: 0 14px;
+}
+
+/* ── Bill modal ─────────────────────────────────────── */
+.staff-bill-modal {
+  width: min(100%, 640px);
+  max-height: min(92vh, 900px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background: var(--staff-surface);
+  box-shadow: 0 28px 80px rgba(26, 28, 26, 0.28);
+  overflow: hidden;
+}
+
+.staff-bill-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--staff-border);
+}
+
+.staff-bill-modal-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--staff-primary);
+}
+
+.staff-bill-modal-header button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--staff-muted);
+  cursor: pointer;
+}
+
+.staff-bill-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.staff-bill-content {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #111;
+}
+
+.staff-bill-content .bc { text-align: center; }
+.staff-bill-content .bb { font-weight: 700; }
+.staff-bill-content .bhr {
+  border: none;
+  border-top: 1px dashed #aaa;
+  margin: 8px 0;
+}
+.staff-bill-content .br {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 2px 0;
+}
+.staff-bill-content .br span:last-child {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.staff-bill-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4px 0;
+}
+.staff-bill-content th,
+.staff-bill-content td {
+  padding: 4px 6px;
+  font-size: 14px;
+  vertical-align: top;
+}
+.staff-bill-content th { font-weight: 700; border-bottom: 1px solid #ccc; }
+.staff-bill-content th:not(:first-child),
+.staff-bill-content td:not(:first-child) { text-align: right; }
+
+.staff-bill-modal-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--staff-border);
+  background: var(--staff-surface-mid);
+}
+
+.staff-bill-modal-footer button { flex: 1; }

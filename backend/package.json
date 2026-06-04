@@ -1,0 +1,38 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate:auth": "node src/scripts/migrateAuthSchema.js",
+    "migrate:workstation": "node src/scripts/migrateWorkstationSchema.js",
+    "migrate:inventory": "node src/scripts/migrateInventorySchema.js",
+    "migrate:employee": "node src/scripts/migrateEmployeeManagementSchema.js",
+    "fix:encoding": "node src/scripts/fixVietnameseEncodingSchema.js",
+    "seed:recipes": "node src/scripts/seedRecipes.js",
+    "migrate:payroll-rate": "node src/scripts/migratePayrollRateSnapshot.js",
+    "migrate:rate-history": "node src/scripts/migrateHourlyRateHistory.js",
+    "migrate:barista-tracking": "node src/scripts/migrateBaristaTracking.js",
+    "migrate:promotion-code": "node src/scripts/migratePromotionCode.js",
+    "cleanup:ingredients": "node src/scripts/cleanupPhantomIngredients.js",
+    "check:ingredients": "node src/scripts/checkIngredients.js",
+    "delete:syrup-viet-quat": "node src/scripts/deleteSyrupVietQuat.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "mysql2": "^3.22.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

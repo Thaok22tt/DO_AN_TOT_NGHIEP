@@ -1,0 +1,31 @@
+const express = require('express')
+const workstationController = require('../controllers/workstationController')
+const verifyToken = require('../middleware/authMiddleware')
+
+const router = express.Router()
+
+router.use(verifyToken)
+
+router.get('/bootstrap', workstationController.getBootstrap)
+router.get('/my-invoices', workstationController.getMyInvoices)
+router.patch('/tables/:id/status', workstationController.updateTableStatus)
+router.get('/invoices', workstationController.getInvoices)
+router.get('/invoices/:id', workstationController.getInvoiceById)
+router.post('/invoices', workstationController.createInvoice)
+router.post('/invoices/:id/items', workstationController.addInvoiceItem)
+router.patch('/invoice-details/:detailId', workstationController.updateInvoiceDetailQuantity)
+router.patch('/invoice-details/:detailId/note', workstationController.updateInvoiceDetailNote)
+router.patch('/invoice-details/:detailId/size', workstationController.updateInvoiceDetailSize)
+router.delete('/invoice-details/:detailId', workstationController.deleteInvoiceDetail)
+router.patch('/invoices/:id/note', workstationController.updateInvoiceNote)
+router.patch('/invoices/:id/send', workstationController.sendToKitchen)
+router.patch('/invoices/:id/status', workstationController.updateInvoiceStatus)
+router.patch('/invoices/:id/promotion', workstationController.applyPromotion)
+router.patch('/invoices/:id/payment-method', workstationController.updatePaymentMethod)
+router.patch('/invoices/:id/transfer-table', workstationController.transferInvoiceTable)
+router.post('/invoices/:id/merge', workstationController.mergeInvoices)
+router.post('/invoices/:id/served', workstationController.markInvoiceServed)
+router.post('/invoices/:id/confirm-payment', workstationController.confirmPayment)
+router.post('/invoices/:id/complete', workstationController.completeInvoice)
+
+module.exports = router

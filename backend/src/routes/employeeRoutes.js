@@ -1,0 +1,32 @@
+const express = require('express')
+const employeeController = require('../controllers/employeeController')
+const accountController = require('../controllers/accountController')
+const verifyToken = require('../middleware/authMiddleware')
+
+const router = express.Router()
+
+router.use(verifyToken)
+router.use(accountController.requireAdmin)
+
+router.get('/assignable-accounts', employeeController.getAssignableAccounts)
+router.get('/shift-templates', employeeController.getShiftTemplates)
+router.post('/shift-templates', employeeController.createShiftTemplate)
+router.put('/shift-templates/:id', employeeController.updateShiftTemplate)
+router.delete('/shift-templates/:id', employeeController.deleteShiftTemplate)
+router.get('/shift-assignments', employeeController.getShiftAssignments)
+router.post('/shift-assignments', employeeController.createShiftAssignment)
+router.put('/shift-assignments/:id', employeeController.updateShiftAssignment)
+router.delete('/shift-assignments/:id', employeeController.deleteShiftAssignment)
+router.get('/attendance', employeeController.getAttendance)
+router.put('/attendance/:id', employeeController.updateAttendance)
+router.get('/payroll', employeeController.getPayroll)
+router.patch('/payroll/:employeeId/payment', employeeController.updatePayrollPayment)
+router.get('/payroll/export/csv', employeeController.exportPayrollCsv)
+router.get('/payroll/export/pdf', employeeController.exportPayrollPdf)
+router.get('/', employeeController.getEmployees)
+router.post('/', employeeController.createEmployee)
+router.put('/:id', employeeController.updateEmployee)
+router.patch('/:id/account-status', employeeController.updateEmployeeAccountStatus)
+router.delete('/:id', employeeController.deleteEmployee)
+
+module.exports = router
