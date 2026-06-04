@@ -23,7 +23,7 @@ const handleUpload = (req, res, next) => {
       return
     }
 
-    res.status(400).json({ message: error.message || 'Ảnh món không hợp lệ' })
+    res.status(400).json({ message: error.message || 'Ảnh món không hợp lệ', error: error.toString() })
   })
 }
 
