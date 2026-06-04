@@ -1,5 +1,4 @@
-const fs = require('fs')
-const path = require('path')
+const cloudinary = require('cloudinary').v2
 const categoryModel = require('../models/categoryModel')
 const productModel = require('../models/productModel')
 
@@ -7,23 +6,18 @@ const normalizeText = (value) => (typeof value === 'string' ? value.trim() : '')
 const normalizeOptionalText = (value) => normalizeText(value) || null
 const allowedStatuses = ['Active', 'Inactive']
 
-const getImagePath = (filename) => (filename ? `/uploads/products/${filename}` : null)
-
 const removeUploadedFile = (file) => {
-  if (file?.path) {
-    fs.unlink(file.path, () => {})
+  if (file?.filename) {
+    cloudinary.uploader.destroy(file.filename, () => {})
   }
 }
 
 const removeProductImage = (image) => {
-  if (!image) {
-    return
-  }
-
-  const filename = path.basename(image)
-  const imagePath = path.join(__dirname, '..', 'uploads', 'products', filename)
-
-  fs.unlink(imagePath, () => {})
+  if (!image) return
+  const parts = image.split('/')
+  const filenameWithExt = parts[parts.length - 1]
+  const publicId = `products/${filenameWithExt.split('.')[0]}`
+  cloudinary.uploader.destroy(publicId, () => {})
 }
 
 const logProductError = (action, error) => {
@@ -40,7 +34,7 @@ const buildProductPayload = (body, file, currentImage = null) => ({
   categoryId: Number(body.CategoryId ?? body.categoryId),
   price: Number(body.Price ?? body.price),
   description: normalizeOptionalText(body.Description ?? body.description),
-  image: file ? getImagePath(file.filename) : currentImage,
+  image: file ? file.path : currentImage,
   status: normalizeText(body.Status ?? body.status) || 'Active',
 })
 
