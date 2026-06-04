@@ -1,9 +1,21 @@
 import { Plus, X } from 'lucide-react'
 import PropTypes from 'prop-types'
+import { useEffect, useState } from 'react'
 import { categoryShape, productShape } from '../../../utils/adminPropTypes'
 
 function ProductModal({ categories, form, mode, onChange, onClose, onFileChange, onSubmit, saving, selectedProduct }) {
   const isCreate = mode === 'product-create'
+  const [previewUrl, setPreviewUrl] = useState(selectedProduct?.image || '')
+
+  useEffect(() => {
+    if (!(form.image instanceof File)) {
+      setPreviewUrl(selectedProduct?.image || '')
+      return
+    }
+    const url = URL.createObjectURL(form.image)
+    setPreviewUrl(url)
+    return () => URL.revokeObjectURL(url)
+  }, [form.image, selectedProduct?.image])
 
   return (
     <div className="admin-modal-backdrop" role="presentation">
@@ -50,7 +62,13 @@ function ProductModal({ categories, form, mode, onChange, onClose, onFileChange,
           <label className="admin-form-full">
             <span>Ảnh món</span>
             <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" name="image" onChange={onFileChange} type="file" />
-            {!isCreate && selectedProduct?.image && !form.image && <small>Đang giữ ảnh hiện tại nếu không chọn ảnh mới.</small>}
+            {previewUrl && (
+              <img
+                alt="Xem trước ảnh món"
+                src={previewUrl}
+                style={{ marginTop: '8px', maxHeight: '160px', maxWidth: '100%', borderRadius: '6px', objectFit: 'cover' }}
+              />
+            )}
           </label>
         </div>
 

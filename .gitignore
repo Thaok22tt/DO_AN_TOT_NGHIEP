@@ -10,6 +10,10 @@ node_modules/
 # Build output
 build/
 dist/
+frontend/dist/
+
+# Uploads: KHÔNG ignore - ảnh sản phẩm cần được commit để deploy lên Railway
+# backend/src/uploads/ phải được commit đầy đủ
 
 # Logs
 *.log

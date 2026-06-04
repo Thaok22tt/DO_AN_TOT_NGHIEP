@@ -20,7 +20,11 @@ require('./config/database')
 
 const app = express()
 
-app.use(cors())
+const corsOrigin = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+  : true
+
+app.use(cors({ origin: corsOrigin, credentials: true }))
 app.use(express.json())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
