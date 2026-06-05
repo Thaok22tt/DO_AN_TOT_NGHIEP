@@ -314,6 +314,14 @@ function Barista() {
 
       knownOrderIdsRef.current = new Set(nextOrders.map((order) => order.id))
       knownCancelledOrderIdsRef.current = new Set(nextOrders.filter((order) => order.status === 'Cancelled').map((order) => order.id))
+
+      if (!initialOrdersLoadedRef.current) {
+        // Lần đầu load: mark hết đơn hiện có là "đã đọc" để badge chỉ hiện với đơn mới
+        const initialReadIds = new Set(nextOrders.map((order) => `order-${order.id}`))
+        setTopReadNotificationIds(initialReadIds)
+        saveReadNotificationIds(initialReadIds)
+      }
+
       initialOrdersLoadedRef.current = true
       setOrders(nextOrders)
 
