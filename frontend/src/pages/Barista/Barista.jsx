@@ -1119,33 +1119,33 @@ function Barista() {
 
             {profileMode === 'password' ? (
               <section className="staff-profile-form">
-                <label>
-                  <span>Mật khẩu hiện tại</span>
-                  <div className="barista-password-field">
-                    <input name="currentPassword" onChange={updateProfileForms} required type={showPasswords.currentPassword ? 'text' : 'password'} value={passwordForm.currentPassword} />
-                    <button type="button" onClick={() => setShowPasswords((s) => ({ ...s, currentPassword: !s.currentPassword }))}>
-                      {showPasswords.currentPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </label>
-                <label>
-                  <span>Mật khẩu mới</span>
-                  <div className="barista-password-field">
-                    <input minLength="6" name="newPassword" onChange={updateProfileForms} required type={showPasswords.newPassword ? 'text' : 'password'} value={passwordForm.newPassword} />
-                    <button type="button" onClick={() => setShowPasswords((s) => ({ ...s, newPassword: !s.newPassword }))}>
-                      {showPasswords.newPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </label>
-                <label>
-                  <span>Nhập lại mật khẩu mới</span>
-                  <div className="barista-password-field">
-                    <input minLength="6" name="confirmPassword" onChange={updateProfileForms} required type={showPasswords.confirmPassword ? 'text' : 'password'} value={passwordForm.confirmPassword} />
-                    <button type="button" onClick={() => setShowPasswords((s) => ({ ...s, confirmPassword: !s.confirmPassword }))}>
-                      {showPasswords.confirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                </label>
+                {[
+                  { field: 'currentPassword', label: 'Mật khẩu hiện tại', extra: {} },
+                  { field: 'newPassword', label: 'Mật khẩu mới', extra: { minLength: '6' } },
+                  { field: 'confirmPassword', label: 'Nhập lại mật khẩu mới', extra: { minLength: '6' } },
+                ].map(({ field, label, extra }) => (
+                  <label key={field}>
+                    <span>{label}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', minHeight: '41px', border: '1px solid #d6d3cc', borderRadius: '8px', background: '#f5f3ef' }}>
+                      <input
+                        {...extra}
+                        name={field}
+                        onChange={updateProfileForms}
+                        required
+                        style={{ flex: 1, minHeight: '41px', border: 'none', borderRadius: '8px', background: 'transparent', padding: '0 8px 0 14px', outline: 'none', font: 'inherit', color: 'inherit' }}
+                        type={showPasswords[field] ? 'text' : 'password'}
+                        value={passwordForm[field]}
+                      />
+                      <button
+                        onClick={() => setShowPasswords((s) => ({ ...s, [field]: !s[field] }))}
+                        style={{ flexShrink: 0, width: '36px', height: '41px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', color: '#6b5d52', cursor: 'pointer', padding: 0 }}
+                        type="button"
+                      >
+                        {showPasswords[field] ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                    </div>
+                  </label>
+                ))}
               </section>
             ) : (
               <section className="staff-profile-form">
