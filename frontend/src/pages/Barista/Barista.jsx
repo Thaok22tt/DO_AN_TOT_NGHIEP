@@ -9,6 +9,8 @@ import {
   Clock3,
   Coffee,
   CupSoda,
+  Eye,
+  EyeOff,
   LogOut,
   PackageSearch,
   RefreshCw,
@@ -270,6 +272,7 @@ function Barista() {
   const [profileMode, setProfileMode] = useState('profile')
   const [profileForm, setProfileForm] = useState(emptyProfileForm)
   const [passwordForm, setPasswordForm] = useState(emptyPasswordForm)
+  const [showPasswords, setShowPasswords] = useState({ confirmPassword: false, currentPassword: false, newPassword: false })
 
   const pageHeadings = {
     notifications: {
@@ -1118,15 +1121,30 @@ function Barista() {
               <section className="staff-profile-form">
                 <label>
                   <span>Mật khẩu hiện tại</span>
-                  <input name="currentPassword" onChange={updateProfileForms} required type="password" value={passwordForm.currentPassword} />
+                  <div className="barista-password-field">
+                    <input name="currentPassword" onChange={updateProfileForms} required type={showPasswords.currentPassword ? 'text' : 'password'} value={passwordForm.currentPassword} />
+                    <button type="button" onClick={() => setShowPasswords((s) => ({ ...s, currentPassword: !s.currentPassword }))}>
+                      {showPasswords.currentPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </label>
                 <label>
                   <span>Mật khẩu mới</span>
-                  <input minLength="6" name="newPassword" onChange={updateProfileForms} required type="password" value={passwordForm.newPassword} />
+                  <div className="barista-password-field">
+                    <input minLength="6" name="newPassword" onChange={updateProfileForms} required type={showPasswords.newPassword ? 'text' : 'password'} value={passwordForm.newPassword} />
+                    <button type="button" onClick={() => setShowPasswords((s) => ({ ...s, newPassword: !s.newPassword }))}>
+                      {showPasswords.newPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </label>
                 <label>
                   <span>Nhập lại mật khẩu mới</span>
-                  <input minLength="6" name="confirmPassword" onChange={updateProfileForms} required type="password" value={passwordForm.confirmPassword} />
+                  <div className="barista-password-field">
+                    <input minLength="6" name="confirmPassword" onChange={updateProfileForms} required type={showPasswords.confirmPassword ? 'text' : 'password'} value={passwordForm.confirmPassword} />
+                    <button type="button" onClick={() => setShowPasswords((s) => ({ ...s, confirmPassword: !s.confirmPassword }))}>
+                      {showPasswords.confirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </label>
               </section>
             ) : (

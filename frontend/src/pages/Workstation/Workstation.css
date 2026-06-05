@@ -5765,6 +5765,34 @@
   z-index: 20;
 }
 
+/* Password field với nút toggle ẩn/hiện */
+.barista-password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.barista-password-field input {
+  flex: 1;
+  padding-right: 36px !important;
+}
+
+.barista-password-field button {
+  position: absolute;
+  right: 10px;
+  border: 0;
+  background: transparent;
+  color: #6b5d52;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.barista-password-field button:hover {
+  color: #352216;
+}
+
 /* Barista page: compact sizing (tương đương zoom 90%) */
 .barista-page .workstation-main {
   zoom: 0.88;
