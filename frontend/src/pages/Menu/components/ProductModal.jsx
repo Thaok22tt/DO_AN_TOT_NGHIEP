@@ -74,12 +74,12 @@ function ProductModal({ categories, form, mode, onChange, onClose, onFileChange,
             <span>Mô tả</span>
             <textarea maxLength="500" name="description" onChange={onChange} rows="4" value={form.description} />
           </label>
-          <label className="admin-form-full">
-            <span>Ảnh món</span>
+          <div className="admin-form-full">
+            <span style={{ color: 'var(--admin-muted)', fontSize: '0.9rem', fontWeight: 700 }}>Ảnh món</span>
             <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" name="image" onChange={onFileChange} ref={fileInputRef} style={{ display: 'none' }} type="file" />
             <div
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid #ccc', borderRadius: '6px', padding: '6px 10px', cursor: 'pointer', background: '#fff' }}
-              onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid #ccc', borderRadius: '6px', padding: '6px 10px', cursor: 'pointer', background: '#fff', marginTop: '8px' }}
+              onClick={() => fileInputRef.current?.click()}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && fileInputRef.current?.click()}
@@ -94,7 +94,7 @@ function ProductModal({ categories, form, mode, onChange, onClose, onFileChange,
                 style={{ marginTop: '8px', maxHeight: '160px', maxWidth: '100%', borderRadius: '6px', objectFit: 'cover' }}
               />
             )}
-          </label>
+          </div>
         </div>
 
         <div className="admin-modal-actions">
