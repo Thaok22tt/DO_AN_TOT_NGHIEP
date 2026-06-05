@@ -42,12 +42,11 @@
 }
 
 .login-card {
-  width: min(100%, 680px);
-  min-height: min(86vh, 820px);
+  width: min(100%, 480px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(34px, 5vw, 72px);
+  padding: clamp(24px, 4vw, 48px);
   border-top: 6px solid #7c5639;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.95);
@@ -59,13 +58,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 48px;
+  margin-bottom: 28px;
   text-align: center;
 }
 
 .login-logo-mark {
-  width: 96px;
-  height: 96px;
+  width: 72px;
+  height: 72px;
   display: grid;
   place-items: center;
   align-content: center;
@@ -95,21 +94,21 @@
   margin: 0;
   color: #3d2b1f;
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: clamp(2.5rem, 4vw, 3.3rem);
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
   line-height: 1.2;
   font-weight: 500;
 }
 
 .login-card-header p {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   color: #4f453f;
-  font-size: 1.16rem;
+  font-size: 0.95rem;
   line-height: 1.5;
 }
 
 .login-form {
   display: grid;
-  gap: 28px;
+  gap: 18px;
 }
 
 .login-field {
@@ -141,8 +140,8 @@
 
 .login-input-wrap input {
   width: 100%;
-  min-height: 64px;
-  padding: 14px 20px 14px 60px;
+  min-height: 48px;
+  padding: 10px 16px 10px 48px;
   border: 1px solid #d2c4bc;
   border-radius: 8px;
   outline: none;
@@ -252,7 +251,7 @@
 
 .login-submit {
   width: 100%;
-  min-height: 68px;
+  min-height: 50px;
   border: 0;
   border-radius: 8px;
   background: #3d2b1f;
@@ -280,9 +279,9 @@
 }
 
 .login-quote {
-  margin: 40px 0 0;
+  margin: 24px 0 0;
   color: rgba(79, 69, 63, 0.6);
-  font-size: 1.12rem;
+  font-size: 0.9rem;
   font-style: italic;
   line-height: 1.5;
   text-align: center;
@@ -298,39 +297,27 @@
   background-size: 22px 22px, 28px 28px;
 }
 
-@media (min-width: 768px) {
-  .login-card {
-    padding: clamp(48px, 5vw, 72px);
-  }
-}
-
 @media (max-width: 520px) {
   .login-shell {
-    padding: 18px;
+    padding: 16px;
   }
 
   .login-card {
-    min-height: auto;
-    padding: 30px 20px;
+    padding: 24px 18px;
   }
 
   .login-logo-mark {
-    width: 82px;
-    height: 82px;
+    width: 60px;
+    height: 60px;
   }
 
   .login-card h1 {
-    font-size: 2.15rem;
-  }
-
-  .login-input-wrap input,
-  .login-submit {
-    min-height: 56px;
+    font-size: 1.7rem;
   }
 
   .login-actions {
     align-items: flex-start;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 }
