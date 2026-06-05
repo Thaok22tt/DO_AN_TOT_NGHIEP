@@ -74,7 +74,7 @@ function ProductModal({ categories, form, mode, onChange, onClose, onFileChange,
             <span>Mô tả</span>
             <textarea maxLength="500" name="description" onChange={onChange} rows="4" value={form.description} />
           </label>
-          <label className="admin-form-full">
+          <label className="admin-form-full" onClick={(e) => e.preventDefault()}>
             <span>Ảnh món</span>
             <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" name="image" onChange={onFileChange} ref={fileInputRef} style={{ display: 'none' }} type="file" />
             <div
