@@ -1,27 +1,24 @@
 const multer = require('multer')
-const path = require('path')
-const fs = require('fs')
+const cloudinary = require('cloudinary').v2
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
 
-const uploadDir = path.join(__dirname, '../uploads/products')
-fs.mkdirSync(uploadDir, { recursive: true })
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadDir),
-  filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase()
-    cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`)
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'products',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
   },
 })
 
 const uploadProductImage = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (_req, file, cb) => {
-    const allowed = ['.jpg', '.jpeg', '.png']
-    const ext = path.extname(file.originalname).toLowerCase()
-    if (allowed.includes(ext)) cb(null, true)
-    else cb(new Error('Chỉ chấp nhận ảnh jpg, jpeg, png'))
-  },
 })
 
 module.exports = uploadProductImage
