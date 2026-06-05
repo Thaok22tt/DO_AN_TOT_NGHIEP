@@ -4,17 +4,6 @@ const cloudinary = require('cloudinary').v2
 const categoryModel = require('../models/categoryModel')
 const productModel = require('../models/productModel')
 
-console.log('[cloudinary env]', {
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY ? 'SET' : 'MISSING',
-  api_secret: process.env.CLOUDINARY_API_SECRET ? 'SET' : 'MISSING',
-  cloudinary_url: process.env.CLOUDINARY_URL || 'NOT SET',
-})
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
 
 const uploadBufferToCloudinary = (buffer) =>
   new Promise((resolve, reject) => {
