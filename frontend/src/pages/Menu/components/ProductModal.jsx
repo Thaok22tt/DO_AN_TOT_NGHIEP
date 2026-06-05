@@ -1,15 +1,30 @@
 import { Plus, X } from 'lucide-react'
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { categoryShape, productShape } from '../../../utils/adminPropTypes'
+
+const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '')
+
+const toAbsoluteImageUrl = (image) => {
+  if (!image) return ''
+  if (/^https?:\/\//i.test(image)) return image
+  return `${API_ORIGIN}${image}`
+}
 
 function ProductModal({ categories, form, mode, onChange, onClose, onFileChange, onSubmit, saving, selectedProduct }) {
   const isCreate = mode === 'product-create'
-  const [previewUrl, setPreviewUrl] = useState(selectedProduct?.image || '')
+  const fileInputRef = useRef(null)
+  const [previewUrl, setPreviewUrl] = useState(() => toAbsoluteImageUrl(selectedProduct?.image))
+
+  const currentFileName = form.image instanceof File
+    ? form.image.name
+    : selectedProduct?.image
+      ? selectedProduct.image.split('/').pop()
+      : 'Chưa chọn file'
 
   useEffect(() => {
     if (!(form.image instanceof File)) {
-      setPreviewUrl(selectedProduct?.image || '')
+      setPreviewUrl(toAbsoluteImageUrl(selectedProduct?.image))
       return
     }
     const url = URL.createObjectURL(form.image)
@@ -61,7 +76,17 @@ function ProductModal({ categories, form, mode, onChange, onClose, onFileChange,
           </label>
           <label className="admin-form-full">
             <span>Ảnh món</span>
-            <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" name="image" onChange={onFileChange} type="file" />
+            <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" name="image" onChange={onFileChange} ref={fileInputRef} style={{ display: 'none' }} type="file" />
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid #ccc', borderRadius: '6px', padding: '6px 10px', cursor: 'pointer', background: '#fff' }}
+              onClick={() => fileInputRef.current?.click()}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && fileInputRef.current?.click()}
+            >
+              <span style={{ background: '#eee', borderRadius: '4px', padding: '2px 10px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>Chọn file</span>
+              <span style={{ color: '#555', fontSize: '0.9rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{currentFileName}</span>
+            </div>
             {previewUrl && (
               <img
                 alt="Xem trước ảnh món"

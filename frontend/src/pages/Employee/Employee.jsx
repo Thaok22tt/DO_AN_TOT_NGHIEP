@@ -700,9 +700,10 @@ function EmployeesListView({
   page,
   searchTerm,
   sortMode,
+  todayAttendance,
   totalPages,
 }) {
-  const activeEmployees = employees.filtered.filter((employee) => Number(employee.accountStatus) === 1).length
+  const activeEmployees = (todayAttendance || []).filter((row) => row.loginAt && !row.logoutAt).length
   const { monthlyHours, monthlySalary } = useMonthlyStats()
   const attendanceRate = employees.filtered.length ? Math.round((activeEmployees / employees.filtered.length) * 100) : 0
 
@@ -844,9 +845,6 @@ function EmployeesListView({
         />
       </section>
 
-      <button className="employee-fab" onClick={onCreate} type="button" aria-label="Thêm nhân viên">
-        {renderMaterialIcon('add')}
-      </button>
     </>
   )
 }
@@ -912,6 +910,7 @@ EmployeesListView.propTypes = {
   page: PropTypes.number.isRequired,
   searchTerm: PropTypes.string.isRequired,
   sortMode: PropTypes.string.isRequired,
+  todayAttendance: PropTypes.arrayOf(PropTypes.object),
   totalPages: PropTypes.number.isRequired,
 }
 

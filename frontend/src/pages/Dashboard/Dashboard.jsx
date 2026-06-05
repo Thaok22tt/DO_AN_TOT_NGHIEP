@@ -198,7 +198,7 @@ function OverviewSection({
             </div>
           </header>
           <div className="dash-peak-body">
-            {peakHour && (
+            {peakHour ? (
               <div className="dash-peak-highlight">
                 <span>Cao điểm nhất</span>
                 <strong>{String(peakHour.hour).padStart(2, '0')}:00 – {String(Number(peakHour.hour) + 1).padStart(2, '0')}:00</strong>
@@ -207,24 +207,9 @@ function OverviewSection({
                   <span>{formatCurrency(peakHour.revenue)}</span>
                 </div>
               </div>
+            ) : (
+              <p className="dash-empty">Chưa có đơn hàng hôm nay.</p>
             )}
-            <div className="dash-hourly-bars">
-              {displayHours.map((h) => (
-                <div
-                  className="dash-hour-col"
-                  key={h.hour}
-                  title={`${String(h.hour).padStart(2, '0')}:00 — ${h.invoiceCount} HĐ · ${formatCurrency(h.revenue)}`}
-                >
-                  <div className="dash-hour-bar-wrap">
-                    <i
-                      className={`dash-hour-bar${h.invoiceCount === 0 ? ' empty' : ''}`}
-                      style={{ height: `${Math.max(h.invoiceCount ? 6 : 2, (h.invoiceCount / maxHourly) * 100)}%` }}
-                    />
-                  </div>
-                  {h.hour % 3 === 0 && <span>{h.hour}h</span>}
-                </div>
-              ))}
-            </div>
           </div>
         </article>
       </div>
@@ -268,10 +253,10 @@ function OverviewSection({
 
         <article className="dash-card dash-staff-card">
           <header className="dash-card-hd">
-            <h3><Users size={14} aria-hidden="true" /> Nhân viên đang ca</h3>
+            <h3><Users size={14} aria-hidden="true" /> Nhân viên đang trong ca</h3>
           </header>
           {shiftEmployees.length === 0 ? (
-            <p className="dash-empty">Chưa có nhân viên đang ca.</p>
+            <p className="dash-empty">Chưa có nhân viên đang trong ca.</p>
           ) : (
             <ul className="dash-staff-list">
               {shiftEmployees.slice(0, 6).map((emp) => (

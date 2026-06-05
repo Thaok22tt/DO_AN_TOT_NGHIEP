@@ -102,9 +102,16 @@ const createInvoice = async (req, res) => {
     const customerName = normalizeText(body.customerName).slice(0, 100) || null
     const serviceNumber = normalizeText(body.serviceNumber).slice(0, 20) || null
     const shippingFee = orderType === 'Ship' ? Math.max(Number(body.shippingFee || 0), 0) : 0
+    const customerPhone = orderType === 'Ship' ? normalizeText(body.customerPhone).slice(0, 20) || null : null
+    const deliveryAddress = orderType === 'Ship' ? normalizeText(body.deliveryAddress).slice(0, 300) || null : null
+    const deliveryNote = orderType === 'Ship' ? normalizeText(body.deliveryNote).slice(0, 300) || null : null
 
     if (orderType === 'DineIn' && !serviceNumber) {
       return res.status(400).json({ message: 'Vui long nhap so the' })
+    }
+
+    if (orderType === 'Ship' && (!customerPhone || !deliveryAddress)) {
+      return res.status(400).json({ message: 'Vui long nhap SĐT va dia chi giao hang' })
     }
 
     if (orderType === 'DineIn' && tableId) {
@@ -125,6 +132,9 @@ const createInvoice = async (req, res) => {
     const invoice = await invoiceModel.createInvoice({
       accountId,
       customerName,
+      customerPhone,
+      deliveryAddress,
+      deliveryNote,
       note,
       orderType,
       promotionId,
@@ -583,12 +593,63 @@ const getMyInvoices = async (req, res) => {
   }
 }
 
+const startDelivery = async (req, res) => {
+  try {
+    const id = parseId(req.params.id)
+    if (!id) return res.status(400).json({ message: 'Hoa don khong hop le' })
+
+    const invoice = await invoiceModel.findById(id)
+    if (!invoice || invoice.orderType !== 'Ship') {
+      return res.status(404).json({ message: 'Khong tim thay don ship' })
+    }
+    if (invoice.kitchenStatus !== 'Completed') {
+      return res.status(400).json({ message: 'Don phai pha che xong moi co the giao' })
+    }
+    if (invoice.deliveryStatus === 'Delivering' || invoice.deliveryStatus === 'Delivered') {
+      return res.status(400).json({ message: 'Don da duoc bat dau giao hoac da giao' })
+    }
+
+    const updated = await invoiceModel.startDelivery(id)
+    return res.json({ message: 'Bat dau giao hang', invoice: updated })
+  } catch (error) {
+    logError('start delivery', error)
+    return res.status(500).json({ message: 'Loi server khi bat dau giao hang', error: error.message })
+  }
+}
+
+const completeDelivery = async (req, res) => {
+  try {
+    const id = parseId(req.params.id)
+    if (!id) return res.status(400).json({ message: 'Hoa don khong hop le' })
+
+    const invoice = await invoiceModel.findById(id)
+    if (!invoice || invoice.orderType !== 'Ship') {
+      return res.status(404).json({ message: 'Khong tim thay don ship' })
+    }
+    if (invoice.deliveryStatus !== 'Delivering') {
+      return res.status(400).json({ message: 'Don phai dang giao moi co the xac nhan da giao' })
+    }
+
+    const amountReceived = invoice.paymentMethod === 'COD'
+      ? Math.max(Number(req.body?.amountReceived || 0), 0)
+      : null
+
+    const updated = await invoiceModel.completeDelivery(id, { amountReceived })
+    return res.json({ message: 'Da giao hang thanh cong', invoice: updated })
+  } catch (error) {
+    logError('complete delivery', error)
+    return res.status(500).json({ message: 'Loi server khi xac nhan da giao', error: error.message })
+  }
+}
+
 module.exports = {
   addInvoiceItem,
   applyPromotion,
   completeInvoice,
   confirmPayment,
   createInvoice,
+  startDelivery,
+  completeDelivery,
   deleteInvoiceDetail,
   getBootstrap,
   getInvoiceById,

@@ -27,5 +27,7 @@ router.post('/invoices/:id/merge', workstationController.mergeInvoices)
 router.post('/invoices/:id/served', workstationController.markInvoiceServed)
 router.post('/invoices/:id/confirm-payment', workstationController.confirmPayment)
 router.post('/invoices/:id/complete', workstationController.completeInvoice)
+router.patch('/invoices/:id/start-delivery', workstationController.startDelivery)
+router.patch('/invoices/:id/complete-delivery', workstationController.completeDelivery)
 
 module.exports = router

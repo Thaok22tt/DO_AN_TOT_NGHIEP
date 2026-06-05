@@ -10082,12 +10082,13 @@
 .dash-peak-highlight > strong { display: block; font-size: 1.05rem; font-weight: 900; color: var(--admin-primary); margin-bottom: 6px; }
 .dash-peak-meta { display: flex; gap: 12px; font-size: .76rem; font-weight: 700; color: var(--admin-muted); }
 
-.dash-hourly-bars { display: flex; align-items: flex-end; gap: 2px; height: 80px; }
-.dash-hour-col { display: flex; flex-direction: column; align-items: center; flex: 1; height: 100%; }
-.dash-hour-bar-wrap { flex: 1; display: flex; align-items: flex-end; width: 100%; }
-.dash-hour-bar { display: block; width: 100%; border-radius: 3px 3px 0 0; background: #6B3A2A; min-height: 2px; transition: height .3s ease; }
-.dash-hour-bar.empty { background: rgba(210,196,187,.35); }
-.dash-hour-col span { font-size: .55rem; color: var(--admin-muted); margin-top: 2px; font-weight: 700; }
+.dash-peak-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.dash-peak-row { display: grid; grid-template-columns: 90px 1fr 36px 80px; align-items: center; gap: 8px; }
+.dash-peak-time { font-size: .72rem; font-weight: 700; color: var(--admin-muted); white-space: nowrap; }
+.dash-peak-bar-wrap { height: 8px; background: rgba(210,196,187,.3); border-radius: 4px; overflow: hidden; }
+.dash-peak-bar { height: 100%; background: #6B3A2A; border-radius: 4px; transition: width .4s ease; }
+.dash-peak-count { font-size: .72rem; font-weight: 800; color: var(--admin-primary); text-align: right; white-space: nowrap; }
+.dash-peak-rev { font-size: .68rem; color: var(--admin-muted); text-align: right; white-space: nowrap; }
 
 /* Row 3: Products + Staff + Alerts */
 .dash-row3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; align-items: start; }

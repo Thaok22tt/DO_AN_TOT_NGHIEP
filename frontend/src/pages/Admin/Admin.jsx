@@ -30,6 +30,7 @@ import {
   createEmployee,
   deleteEmployee,
   getAssignableEmployeeAccounts,
+  getAttendance,
   getEmployees,
   updateEmployee,
   updateEmployeeAccountStatus,
@@ -121,6 +122,7 @@ function Admin() {
   const [areas, setAreas] = useState([])
   const [categories, setCategories] = useState([])
   const [employees, setEmployees] = useState([])
+  const [todayAttendance, setTodayAttendance] = useState([])
   const [invoices, setInvoices] = useState([])
   const [overviewInvoiceDetails, setOverviewInvoiceDetails] = useState([])
   const [inventorySummary, setInventorySummary] = useState({ ingredients: [], lowStock: [] })
@@ -184,7 +186,8 @@ function Admin() {
     setLoading(true)
     setError('')
 
-    const [accountResult, roleResult, employeeResult, categoryResult, productResult, promotionResult, areaResult, tableResult, invoiceResult, inventoryResult] = await Promise.allSettled([
+    const today = new Date().toISOString().slice(0, 10)
+    const [accountResult, roleResult, employeeResult, categoryResult, productResult, promotionResult, areaResult, tableResult, invoiceResult, inventoryResult, attendanceResult] = await Promise.allSettled([
       getAccounts(),
       getRoles(),
       getEmployees(),
@@ -195,6 +198,7 @@ function Admin() {
       getTables(),
       getInvoices(),
       getInventoryBootstrap(),
+      getAttendance({ startDate: today, endDate: today }),
     ])
 
     if (accountResult.status === 'fulfilled') {
@@ -267,6 +271,12 @@ function Admin() {
     } else if (activeNavKey === 'inventory' || activeNavKey === 'overview') {
       setInventorySummary({ ingredients: [], lowStock: [] })
       setError(getErrorMessage(inventoryResult.reason))
+    }
+
+    if (attendanceResult.status === 'fulfilled') {
+      setTodayAttendance(attendanceResult.value.attendance || attendanceResult.value || [])
+    } else {
+      setTodayAttendance([])
     }
 
     setLoading(false)
@@ -585,10 +595,18 @@ function Admin() {
 
   const overviewShiftEmployees = useMemo(
     () =>
-      employees
-        .filter((employee) => Number(employee.accountStatus ?? employee.status) === 1)
-        .slice(0, 3),
-    [employees]
+      todayAttendance
+        .filter((row) => row.loginAt && !row.logoutAt)
+        .map((row) => ({
+          id: row.employeeId || row.accountId,
+          accountId: row.accountId,
+          fullName: row.employeeName,
+          username: row.employeeName,
+          position: row.position || row.role,
+          workShift: null,
+        }))
+        .slice(0, 6),
+    [todayAttendance]
   )
 
   const overviewTopProducts = useMemo(() => {
@@ -685,12 +703,16 @@ function Admin() {
     ].filter(Boolean)
   }, [accounts, invoices, promotions])
 
-  const getEmployeeFormFromAccount = (account, currentForm = emptyEmployeeForm) => ({
-    ...currentForm,
-    accountId: account?.id ? String(account.id) : '',
-    fullName: account?.fullName || '',
-    phoneNumber: account?.phoneNumber || '',
-  })
+  const getEmployeeFormFromAccount = (account, currentForm = emptyEmployeeForm) => {
+    const roleToPosition = { 'Nhân viên': 'Nhân viên', 'Pha chế': 'Pha chế' }
+    return {
+      ...currentForm,
+      accountId: account?.id ? String(account.id) : '',
+      fullName: account?.fullName || '',
+      phoneNumber: account?.phoneNumber || '',
+      position: roleToPosition[account?.role] || currentForm.position || '',
+    }
+  }
 
   const handleLogout = async () => {
     const confirmed = await confirm({
@@ -1593,6 +1615,7 @@ function Admin() {
             employees={{ filtered: filteredEmployees, visible: visibleEmployees }}
             activeTab={employeeTab}
             loading={loading}
+            todayAttendance={todayAttendance}
             onDelete={(employee) => {
               setError('')
               setMessage('')

@@ -26,13 +26,17 @@ const invoiceSelect = `
     END AS discountAmount,
     i.OrderType AS orderType,
     i.KitchenStatus AS kitchenStatus,
+    i.DeliveryStatus AS deliveryStatus,
     i.CustomerName AS customerName,
+    i.CustomerPhone AS customerPhone,
+    i.DeliveryAddress AS deliveryAddress,
+    i.DeliveryNote AS deliveryNote,
     i.TotalAmount AS totalAmount,
     i.Status AS status,
     i.PaymentMethod AS paymentMethod,
     i.AmountReceived AS amountReceived,
     i.ChangeAmount AS changeAmount,
-    CASE WHEN i.Status = 'Paid' THEN i.UpdatedAt ELSE NULL END AS paidAt,
+    CASE WHEN i.Status IN ('Paid', 'Completed') THEN i.UpdatedAt ELSE NULL END AS paidAt,
     i.Note AS note,
     i.CreatedAt AS createdAt,
     i.UpdatedAt AS updatedAt
@@ -75,13 +79,17 @@ const historySelect = `
     END AS discountAmount,
     i.OrderType AS orderType,
     i.KitchenStatus AS kitchenStatus,
+    i.DeliveryStatus AS deliveryStatus,
     i.CustomerName AS customerName,
+    i.CustomerPhone AS customerPhone,
+    i.DeliveryAddress AS deliveryAddress,
+    i.DeliveryNote AS deliveryNote,
     i.TotalAmount AS totalAmount,
     i.Status AS status,
     i.PaymentMethod AS paymentMethod,
     i.AmountReceived AS amountReceived,
     i.ChangeAmount AS changeAmount,
-    CASE WHEN i.Status = 'Paid' THEN i.UpdatedAt ELSE NULL END AS paidAt,
+    CASE WHEN i.Status IN ('Paid', 'Completed') THEN i.UpdatedAt ELSE NULL END AS paidAt,
     i.Note AS note,
     i.CreatedAt AS createdAt,
     i.UpdatedAt AS updatedAt
@@ -236,6 +244,9 @@ const createInvoice = async ({
   note = null,
   promotionId = null,
   customerName = null,
+  customerPhone = null,
+  deliveryAddress = null,
+  deliveryNote = null,
   serviceNumber = null,
   shippingFee = 0,
 }) => {
@@ -243,10 +254,12 @@ const createInvoice = async ({
 
   try {
     const code = buildInvoiceCode()
+    const deliveryStatus = orderType === 'Ship' ? 'Pending' : null
     const sql = `
       INSERT INTO invoices
-        (InvoiceCode, ServiceNumber, TableId, AccountId, PromotionId, OrderType, CustomerName, ShippingFee, TotalAmount, Status, KitchenStatus, Note)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 'Unpaid', 'Draft', ?)
+        (InvoiceCode, ServiceNumber, TableId, AccountId, PromotionId, OrderType, KitchenStatus, DeliveryStatus,
+         CustomerName, CustomerPhone, DeliveryAddress, DeliveryNote, ShippingFee, TotalAmount, Status, Note)
+      VALUES (?, ?, ?, ?, ?, ?, 'Draft', ?, ?, ?, ?, ?, ?, 0, 'Unpaid', ?)
     `
     const [result] = await connection.query(sql, [
       code,
@@ -255,7 +268,11 @@ const createInvoice = async ({
       accountId || null,
       promotionId || null,
       orderType || 'DineIn',
+      deliveryStatus,
       customerName || null,
+      customerPhone || null,
+      deliveryAddress || null,
+      deliveryNote || null,
       Math.max(Number(shippingFee || 0), 0),
       note || null,
     ])
@@ -746,7 +763,7 @@ const markServed = async (invoiceId) => {
 }
 
 const getKitchenOrders = async ({ status = '' } = {}) => {
-  const conditions = ["i.KitchenStatus <> 'Draft'"]
+  const conditions = ["i.KitchenStatus <> 'Draft'", 'DATE(i.CreatedAt) = CURDATE()']
   const params = []
   let sql = invoiceSelect
 
@@ -818,6 +835,27 @@ const getKitchenHistory = async ({ startDate = '', endDate = '' } = {}) => {
   return ordersWithDetails
 }
 
+const startDelivery = async (id) => {
+  await connection.query(
+    "UPDATE invoices SET DeliveryStatus = 'Delivering', UpdatedAt = CURRENT_TIMESTAMP WHERE InvoiceId = ? AND OrderType = 'Ship'",
+    [id]
+  )
+  return findById(id)
+}
+
+const completeDelivery = async (id, { amountReceived = null } = {}) => {
+  await connection.query(
+    `UPDATE invoices
+     SET DeliveryStatus = 'Delivered',
+         Status = 'Completed',
+         AmountReceived = ?,
+         UpdatedAt = CURRENT_TIMESTAMP
+     WHERE InvoiceId = ? AND OrderType = 'Ship'`,
+    [amountReceived ?? null, id]
+  )
+  return findById(id)
+}
+
 module.exports = {
   addInvoiceItem,
   applyPromotion,
@@ -840,6 +878,8 @@ module.exports = {
   updateInvoiceDetailQuantity,
   updateInvoiceDetailSize,
   updateInvoiceNote,
+  startDelivery,
+  completeDelivery,
   updateInvoiceStatus,
   updateKitchenStatus,
   updatePaymentMethod,

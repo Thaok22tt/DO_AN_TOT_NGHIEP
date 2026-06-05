@@ -266,6 +266,7 @@ const updateProfile = async (id, { fullName, email, phoneNumber }) => {
 }
 
 const deleteAccount = async (id) => {
+  await connection.query('DELETE FROM employees WHERE AccountId = ?', [id])
   const [result] = await connection.query('DELETE FROM accounts WHERE AccountId = ?', [id])
 
   return result.affectedRows > 0

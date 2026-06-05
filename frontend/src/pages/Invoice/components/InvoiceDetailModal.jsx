@@ -37,11 +37,11 @@ function InvoiceDetailModal({ invoice, loading, onClose }) {
   const subtotal = details.reduce((sum, item) => sum + Number(item.lineTotal || 0), 0)
   const totalAmount = Number(invoice?.totalAmount || 0)
   const discountAmount = Math.max(subtotal - totalAmount, 0)
-  const paidAt = invoice?.paidAt || (invoice?.status === 'Paid' ? invoice?.updatedAt : '')
-  const paymentMethod =
-    invoice?.status === 'Paid'
-      ? paymentMethodLabels[invoice.paymentMethod] || invoice.paymentMethod || 'Chưa có dữ liệu'
-      : 'Chưa thanh toán'
+  const isPaidOrCompleted = invoice?.status === 'Paid' || invoice?.status === 'Completed'
+  const paidAt = invoice?.paidAt || (isPaidOrCompleted ? invoice?.updatedAt : '')
+  const paymentMethod = isPaidOrCompleted
+    ? paymentMethodLabels[invoice.paymentMethod] || invoice.paymentMethod || 'Chưa có dữ liệu'
+    : 'Chưa thanh toán'
 
   return (
     <div className="admin-modal-backdrop" role="presentation">

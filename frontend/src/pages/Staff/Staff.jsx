@@ -20,6 +20,7 @@ import {
   Search,
   Send,
   ShoppingCart,
+  Truck,
   Table2,
   Trash2,
   UserRound,
@@ -36,6 +37,8 @@ import {
   getWorkstationBootstrap,
   getWorkstationInvoiceById,
   markWorkstationInvoiceServed,
+  startWorkstationDelivery,
+  completeWorkstationDelivery,
   mergeWorkstationInvoices,
   sendWorkstationInvoiceToKitchen,
   transferWorkstationInvoiceTable,
@@ -116,6 +119,7 @@ const emptyCreateForm = {
   deliveryPhone: '',
   note: '',
   orderType: 'DineIn',
+  paymentMethod: 'COD',
   promotionCode: '',
   serviceNumber: '',
   shippingFee: '',
@@ -159,8 +163,8 @@ const kitchenStatusLabels = {
   Completed: 'Pha chế xong',
   Draft: 'Chưa gửi',
   InProgress: 'Đang pha chế',
-  Sent: 'Chờ pha chế',
-  Waiting: 'Chờ xử lý',
+  Sent: 'Đang chờ',
+  Waiting: 'Đang chờ',
 }
 
 const orderTypeLabels = {
@@ -216,16 +220,20 @@ const canCancelInvoice = (invoice) =>
   !invoice?.isServed
 
 const getInvoiceStatusLabel = (invoice) => {
-  if (isCancelledInvoice(invoice)) {
-    return invoiceStatusLabels[invoice.status]
-  }
-
-  if (isPaidInvoice(invoice)) return invoiceStatusLabels[invoice.status]
-
+  if (isCancelledInvoice(invoice)) return invoiceStatusLabels[invoice.status]
   if (isOrderCompletedInvoice(invoice)) return invoiceStatusLabels[invoice.status]
-
+  if (invoice?.orderType === 'Ship') {
+    if (invoice.deliveryStatus === 'Delivering') return 'ĐANG GIAO'
+    if (invoice.deliveryStatus === 'Delivered') return 'ĐÃ GIAO'
+    if (isKitchenCompletedInvoice(invoice)) return 'CHỜ GIAO HÀNG'
+    if (invoice.kitchenStatus === 'InProgress') return 'ĐANG PHA CHẾ'
+    if (isWaitingKitchenInvoice(invoice)) return 'ĐANG CHỜ'
+    return 'CHỜ PHA CHẾ'
+  }
   if (isKitchenCompletedInvoice(invoice)) return 'PHA CHẾ XONG'
-
+  if (invoice?.kitchenStatus === 'InProgress') return 'ĐANG PHA CHẾ'
+  if (isWaitingKitchenInvoice(invoice)) return 'ĐANG CHỜ'
+  if (isPaidInvoice(invoice)) return invoiceStatusLabels[invoice.status]
   return kitchenStatusLabels[invoice?.kitchenStatus] || invoiceStatusLabels[invoice?.status] || invoice?.status
 }
 
@@ -284,12 +292,12 @@ const generateVietQR = async ({ amount, content }) => {
 
 const getInvoiceTone = (invoice) => {
   if (isCancelledInvoice(invoice)) return 'cancelled'
-  if (isPaidInvoice(invoice)) return 'paid'
+  if (isOrderCompletedInvoice(invoice)) return 'served'
   if (isKitchenCompletedInvoice(invoice)) return 'completed'
-  if (invoice.kitchenStatus === 'Draft') return 'draft'
   if (invoice.kitchenStatus === 'InProgress') return 'making'
   if (isWaitingKitchenInvoice(invoice)) return 'waiting'
-  if (isOrderCompletedInvoice(invoice)) return 'served'
+  if (isPaidInvoice(invoice)) return 'paid'
+  if (invoice.kitchenStatus === 'Draft') return 'draft'
   return 'draft'
 }
 
@@ -466,9 +474,9 @@ function Staff() {
 
       const matchesFilter =
         invoiceFilter === 'all' ||
-        (invoiceFilter === 'Completed' && isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice)) ||
-        (invoiceFilter === 'OrderCompleted' && isHistoricalCompletedInvoice(invoice)) ||
-        (invoiceFilter === 'Paid' && isHistoricalCompletedInvoice(invoice)) ||
+        (invoiceFilter === 'Completed' && isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isOrderCompletedInvoice(invoice)) ||
+        (invoiceFilter === 'OrderCompleted' && isOrderCompletedInvoice(invoice)) ||
+        (invoiceFilter === 'Paid' && isOrderCompletedInvoice(invoice)) ||
         (invoiceFilter === 'Cancelled' && isCancelledInvoice(invoice)) ||
         (invoiceFilter === 'Waiting' && isWaitingKitchenInvoice(invoice) && !isCancelledInvoice(invoice)) ||
         (invoiceFilter === 'InProgress' && invoice.kitchenStatus === 'InProgress' && !isCancelledInvoice(invoice))
@@ -552,11 +560,11 @@ function Staff() {
     return {
       all: bootstrap.invoices.length,
       cancelled: bootstrap.invoices.filter(isCancelledInvoice).length,
-      completed: bootstrap.invoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isHistoricalCompletedInvoice(invoice)).length,
+      completed: bootstrap.invoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isOrderCompletedInvoice(invoice)).length,
       inProgress: bootstrap.invoices.filter((invoice) => invoice.kitchenStatus === 'InProgress' && !isCancelledInvoice(invoice)).length,
-      paid: bootstrap.invoices.filter(isHistoricalCompletedInvoice).length,
-      readyToServe: bootstrap.invoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isHistoricalCompletedInvoice(invoice)).length,
-      served: bootstrap.invoices.filter(isHistoricalCompletedInvoice).length,
+      paid: bootstrap.invoices.filter(isOrderCompletedInvoice).length,
+      readyToServe: bootstrap.invoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isOrderCompletedInvoice(invoice)).length,
+      served: bootstrap.invoices.filter(isOrderCompletedInvoice).length,
       waiting: bootstrap.invoices.filter((invoice) => isWaitingKitchenInvoice(invoice) && !isCancelledInvoice(invoice)).length,
     }
   }, [bootstrap.invoices])
@@ -710,20 +718,31 @@ function Staff() {
         completedInvoiceIdsRef.current = completedIds
         setBootstrap(data)
 
+        const servedInvoiceIds = new Set(
+          data.invoices.filter((invoice) => isOrderCompletedInvoice(invoice)).map((invoice) => String(invoice.id))
+        )
+
+        setCompletedNotifications((current) => {
+          const hasServed = current.some((n) => !n.read && servedInvoiceIds.has(String(n.id || n.invoiceId)))
+          const withAutoRead = hasServed
+            ? current.map((n) => servedInvoiceIds.has(String(n.id || n.invoiceId)) ? { ...n, read: true } : n)
+            : current
+
+          if (!newCompletedInvoice) return withAutoRead
+          if (withAutoRead.some((n) => String(n.id) === String(newCompletedInvoice.id))) return withAutoRead
+          return [
+            {
+              code: newCompletedInvoice.code,
+              id: newCompletedInvoice.id,
+              label: getDisplayOrderNumber(newCompletedInvoice),
+              place: getInvoicePlace(newCompletedInvoice),
+              sortTime: newCompletedInvoice.completedAt || newCompletedInvoice.updatedAt || newCompletedInvoice.createdAt,
+            },
+            ...withAutoRead,
+          ]
+        })
+
         if (newCompletedInvoice) {
-          setCompletedNotifications((current) => {
-            if (current.some((invoice) => invoice.id === newCompletedInvoice.id)) return current
-            return [
-              {
-                code: newCompletedInvoice.code,
-                id: newCompletedInvoice.id,
-                label: getDisplayOrderNumber(newCompletedInvoice),
-                place: getInvoicePlace(newCompletedInvoice),
-                sortTime: newCompletedInvoice.completedAt || newCompletedInvoice.updatedAt || newCompletedInvoice.createdAt,
-              },
-              ...current,
-            ]
-          })
           setMessage(`🔔 ${getDisplayOrderNumber(newCompletedInvoice)} - Pha chế xong! Nhấn Ra đơn để phục vụ khách.`)
         }
       } catch {
@@ -941,25 +960,19 @@ function Staff() {
         throw new Error('Vui lòng nhập SĐT và địa chỉ giao hàng')
       }
 
-      const shipNote =
-        createForm.orderType === 'Ship'
-          ? [
-              createForm.deliveryPhone ? `SĐT: ${createForm.deliveryPhone}` : '',
-              createForm.deliveryAddress ? `Địa chỉ: ${createForm.deliveryAddress}` : '',
-              createForm.deliveryNote ? `Giao hàng: ${createForm.deliveryNote}` : '',
-            ]
-              .filter(Boolean)
-              .join(' | ')
-          : ''
-
+      const isShip = createForm.orderType === 'Ship'
       const payload = {
         areaId: createForm.areaId ? Number(createForm.areaId) : '',
-        customerName: '',
-        note: createForm.orderType === 'Ship' ? shipNote : '',
+        customerName: isShip ? createForm.customerName.trim() || 'Khách giao hàng' : '',
+        customerPhone: isShip ? createForm.deliveryPhone.trim() : '',
+        deliveryAddress: isShip ? createForm.deliveryAddress.trim() : '',
+        deliveryNote: isShip ? createForm.deliveryNote.trim() : '',
+        note: createForm.note || '',
         orderType: createForm.orderType,
+        paymentMethod: isShip ? createForm.paymentMethod || 'COD' : '',
         promotionId: '',
         serviceNumber: createForm.orderType === 'DineIn' ? createForm.serviceNumber.trim() : '',
-        shippingFee: createForm.orderType === 'Ship' ? parseCurrency(createForm.shippingFee) : 0,
+        shippingFee: isShip ? parseCurrency(createForm.shippingFee) : 0,
         tableId: createForm.orderType === 'DineIn' && createForm.tableId ? Number(createForm.tableId) : '',
       }
 
@@ -1338,6 +1351,9 @@ function Staff() {
 
     const result = await runAction(() => markWorkstationInvoiceServed(invoice.id), 'Đã xác nhận mang món ra đơn')
     if (result) {
+      setCompletedNotifications((current) =>
+        current.map((n) => String(n.id || n.invoiceId) === String(invoice.id) ? { ...n, read: true } : n)
+      )
       const servedInvoice = result.invoice || { ...invoice, status: 'Completed' }
       setBootstrap((current) => ({
         ...current,
@@ -1354,6 +1370,47 @@ function Staff() {
     if (result) {
       setDetailInvoice(null)
       setDetailLoading(false)
+    }
+  }
+
+  const handleStartDelivery = async (invoice) => {
+    const confirmed = await confirm({
+      body: `Xác nhận bắt đầu giao đơn ${invoice.code}?`,
+      confirmLabel: 'Bắt đầu giao',
+    })
+    if (!confirmed) return
+
+    const result = await runAction(() => startWorkstationDelivery(invoice.id), 'Đang giao hàng')
+    if (result) {
+      setBootstrap((current) => ({
+        ...current,
+        invoices: current.invoices.map((item) =>
+          String(item.id) === String(invoice.id) ? { ...item, deliveryStatus: 'Delivering' } : item
+        ),
+      }))
+    }
+  }
+
+  const handleCompleteDelivery = async (invoice) => {
+    const isCOD = invoice.paymentMethod === 'COD'
+    const confirmed = await confirm({
+      body: isCOD
+        ? `Xác nhận đã giao và thu tiền COD đơn ${invoice.code}?`
+        : `Xác nhận đã giao đơn ${invoice.code}?`,
+      confirmLabel: 'Đã giao',
+    })
+    if (!confirmed) return
+
+    const amountReceived = isCOD ? Number(invoice.totalAmount || 0) : null
+    const result = await runAction(
+      () => completeWorkstationDelivery(invoice.id, { amountReceived }),
+      'Đã giao hàng thành công'
+    )
+    if (result) {
+      setCompletedNotifications((current) =>
+        current.map((n) => String(n.id || n.invoiceId) === String(invoice.id) ? { ...n, read: true } : n)
+      )
+      await refreshAfterAction(invoice.id)
     }
   }
 
@@ -1623,11 +1680,10 @@ function Staff() {
           </div>
 
           <form onSubmit={handleCreateInvoice}>
-            <div className="staff-segmented three">
+            <div className="staff-segmented">
               {[
                 ['DineIn', 'Tại chỗ'],
                 ['Takeaway', 'Mang đi'],
-                ['Ship', 'Ship'],
               ].map(([value, label]) => (
                 <button
                   className={createForm.orderType === value ? 'active' : ''}
@@ -1645,23 +1701,6 @@ function Staff() {
                 <span>Số thẻ khách cầm</span>
                 <input autoFocus name="serviceNumber" onChange={updateCreateForm} value={createForm.serviceNumber} />
               </label>
-            )}
-
-            {createForm.orderType === 'Ship' && (
-              <>
-                <div className="staff-ship-fields">
-                  <input name="deliveryPhone" onChange={updateCreateForm} placeholder="SĐT khách" value={createForm.deliveryPhone} />
-                  <input name="deliveryAddress" onChange={updateCreateForm} placeholder="Địa chỉ giao hàng" value={createForm.deliveryAddress} />
-                  <input name="deliveryNote" onChange={updateCreateForm} placeholder="Ghi chú giao hàng" value={createForm.deliveryNote} />
-                  <input
-                    inputMode="numeric"
-                    name="shippingFee"
-                    onChange={(event) => setCreateForm((current) => ({ ...current, shippingFee: formatCurrencyInput(event.target.value) }))}
-                    placeholder="Phí ship"
-                    value={createForm.shippingFee}
-                  />
-                </div>
-              </>
             )}
 
             <button className="staff-primary-action" disabled={saving} type="submit">
@@ -2390,7 +2429,7 @@ function Staff() {
   }, [effectiveShiftInvoices, shiftSearch])
 
   const effectiveShiftRevenue = useMemo(
-    () => currentShiftInvoices.filter(isPaidInvoice).reduce((sum, invoice) => sum + Number(invoice.totalAmount || 0), 0),
+    () => currentShiftInvoices.filter((inv) => isPaidInvoice(inv) || isOrderCompletedInvoice(inv)).reduce((sum, invoice) => sum + Number(invoice.totalAmount || 0), 0),
     [currentShiftInvoices]
   )
 
@@ -2431,16 +2470,16 @@ function Staff() {
 
   // Doanh thu ngày được chọn (từ myInvoices đã lọc theo ngày)
   const selectedDateRevenue = useMemo(
-    () => effectiveShiftInvoices.filter(isPaidInvoice).reduce((sum, invoice) => sum + Number(invoice.totalAmount || 0), 0),
+    () => effectiveShiftInvoices.filter((inv) => isPaidInvoice(inv) || isOrderCompletedInvoice(inv)).reduce((sum, invoice) => sum + Number(invoice.totalAmount || 0), 0),
     [effectiveShiftInvoices]
   )
 
   const shiftStatusCounts = useMemo(() => {
     const countableInvoices = effectiveShiftInvoices
     const cancelled = countableInvoices.filter(isCancelledInvoice).length
-    const completed = countableInvoices.filter(isHistoricalCompletedInvoice).length
+    const completed = countableInvoices.filter(isOrderCompletedInvoice).length
     const inProgress = countableInvoices.filter((invoice) => invoice.kitchenStatus === 'InProgress' && !isCancelledInvoice(invoice)).length
-    const kitchenCompleted = countableInvoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isHistoricalCompletedInvoice(invoice)).length
+    const kitchenCompleted = countableInvoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isOrderCompletedInvoice(invoice)).length
     const waiting = countableInvoices.filter((invoice) => isWaitingKitchenInvoice(invoice) && !isCancelledInvoice(invoice)).length
 
     return {
@@ -2457,14 +2496,14 @@ function Staff() {
     // Ngày cũ: chỉ hiện Hoàn thành + Đã hủy
     const displayableInvoices = isCurrentShiftDate
       ? effectiveFilteredShiftInvoices
-      : effectiveFilteredShiftInvoices.filter((invoice) => isHistoricalCompletedInvoice(invoice) || isCancelledInvoice(invoice))
+      : effectiveFilteredShiftInvoices.filter((invoice) => isOrderCompletedInvoice(invoice) || isCancelledInvoice(invoice))
 
     if (shiftFilter === 'Completed') {
-      return displayableInvoices.filter(isHistoricalCompletedInvoice)
+      return displayableInvoices.filter(isOrderCompletedInvoice)
     }
     if (shiftFilter === 'Cancelled') return displayableInvoices.filter(isCancelledInvoice)
     if (shiftFilter === 'InProgress') return displayableInvoices.filter((invoice) => invoice.kitchenStatus === 'InProgress' && !isCancelledInvoice(invoice))
-    if (shiftFilter === 'KitchenCompleted') return displayableInvoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isHistoricalCompletedInvoice(invoice))
+    if (shiftFilter === 'KitchenCompleted') return displayableInvoices.filter((invoice) => isKitchenCompletedInvoice(invoice) && !isCancelledInvoice(invoice) && !isOrderCompletedInvoice(invoice))
     if (shiftFilter === 'Waiting') return displayableInvoices.filter((invoice) => isWaitingKitchenInvoice(invoice) && !isCancelledInvoice(invoice))
     return displayableInvoices
   }, [effectiveFilteredShiftInvoices, isCurrentShiftDate, shiftFilter])
@@ -2594,7 +2633,7 @@ function Staff() {
                   <button className="workstation-secondary" onClick={() => openInvoiceDetail(invoice.id)} type="button">
                     Chi tiết
                   </button>
-                  {isHistoricalCompletedInvoice(invoice) ? (
+                  {isOrderCompletedInvoice(invoice) ? (
                     <span className="staff-order-action-note">Hoàn thành đơn</span>
                   ) : isCancelledInvoice(invoice) ? (
                     <span className="staff-order-action-note">Hóa đơn đã bị hủy</span>
@@ -2788,10 +2827,33 @@ function Staff() {
                   <button className="workstation-secondary" onClick={() => openInvoiceDetail(invoice.id)} type="button">
                     <span>Chi tiết</span>
                   </button>
-                  {isCancelledInvoice(invoice) || isHistoricalCompletedInvoice(invoice) ? (
+                  {isCancelledInvoice(invoice) || isOrderCompletedInvoice(invoice) ? (
                     <span className="staff-order-action-note">
                       {isCancelledInvoice(invoice) ? 'Hóa đơn đã bị hủy' : 'Hóa đơn đã hoàn thành'}
                     </span>
+                  ) : invoice.orderType === 'Ship' ? (
+                    <>
+                      {canSendInvoiceToKitchen(invoice) ? (
+                        <button className="workstation-secondary" disabled={saving || !invoice.details?.length} onClick={() => handleSendToKitchen(invoice.id)} type="button">
+                          <Send aria-hidden="true" /><span>Gửi pha chế</span>
+                        </button>
+                      ) : invoice.kitchenStatus !== 'Completed' ? (
+                        <button className="workstation-secondary" disabled type="button">
+                          <span>Chờ pha chế xong</span>
+                        </button>
+                      ) : invoice.deliveryStatus === 'Pending' ? (
+                        <button className="workstation-secondary" disabled={saving} onClick={() => handleStartDelivery(invoice)} type="button">
+                          <Truck aria-hidden="true" /><span>Bắt đầu giao</span>
+                        </button>
+                      ) : invoice.deliveryStatus === 'Delivering' ? (
+                        <button className="workstation-secondary" disabled={saving} onClick={() => handleCompleteDelivery(invoice)} type="button">
+                          <CheckCircle2 aria-hidden="true" /><span>Đã giao</span>
+                        </button>
+                      ) : null}
+                      {canCancelInvoice(invoice) && (
+                        <button className="workstation-primary" disabled={saving} onClick={() => handleCancelInvoice(invoice)} type="button">Hủy hóa đơn</button>
+                      )}
+                    </>
                   ) : (
                     <>
                       {canSendInvoiceToKitchen(invoice) ? (

@@ -654,6 +654,13 @@ function Barista() {
     })
     if (!confirmed) return
 
+    setTopReadNotificationIds((current) => {
+      const next = new Set(current)
+      next.add(`order-${order.id}`)
+      saveReadNotificationIds(next)
+      return next
+    })
+
     runOrderAction(() => acceptBaristaOrder(order.id), 'Đã nhận đơn pha chế', {
       keepDetailOpen: selectedOrderRef.current?.id === order.id,
     })

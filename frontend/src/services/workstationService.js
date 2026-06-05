@@ -140,3 +140,14 @@ export const markWorkstationInvoiceServed = (id) =>
   jsonRequest(`/workstation/invoices/${id}/served`, {
     method: 'POST',
   })
+
+export const startWorkstationDelivery = (id) =>
+  jsonRequest(`/workstation/invoices/${id}/start-delivery`, {
+    method: 'PATCH',
+  })
+
+export const completeWorkstationDelivery = (id, { amountReceived } = {}) =>
+  jsonRequest(`/workstation/invoices/${id}/complete-delivery`, {
+    method: 'PATCH',
+    body: JSON.stringify({ amountReceived }),
+  })
