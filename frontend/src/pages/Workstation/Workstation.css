@@ -5765,3 +5765,62 @@
   z-index: 20;
 }
 
+/* Barista page: compact sizing */
+.barista-page .workstation-main {
+  padding: 18px 22px;
+}
+
+.barista-page .workstation-header h1 {
+  font-size: 1.8rem;
+}
+
+.barista-page .staff-orders-stats {
+  gap: 12px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.barista-page .staff-orders-stats article {
+  min-height: 76px;
+  padding: 14px 16px;
+  gap: 10px;
+}
+
+.barista-page .staff-orders-stats strong {
+  font-size: 1.75rem;
+  margin-top: 4px;
+}
+
+.barista-page .staff-orders-stats small {
+  padding: 5px 8px;
+  font-size: 0.74rem;
+}
+
+.barista-page .barista-board {
+  margin-top: 12px;
+}
+
+.barista-page .barista-board-header {
+  padding: 12px 14px;
+}
+
+.barista-page .barista-ticket-grid {
+  grid-template-columns: repeat(3, minmax(210px, 1fr));
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.barista-page .staff-order-ticket {
+  padding: 16px;
+  gap: 12px;
+}
+
+.barista-page .staff-order-ticket .barista-ticket-head h3 {
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+
+.barista-page .barista-ticket-actions {
+  padding: 0 14px 14px;
+}
+
