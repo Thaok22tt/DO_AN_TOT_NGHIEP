@@ -1316,12 +1316,20 @@ function Barista() {
                 <div className="barista-detail-items">{renderOrderItems(selectedOrder)}</div>
 
                 <div className="barista-ticket-actions">
-                  <button className="workstation-secondary" disabled={saving || selectedOrder.kitchenStatus !== 'Waiting'} onClick={() => acceptOrder(selectedOrder)} type="button">
-                    Nhận đơn
-                  </button>
-                  <button className="workstation-primary" disabled={saving || selectedOrder.kitchenStatus !== 'InProgress'} onClick={() => completeOrder(selectedOrder)} type="button">
-                    Xác nhận hoàn thành
-                  </button>
+                  {isCancelledBaristaOrder(selectedOrder) ? (
+                    <button className="workstation-secondary" disabled type="button">Đơn đã hủy</button>
+                  ) : isCompletedBaristaOrder(selectedOrder) ? (
+                    <button className="workstation-primary" disabled type="button">Đã hoàn thành</button>
+                  ) : (
+                    <>
+                      <button className="workstation-secondary" disabled={saving || selectedOrder.kitchenStatus !== 'Waiting'} onClick={() => acceptOrder(selectedOrder)} type="button">
+                        Nhận đơn
+                      </button>
+                      <button className="workstation-primary" disabled={saving || selectedOrder.kitchenStatus !== 'InProgress'} onClick={() => completeOrder(selectedOrder)} type="button">
+                        Xác nhận hoàn thành
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </section>
