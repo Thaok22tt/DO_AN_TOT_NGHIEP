@@ -199,6 +199,7 @@ function MenuSection({
         error: '',
         formItems: buildRecipeFormItems(savedRecipe),
         items: savedRecipe,
+        open: false,
         saving: false,
       }))
     } catch (error) {
