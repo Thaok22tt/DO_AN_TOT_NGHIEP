@@ -494,14 +494,6 @@ function Barista() {
       }
     })
 
-    const stockItems = workspace.lowStock.map((ingredient) => ({
-      id: `stock-${ingredient.id}`,
-      tone: 'warning',
-      title: `${ingredient.name} sắp hết`,
-      description: `Còn ${ingredient.currentStock} ${ingredient.unit}, mức tối thiểu ${ingredient.minStock} ${ingredient.unit}`,
-      time: 'Kho',
-    }))
-
     const reminderItems = orders
       .filter((order) => order.kitchenStatus === 'InProgress' && getOrderMinutes(order) >= 15)
       .map((order) => ({
@@ -512,8 +504,8 @@ function Barista() {
         time: 'Nhắc nhở',
       }))
 
-    return [...orderItems, ...stockItems, ...reminderItems]
-  }, [orders, workspace.lowStock])
+    return [...orderItems, ...reminderItems]
+  }, [orders])
 
   const handleLogout = async () => {
     const confirmed = await confirm({
