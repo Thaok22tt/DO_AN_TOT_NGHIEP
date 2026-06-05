@@ -1,7 +1,26 @@
 const fs = require('fs')
 const path = require('path')
+const cloudinary = require('cloudinary').v2
 const categoryModel = require('../models/categoryModel')
 const productModel = require('../models/productModel')
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
+const uploadBufferToCloudinary = (buffer) =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: 'products' },
+      (error, result) => {
+        if (error) reject(error)
+        else resolve(result.secure_url)
+      }
+    )
+    stream.end(buffer)
+  })
 
 const normalizeText = (value) => (typeof value === 'string' ? value.trim() : '')
 const normalizeOptionalText = (value) => normalizeText(value) || null
@@ -29,12 +48,12 @@ const logProductError = (action, error) => {
   })
 }
 
-const buildProductPayload = (body, file, currentImage = null) => ({
+const buildProductPayload = (body, imageUrl, currentImage = null) => ({
   name: normalizeText(body.ProductName ?? body.productName ?? body.name),
   categoryId: Number(body.CategoryId ?? body.categoryId),
   price: Number(body.Price ?? body.price),
   description: normalizeOptionalText(body.Description ?? body.description),
-  image: file ? (file.path || `/uploads/products/${file.filename}`) : currentImage,
+  image: imageUrl !== undefined ? imageUrl : currentImage,
   status: normalizeText(body.Status ?? body.status) || 'Active',
 })
 
@@ -81,17 +100,19 @@ const getProducts = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const payload = buildProductPayload(req.body || {}, req.file)
+    let imageUrl = undefined
+    if (req.file?.buffer) {
+      imageUrl = await uploadBufferToCloudinary(req.file.buffer)
+    }
+    const payload = buildProductPayload(req.body || {}, imageUrl)
     const validationMessage = validateProductPayload(payload)
 
     if (validationMessage) {
-      removeUploadedFile(req.file)
       return res.status(400).json({ message: validationMessage })
     }
 
     const category = await categoryModel.findById(payload.categoryId)
     if (!category) {
-      removeUploadedFile(req.file)
       return res.status(400).json({ message: 'Danh mục không hợp lệ' })
     }
 
@@ -99,7 +120,6 @@ const createProduct = async (req, res) => {
 
     return res.status(201).json({ message: 'Thêm món thành công', product })
   } catch (error) {
-    removeUploadedFile(req.file)
     logProductError('create product', error)
     return res.status(500).json({ message: 'Lỗi server khi thêm món', error: error.message })
   }
@@ -120,29 +140,26 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Không tìm thấy món' })
     }
 
-    const payload = buildProductPayload(req.body || {}, req.file, currentProduct.image)
+    let imageUrl = undefined
+    if (req.file?.buffer) {
+      imageUrl = await uploadBufferToCloudinary(req.file.buffer)
+    }
+    const payload = buildProductPayload(req.body || {}, imageUrl, currentProduct.image)
     const validationMessage = validateProductPayload(payload)
 
     if (validationMessage) {
-      removeUploadedFile(req.file)
       return res.status(400).json({ message: validationMessage })
     }
 
     const category = await categoryModel.findById(payload.categoryId)
     if (!category) {
-      removeUploadedFile(req.file)
       return res.status(400).json({ message: 'Danh mục không hợp lệ' })
     }
 
     const updatedProduct = await productModel.updateProduct(id, payload)
 
-    if (req.file && currentProduct.image) {
-      removeProductImage(currentProduct.image)
-    }
-
     return res.json({ message: 'Cập nhật món thành công', product: updatedProduct })
   } catch (error) {
-    removeUploadedFile(req.file)
     logProductError('update product', error)
     return res.status(500).json({ message: 'Lỗi server khi cập nhật món', error: error.message })
   }
