@@ -415,6 +415,7 @@ function Staff() {
   const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [billModalOpen, setBillModalOpen] = useState(false)
   const [billInvoice, setBillInvoice] = useState(null)
+  const [sizePickerProduct, setSizePickerProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [loadingDetail, setLoadingDetail] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -986,7 +987,26 @@ function Staff() {
     }
   }
 
-  const handleAddProduct = async (product) => {
+  const doAddProduct = async (product, size) => {
+    const sizeConfig = getCupSizeConfig(product.categoryName)
+    const existingDetail = (selectedInvoice?.details || []).find((item) => {
+      const sameProduct = String(item.productId || '') === String(product.id) || item.productName === product.name
+      return sameProduct && (sizeConfig.options.length === 1 || getDetailCupSize(item, product) === size)
+    })
+    const payload = { note: '', productId: Number(product.id), quantity: 1 }
+    if (sizeConfig.options.length > 1) payload.size = size
+
+    const result = await runAction(
+      () =>
+        existingDetail
+          ? updateWorkstationInvoiceDetailQuantity(existingDetail.id, { quantity: Number(existingDetail.quantity || 0) + 1 })
+          : addWorkstationInvoiceItem(selectedInvoiceId, payload),
+      existingDetail ? `Đã tăng số lượng ${product.name}` : `Đã thêm ${product.name}`
+    )
+    if (result) await refreshAfterAction()
+  }
+
+  const handleAddProduct = (product) => {
     if (!selectedInvoiceId) {
       setError('Vui lòng tạo hoặc chọn hóa đơn trước khi thêm món')
       return
@@ -998,26 +1018,11 @@ function Staff() {
     }
 
     const sizeConfig = getCupSizeConfig(product.categoryName)
-    const defaultSize = sizeConfig.defaultSize
-    const existingDetail = (selectedInvoice?.details || []).find((item) => {
-      const sameProduct = String(item.productId || '') === String(product.id) || item.productName === product.name
-      return sameProduct && (sizeConfig.options.length === 1 || getDetailCupSize(item, product) === defaultSize)
-    })
-    const payload = { note: '', productId: Number(product.id), quantity: 1 }
-
     if (sizeConfig.options.length > 1) {
-      payload.size = defaultSize
+      setSizePickerProduct(product)
+    } else {
+      doAddProduct(product, sizeConfig.defaultSize)
     }
-
-    const result = await runAction(
-      () =>
-        existingDetail
-          ? updateWorkstationInvoiceDetailQuantity(existingDetail.id, { quantity: Number(existingDetail.quantity || 0) + 1 })
-          : addWorkstationInvoiceItem(selectedInvoiceId, payload),
-      existingDetail ? `Đã tăng số lượng ${product.name}` : `Đã thêm ${product.name}`
-    )
-
-    if (result) await refreshAfterAction()
   }
 
   const handleQuantityChange = async (detailId, quantity) => {
@@ -2959,6 +2964,35 @@ function Staff() {
         {renderPaymentModal()}
         {renderBillModal()}
         {renderProfileModal()}
+        {sizePickerProduct && (
+          <div className="staff-payment-backdrop" role="dialog" aria-modal="true" onClick={() => setSizePickerProduct(null)}>
+            <div className="staff-size-picker-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="staff-size-picker-header">
+                <strong>{sizePickerProduct.name}</strong>
+                <button aria-label="Đóng" onClick={() => setSizePickerProduct(null)} type="button">✕</button>
+              </div>
+              <p className="staff-size-picker-label">Chọn size:</p>
+              <div className="staff-size-picker-options">
+                <button
+                  className="staff-size-picker-btn"
+                  onClick={() => { setSizePickerProduct(null); doAddProduct(sizePickerProduct, 'M') }}
+                  type="button"
+                >
+                  M
+                  <span>Tiêu chuẩn</span>
+                </button>
+                <button
+                  className="staff-size-picker-btn staff-size-picker-btn--l"
+                  onClick={() => { setSizePickerProduct(null); doAddProduct(sizePickerProduct, 'L') }}
+                  type="button"
+                >
+                  L
+                  <span>+5.000 đ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   )
