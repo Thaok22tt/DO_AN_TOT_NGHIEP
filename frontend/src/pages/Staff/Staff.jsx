@@ -743,9 +743,6 @@ function Staff() {
           ]
         })
 
-        if (newCompletedInvoice) {
-          setMessage(`🔔 ${getDisplayOrderNumber(newCompletedInvoice)} - Pha chế xong! Nhấn Ra đơn để phục vụ khách.`)
-        }
       } catch {
         // Polling is only for completion notices; keep current screen usable if it misses one tick.
       }
