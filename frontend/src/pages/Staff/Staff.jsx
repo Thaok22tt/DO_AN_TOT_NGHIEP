@@ -1957,7 +1957,7 @@ function Staff() {
               <button
                 className="staff-secondary-action"
                 disabled={saving}
-                onClick={async () => { await handleSendToKitchen(billInvoice.id); setBillModalOpen(false) }}
+                onClick={() => handleSendToKitchen(billInvoice.id)}
                 type="button"
               >
                 <Send aria-hidden="true" />
