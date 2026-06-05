@@ -273,10 +273,11 @@ const deleteAccount = async (id) => {
 }
 
 const openWorkShift = async (accountId) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    await connection.query(
+    await conn.query(
       `
         UPDATE work_shifts
         SET LogoutAt = TIMESTAMP(WorkDate, '23:59:59'),
@@ -288,7 +289,7 @@ const openWorkShift = async (accountId) => {
       [accountId],
     )
 
-    const [openRows] = await connection.query(
+    const [openRows] = await conn.query(
       `
         SELECT
           WorkShiftId AS id,
@@ -309,16 +310,16 @@ const openWorkShift = async (accountId) => {
     )
 
     if (openRows[0]) {
-      await connection.commit()
+      await conn.commit()
       return openRows[0]
     }
 
-    const [result] = await connection.query(
+    const [result] = await conn.query(
       'INSERT INTO work_shifts (AccountId, LoginAt, WorkDate) VALUES (?, NOW(), CURDATE())',
       [accountId],
     )
 
-    const [rows] = await connection.query(
+    const [rows] = await conn.query(
       `
         SELECT
           WorkShiftId AS id,
@@ -334,11 +335,13 @@ const openWorkShift = async (accountId) => {
       [result.insertId],
     )
 
-    await connection.commit()
+    await conn.commit()
     return rows[0]
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
