@@ -879,7 +879,7 @@ function Barista() {
               )}
             </div>
           ) : (
-            paginatedBaristaOrders.map((order) => (
+            currentFilteredOrders.map((order) => (
               <article className={`barista-ticket ${getBaristaTicketClass(order)}`} key={order.id}>
                 <div className="barista-ticket-head">
                   <div>
@@ -927,34 +927,6 @@ function Barista() {
           )}
         </div>
 
-        {currentFilteredOrders.length > 0 && (
-          <footer className="staff-order-pagination barista-order-pagination">
-            <span>
-              Hiển thị {paginatedBaristaOrders.length} trên {currentFilteredOrders.length} đơn
-            </span>
-            <div>
-              <button
-                aria-label="Trang trước"
-                disabled={orderPage <= 1}
-                onClick={() => setOrderPage((page) => Math.max(page - 1, 1))}
-                type="button"
-              >
-                <ChevronLeft aria-hidden="true" />
-              </button>
-              <strong>
-                {orderPage}/{baristaOrderTotalPages}
-              </strong>
-              <button
-                aria-label="Trang sau"
-                disabled={orderPage >= baristaOrderTotalPages}
-                onClick={() => setOrderPage((page) => Math.min(page + 1, baristaOrderTotalPages))}
-                type="button"
-              >
-                <ChevronRight aria-hidden="true" />
-              </button>
-            </div>
-          </footer>
-        )}
 
       </section>
     </>

@@ -2376,34 +2376,6 @@ function Staff() {
     </>
   )
 
-  const renderOrderPagination = ({ currentPage, onPageChange, totalItems, totalPages, visibleItems }) => (
-    <footer className="staff-order-pagination">
-      <span>
-        Hiển thị {visibleItems} trên {totalItems} đơn
-      </span>
-      <div>
-        <button
-          aria-label="Trang trước"
-          disabled={currentPage <= 1}
-          onClick={() => onPageChange((page) => Math.max(page - 1, 1))}
-          type="button"
-        >
-          <ChevronLeft aria-hidden="true" />
-        </button>
-        <strong>
-          {currentPage}/{totalPages}
-        </strong>
-        <button
-          aria-label="Trang sau"
-          disabled={currentPage >= totalPages}
-          onClick={() => onPageChange((page) => Math.min(page + 1, totalPages))}
-          type="button"
-        >
-          <ChevronRight aria-hidden="true" />
-        </button>
-      </div>
-    </footer>
-  )
 
   // myInvoices đã lọc theo accountId từ backend — chỉ cần lọc theo ngày được chọn
   const effectiveShiftInvoices = useMemo(() => {
@@ -2674,14 +2646,6 @@ function Staff() {
             <div className="staff-pos-empty">Không có hóa đơn phù hợp.</div>
           )}
         </section>
-        {displayedShiftInvoices.length > 0 &&
-          renderOrderPagination({
-            currentPage: displayedShiftPage,
-            onPageChange: setShiftPage,
-            totalItems: displayedShiftInvoices.length,
-            totalPages: displayedShiftTotalPages,
-            visibleItems: paginatedDisplayedShiftInvoices.length,
-          })}
       </main>
     </>
   )
@@ -2785,8 +2749,8 @@ function Staff() {
         </section>
 
         <section className="staff-order-board">
-          {paginatedInvoices.length > 0 ? (
-            paginatedInvoices.map((invoice) => {
+          {filteredInvoices.length > 0 ? (
+            filteredInvoices.map((invoice) => {
               const isLockedOrder = isOrderCompletedInvoice(invoice)
               const orderTone = invoiceFilter === 'Completed' ? 'completed' : getInvoiceTone(invoice)
               const isNotificationFocused =
@@ -2892,14 +2856,6 @@ function Staff() {
             <div className="staff-pos-empty">Không có hóa đơn phù hợp.</div>
           )}
         </section>
-        {paginatedInvoices.length > 0 &&
-          renderOrderPagination({
-            currentPage: ordersPage,
-            onPageChange: setOrdersPage,
-            totalItems: filteredInvoices.length,
-            totalPages: ordersTotalPages,
-            visibleItems: paginatedInvoices.length,
-          })}
       </main>
     </>
   )

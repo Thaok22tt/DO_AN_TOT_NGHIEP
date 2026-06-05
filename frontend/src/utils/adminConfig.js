@@ -69,7 +69,6 @@ export const navItems = [
     key: 'financial',
     label: 'Báo cáo',
     title: 'Báo cáo',
-    description: 'Tổng hợp doanh thu, chi phí nhập kho, lương nhân viên và lợi nhuận theo tháng.',
     icon: LineChart,
     materialIcon: 'analytics',
   },

@@ -1,9 +1,11 @@
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 html {
   background: #faf9f6;
+  scroll-behavior: smooth;
 }
 
 body {

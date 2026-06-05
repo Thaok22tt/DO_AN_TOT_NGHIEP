@@ -387,7 +387,6 @@
 .admin-table-section {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 160px);
   overflow: hidden;
   border: 1px solid var(--admin-border);
   border-radius: 12px;
@@ -1142,7 +1141,6 @@
 .admin-accounts-panel {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 160px);
   overflow: hidden;
   border: 1px solid var(--admin-border);
   border-radius: 8px;
@@ -3285,7 +3283,6 @@
 .promotion-table-card {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 340px);
   overflow: hidden;
   border: 1px solid var(--admin-border);
   border-radius: 12px;
@@ -6122,7 +6119,6 @@
 .account-table-panel {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 280px);
   overflow: hidden;
   border: 1px solid var(--account-line);
   border-radius: 8px;
@@ -7967,7 +7963,6 @@
 .inventory-scroll-card {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 220px);
   overflow: hidden;
 }
 
@@ -7994,7 +7989,6 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  height: calc(100vh - 220px);
   overflow: hidden;
 }
 
@@ -10162,4 +10156,16 @@
 }
 @media (max-width: 560px) {
   .dash-kpi-row { grid-template-columns: 1fr; }
+}
+
+/* Sticky toolbar cho tất cả trang admin */
+.account-toolbar,
+.employee-filter-bar,
+.promotion-filter-bar,
+.admin-content > .admin-toolbar {
+  position: sticky;
+  top: 100px;
+  z-index: 20;
+  background: rgba(252, 249, 244, 0.97);
+  backdrop-filter: blur(2px);
 }

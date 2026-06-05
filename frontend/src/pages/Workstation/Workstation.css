@@ -5738,3 +5738,30 @@
 }
 
 .staff-bill-modal-footer button { flex: 1; }
+
+/* Barista filter bar — same card look as staff */
+.barista-page .barista-board {
+  border: 0;
+  background: transparent;
+}
+
+.barista-page .barista-board > .barista-board-header {
+  border: 1px solid #d1c4be;
+  border-radius: 12px 12px 0 0;
+  background: #fff;
+  margin-bottom: 0;
+}
+
+/* Sticky topbar + filter bar */
+.staff-pos-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.staff-orders-filter {
+  position: sticky;
+  top: 66px;
+  z-index: 20;
+}
+
