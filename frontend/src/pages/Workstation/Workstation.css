@@ -5767,25 +5767,37 @@
 
 /* Password field với nút toggle ẩn/hiện */
 .barista-password-field {
-  position: relative;
   display: flex;
   align-items: center;
+  min-height: 41px;
+  border: 1px solid #d6d3cc;
+  border-radius: 8px;
+  background: #f5f3ef;
+  overflow: hidden;
 }
 
 .barista-password-field input {
   flex: 1;
-  padding-right: 36px !important;
+  min-height: 41px;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  outline: none;
+  padding: 0 0 0 14px !important;
+  box-shadow: none !important;
 }
 
 .barista-password-field button {
-  position: absolute;
-  right: 10px;
-  border: 0;
-  background: transparent;
-  color: #6b5d52;
-  cursor: pointer;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 41px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #7a6a62;
+  cursor: pointer;
   padding: 0;
 }
 
