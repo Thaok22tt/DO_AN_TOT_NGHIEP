@@ -152,10 +152,11 @@ const updateIngredient = async (id, { name, unit, minStock = 0, costPrice = 0, c
 }
 
 const adjustIngredientStock = async (id, { quantity, note = null, accountId = null }) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    const [rows] = await connection.query('SELECT CurrentStock AS currentStock FROM ingredients WHERE IngredientId = ? FOR UPDATE', [id])
+    const [rows] = await conn.query('SELECT CurrentStock AS currentStock FROM ingredients WHERE IngredientId = ? FOR UPDATE', [id])
     const ingredient = rows[0]
     if (!ingredient) {
       throw new Error('Khong tim thay nguyen lieu')
@@ -165,8 +166,8 @@ const adjustIngredientStock = async (id, { quantity, note = null, accountId = nu
     const afterQuantity = Number(quantity)
     const changedQuantity = afterQuantity - beforeQuantity
 
-    await connection.query('UPDATE ingredients SET CurrentStock = ? WHERE IngredientId = ?', [afterQuantity, id])
-    await connection.query(
+    await conn.query('UPDATE ingredients SET CurrentStock = ? WHERE IngredientId = ?', [afterQuantity, id])
+    await conn.query(
       `
         INSERT INTO stock_movements
           (IngredientId, MovementType, Quantity, BeforeQuantity, AfterQuantity, ReferenceType, ReferenceId, Note, AccountId)
@@ -175,11 +176,13 @@ const adjustIngredientStock = async (id, { quantity, note = null, accountId = nu
       [id, changedQuantity, beforeQuantity, afterQuantity, note || null, accountId || null]
     )
 
-    await connection.commit()
+    await conn.commit()
     return findIngredientById(id)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
@@ -224,24 +227,27 @@ const getRecipeByProductId = (productId) =>
     .then(([rows]) => rows)
 
 const replaceRecipe = async (productId, items = []) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    await connection.query('DELETE FROM product_recipes WHERE ProductId = ?', [productId])
+    await conn.query('DELETE FROM product_recipes WHERE ProductId = ?', [productId])
 
     for (const item of items) {
-      await connection.query('INSERT INTO product_recipes (ProductId, IngredientId, Quantity) VALUES (?, ?, ?)', [
+      await conn.query('INSERT INTO product_recipes (ProductId, IngredientId, Quantity) VALUES (?, ?, ?)', [
         productId,
         item.ingredientId,
         item.quantity,
       ])
     }
 
-    await connection.commit()
+    await conn.commit()
     return getRecipeByProductId(productId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
@@ -283,11 +289,12 @@ const getReceipts = async () => {
 }
 
 const createReceipt = async ({ supplierId = null, accountId = null, note = null, details = [] }) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
     const totalAmount = details.reduce((sum, item) => sum + Number(item.purchaseQuantity || item.quantity || 0) * Number(item.purchaseUnitPrice || 0), 0)
-    const [result] = await connection.query(
+    const [result] = await conn.query(
       'INSERT INTO stock_receipts (ReceiptCode, SupplierId, AccountId, TotalAmount, Note) VALUES (?, ?, ?, ?, ?)',
       [buildReceiptCode(), supplierId || null, accountId || null, totalAmount, note || null]
     )
@@ -303,7 +310,7 @@ const createReceipt = async ({ supplierId = null, accountId = null, note = null,
       const purchaseUnitPrice = Number(item.purchaseUnitPrice ?? unitPrice * conversionQuantity)
       const lineTotal = purchaseQuantity * purchaseUnitPrice
 
-      const [ingredientRows] = await connection.query(
+      const [ingredientRows] = await conn.query(
         'SELECT CurrentStock AS currentStock FROM ingredients WHERE IngredientId = ? FOR UPDATE',
         [item.ingredientId]
       )
@@ -315,7 +322,7 @@ const createReceipt = async ({ supplierId = null, accountId = null, note = null,
       const beforeQuantity = Number(ingredient.currentStock || 0)
       const afterQuantity = beforeQuantity + quantity
 
-      await connection.query(
+      await conn.query(
         `
           INSERT INTO stock_receipt_details
             (StockReceiptId, IngredientId, PurchaseQuantity, PurchaseUnit, ConversionQuantity, BaseUnit, Quantity, UnitPrice, LineTotal, ExpiryDate)
@@ -323,12 +330,12 @@ const createReceipt = async ({ supplierId = null, accountId = null, note = null,
         `,
         [receiptId, item.ingredientId, purchaseQuantity, purchaseUnit, conversionQuantity, baseUnit, quantity, unitPrice, lineTotal, item.expiryDate || null]
       )
-      await connection.query('UPDATE ingredients SET CurrentStock = ?, CostPrice = ? WHERE IngredientId = ?', [
+      await conn.query('UPDATE ingredients SET CurrentStock = ?, CostPrice = ? WHERE IngredientId = ?', [
         afterQuantity,
         unitPrice,
         item.ingredientId,
       ])
-      await connection.query(
+      await conn.query(
         `
           INSERT INTO stock_movements
             (IngredientId, MovementType, Quantity, BeforeQuantity, AfterQuantity, ReferenceType, ReferenceId, Note, AccountId)
@@ -338,12 +345,14 @@ const createReceipt = async ({ supplierId = null, accountId = null, note = null,
       )
     }
 
-    await connection.commit()
+    await conn.commit()
     const [rows] = await connection.query(`${receiptSelect} WHERE r.StockReceiptId = ? LIMIT 1`, [receiptId])
     return { ...rows[0], details: await getReceiptDetails(receiptId) }
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
@@ -378,10 +387,11 @@ const getLowStockIngredients = () =>
   connection.query(`${ingredientSelect} WHERE i.Status = 'Active' AND i.CurrentStock <= i.MinStock ORDER BY i.CurrentStock ASC`).then(([rows]) => rows)
 
 const consumeInvoiceStock = async (invoiceId, accountId = null) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    const [invoiceRows] = await connection.query(
+    const [invoiceRows] = await conn.query(
       'SELECT InvoiceId AS id, KitchenStatus AS kitchenStatus FROM invoices WHERE InvoiceId = ? FOR UPDATE',
       [invoiceId]
     )
@@ -391,20 +401,20 @@ const consumeInvoiceStock = async (invoiceId, accountId = null) => {
     }
 
     if (invoice.kitchenStatus !== 'Draft') {
-      await connection.commit()
+      await conn.commit()
       return true
     }
 
-    const [existingMovements] = await connection.query(
+    const [existingMovements] = await conn.query(
       "SELECT StockMovementId AS id FROM stock_movements WHERE ReferenceType = 'Invoice' AND ReferenceId = ? LIMIT 1",
       [invoiceId]
     )
     if (existingMovements[0]) {
-      await connection.commit()
+      await conn.commit()
       return true
     }
 
-    const [requirements] = await connection.query(
+    const [requirements] = await conn.query(
       `
         SELECT
           r.IngredientId AS ingredientId,
@@ -430,7 +440,7 @@ const consumeInvoiceStock = async (invoiceId, accountId = null) => {
     )
 
     if (requirements.length === 0) {
-      await connection.commit()
+      await conn.commit()
       return true
     }
 
@@ -447,8 +457,8 @@ const consumeInvoiceStock = async (invoiceId, accountId = null) => {
       const usedQuantity = Number(item.requiredQuantity || 0)
       const afterQuantity = beforeQuantity - usedQuantity
 
-      await connection.query('UPDATE ingredients SET CurrentStock = ? WHERE IngredientId = ?', [afterQuantity, item.ingredientId])
-      await connection.query(
+      await conn.query('UPDATE ingredients SET CurrentStock = ? WHERE IngredientId = ?', [afterQuantity, item.ingredientId])
+      await conn.query(
         `
           INSERT INTO stock_movements
             (IngredientId, MovementType, Quantity, BeforeQuantity, AfterQuantity, ReferenceType, ReferenceId, Note, AccountId)
@@ -458,11 +468,13 @@ const consumeInvoiceStock = async (invoiceId, accountId = null) => {
       )
     }
 
-    await connection.commit()
+    await conn.commit()
     return true
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 

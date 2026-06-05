@@ -143,13 +143,14 @@ const getInvoiceDetails = (invoiceId) => {
   return connection.query(sql, [invoiceId]).then(([rows]) => rows)
 }
 
-const getInvoiceTotals = async (invoiceId) => {
-  const [detailRows] = await connection.query(
+// conn cho phép truyền vào connection đang trong transaction để đọc đúng dữ liệu chưa commit
+const getInvoiceTotals = async (invoiceId, conn = connection) => {
+  const [detailRows] = await conn.query(
     'SELECT COALESCE(SUM(LineTotal), 0) AS subtotal FROM invoice_details WHERE InvoiceId = ?',
     [invoiceId]
   )
 
-  const [invoiceRows] = await connection.query(
+  const [invoiceRows] = await conn.query(
     'SELECT PromotionId AS promotionId, COALESCE(ShippingFee, 0) AS shippingFee FROM invoices WHERE InvoiceId = ? LIMIT 1',
     [invoiceId]
   )
@@ -160,7 +161,7 @@ const getInvoiceTotals = async (invoiceId) => {
   let discountAmount = 0
 
   if (promotionId) {
-    const [promotionRows] = await connection.query(
+    const [promotionRows] = await conn.query(
       `
         SELECT PromotionId AS id, DiscountType AS discountType, DiscountValue AS discountValue
         FROM promotions
@@ -250,7 +251,8 @@ const createInvoice = async ({
   serviceNumber = null,
   shippingFee = 0,
 }) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
     const code = buildInvoiceCode()
@@ -261,7 +263,7 @@ const createInvoice = async ({
          CustomerName, CustomerPhone, DeliveryAddress, DeliveryNote, ShippingFee, TotalAmount, Status, Note)
       VALUES (?, ?, ?, ?, ?, ?, 'Draft', ?, ?, ?, ?, ?, ?, 0, 'Unpaid', ?)
     `
-    const [result] = await connection.query(sql, [
+    const [result] = await conn.query(sql, [
       code,
       serviceNumber || null,
       tableId || null,
@@ -278,22 +280,25 @@ const createInvoice = async ({
     ])
 
     if (tableId) {
-      await connection.query("UPDATE `tables` SET Status = 'Occupied' WHERE TableId = ?", [tableId])
+      await conn.query("UPDATE `tables` SET Status = 'Occupied' WHERE TableId = ?", [tableId])
     }
 
-    await connection.commit()
+    await conn.commit()
     return findById(result.insertId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
 const addInvoiceItem = async (invoiceId, { productId, quantity, note = null, size = null }) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    const [invoiceRows] = await connection.query(
+    const [invoiceRows] = await conn.query(
       'SELECT InvoiceId AS id, KitchenStatus AS kitchenStatus FROM invoices WHERE InvoiceId = ? LIMIT 1',
       [invoiceId]
     )
@@ -307,7 +312,7 @@ const addInvoiceItem = async (invoiceId, { productId, quantity, note = null, siz
       throw new Error('Chi duoc sua hoa don khi chua gui pha che')
     }
 
-    const [productRows] = await connection.query(
+    const [productRows] = await conn.query(
       `
         SELECT ProductId AS id, ProductName AS name, Price AS price
         FROM products
@@ -326,7 +331,7 @@ const addInvoiceItem = async (invoiceId, { productId, quantity, note = null, siz
     const unitPrice = Number(product.price) + (cupSize === 'L' ? SIZE_SURCHARGE : 0)
     const lineTotal = unitPrice * Number(quantity)
     const detailNote = cupSize ? buildSizeNote(cupSize, note) : stripSizePrefix(note)
-    await connection.query(
+    await conn.query(
       `
         INSERT INTO invoice_details
           (InvoiceId, ProductId, ProductName, Quantity, UnitPrice, LineTotal, Note)
@@ -335,22 +340,25 @@ const addInvoiceItem = async (invoiceId, { productId, quantity, note = null, siz
       [invoiceId, product.id, product.name, quantity, unitPrice, lineTotal, detailNote]
     )
 
-    const totals = await getInvoiceTotals(invoiceId)
-    await connection.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, invoiceId])
-    await connection.commit()
+    const totals = await getInvoiceTotals(invoiceId, conn)
+    await conn.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, invoiceId])
+    await conn.commit()
 
     return findById(invoiceId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
 const updateInvoiceDetailSize = async (detailId, { size, note = '' }) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    const [detailRows] = await connection.query(
+    const [detailRows] = await conn.query(
       `
         SELECT
           d.InvoiceDetailId AS id,
@@ -387,27 +395,30 @@ const updateInvoiceDetailSize = async (detailId, { size, note = '' }) => {
     const lineTotal = unitPrice * Number(detail.quantity || 0)
     const detailNote = buildSizeNote(cupSize, note || detail.note)
 
-    await connection.query(
+    await conn.query(
       'UPDATE invoice_details SET UnitPrice = ?, LineTotal = ?, Note = ? WHERE InvoiceDetailId = ?',
       [unitPrice, lineTotal, detailNote, detailId]
     )
 
-    const totals = await getInvoiceTotals(detail.invoiceId)
-    await connection.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, detail.invoiceId])
-    await connection.commit()
+    const totals = await getInvoiceTotals(detail.invoiceId, conn)
+    await conn.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, detail.invoiceId])
+    await conn.commit()
 
     return findById(detail.invoiceId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
 const updateInvoiceDetailQuantity = async (detailId, quantity) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    const [detailRows] = await connection.query(
+    const [detailRows] = await conn.query(
       `
         SELECT d.InvoiceDetailId AS id, d.InvoiceId AS invoiceId, i.KitchenStatus AS kitchenStatus
         FROM invoice_details d
@@ -427,26 +438,28 @@ const updateInvoiceDetailQuantity = async (detailId, quantity) => {
       throw new Error('Chi duoc sua khi chua gui pha che')
     }
 
-    const [valueRows] = await connection.query(
+    const [valueRows] = await conn.query(
       'SELECT UnitPrice AS unitPrice FROM invoice_details WHERE InvoiceDetailId = ? LIMIT 1',
       [detailId]
     )
     const unitPrice = Number(valueRows[0]?.unitPrice || 0)
     const lineTotal = unitPrice * Number(quantity)
 
-    await connection.query(
+    await conn.query(
       'UPDATE invoice_details SET Quantity = ?, LineTotal = ? WHERE InvoiceDetailId = ?',
       [quantity, lineTotal, detailId]
     )
 
-    const totals = await getInvoiceTotals(detail.invoiceId)
-    await connection.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, detail.invoiceId])
-    await connection.commit()
+    const totals = await getInvoiceTotals(detail.invoiceId, conn)
+    await conn.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, detail.invoiceId])
+    await conn.commit()
 
     return findById(detail.invoiceId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
@@ -477,10 +490,11 @@ const updateInvoiceDetailNote = async (detailId, note) => {
 }
 
 const deleteInvoiceDetail = async (detailId) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
-    const [detailRows] = await connection.query(
+    const [detailRows] = await conn.query(
       `
         SELECT d.InvoiceDetailId AS id, d.InvoiceId AS invoiceId, i.KitchenStatus AS kitchenStatus
         FROM invoice_details d
@@ -500,16 +514,18 @@ const deleteInvoiceDetail = async (detailId) => {
       throw new Error('Chi duoc xoa khi chua gui pha che')
     }
 
-    await connection.query('DELETE FROM invoice_details WHERE InvoiceDetailId = ?', [detailId])
+    await conn.query('DELETE FROM invoice_details WHERE InvoiceDetailId = ?', [detailId])
 
-    const totals = await getInvoiceTotals(detail.invoiceId)
-    await connection.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, detail.invoiceId])
-    await connection.commit()
+    const totals = await getInvoiceTotals(detail.invoiceId, conn)
+    await conn.query('UPDATE invoices SET TotalAmount = ? WHERE InvoiceId = ?', [totals.totalAmount, detail.invoiceId])
+    await conn.commit()
 
     return true
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
@@ -573,7 +589,8 @@ const applyPromotion = async (invoiceId, promotionId) => {
 }
 
 const confirmPayment = async (invoiceId, { paymentMethod, amountReceived = null }) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
     const invoice = await findById(invoiceId)
@@ -589,7 +606,7 @@ const confirmPayment = async (invoiceId, { paymentMethod, amountReceived = null 
       throw new Error('So tien nhan phai lon hon hoac bang tong tien')
     }
 
-    await connection.query(
+    await conn.query(
       `
         UPDATE invoices
         SET Status = 'Paid',
@@ -610,14 +627,16 @@ const confirmPayment = async (invoiceId, { paymentMethod, amountReceived = null 
     )
 
     if (invoice.tableId && invoice.status === 'Completed') {
-      await connection.query("UPDATE `tables` SET Status = 'Available' WHERE TableId = ?", [invoice.tableId])
+      await conn.query("UPDATE `tables` SET Status = 'Available' WHERE TableId = ?", [invoice.tableId])
     }
 
-    await connection.commit()
+    await conn.commit()
     return findById(invoiceId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
@@ -647,7 +666,8 @@ const updateInvoiceStatus = async (invoiceId, status) => {
 }
 
 const transferInvoiceTable = async (invoiceId, targetTableId) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
     const invoice = await findById(invoiceId)
@@ -659,33 +679,36 @@ const transferInvoiceTable = async (invoiceId, targetTableId) => {
       throw new Error('Chi chuyen ban cho hoa don chua thanh toan')
     }
 
-    const [targetRows] = await connection.query('SELECT TableId AS id, Status AS status FROM `tables` WHERE TableId = ? LIMIT 1', [targetTableId])
+    const [targetRows] = await conn.query('SELECT TableId AS id, Status AS status FROM `tables` WHERE TableId = ? LIMIT 1', [targetTableId])
     const targetTable = targetRows[0]
     if (!targetTable || targetTable.status !== 'Available') {
       throw new Error('Ban dich khong kha dung')
     }
 
-    await connection.query('UPDATE invoices SET TableId = ?, OrderType = ? WHERE InvoiceId = ?', [targetTableId, 'DineIn', invoiceId])
+    await conn.query('UPDATE invoices SET TableId = ?, OrderType = ? WHERE InvoiceId = ?', [targetTableId, 'DineIn', invoiceId])
 
     if (invoice.tableId) {
-      await connection.query("UPDATE `tables` SET Status = 'Available' WHERE TableId = ?", [invoice.tableId])
+      await conn.query("UPDATE `tables` SET Status = 'Available' WHERE TableId = ?", [invoice.tableId])
     }
 
-    await connection.query("UPDATE `tables` SET Status = ? WHERE TableId = ?", [
+    await conn.query("UPDATE `tables` SET Status = ? WHERE TableId = ?", [
       invoice.kitchenStatus === 'Waiting' || invoice.kitchenStatus === 'InProgress' ? 'Preparing' : 'Occupied',
       targetTableId,
     ])
 
-    await connection.commit()
+    await conn.commit()
     return findById(invoiceId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
 const mergeInvoices = async (sourceInvoiceId, targetInvoiceId) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
     const sourceInvoice = await findById(sourceInvoiceId)
@@ -703,36 +726,39 @@ const mergeInvoices = async (sourceInvoiceId, targetInvoiceId) => {
       throw new Error('Chi gop hoa don chua thanh toan')
     }
 
-    await connection.query('UPDATE invoice_details SET InvoiceId = ? WHERE InvoiceId = ?', [targetInvoiceId, sourceInvoiceId])
+    await conn.query('UPDATE invoice_details SET InvoiceId = ? WHERE InvoiceId = ?', [targetInvoiceId, sourceInvoiceId])
 
-    const targetTotals = await getInvoiceTotals(targetInvoiceId)
-    await connection.query('UPDATE invoices SET TotalAmount = ?, UpdatedAt = CURRENT_TIMESTAMP WHERE InvoiceId = ?', [targetTotals.totalAmount, targetInvoiceId])
-    await connection.query(
+    const targetTotals = await getInvoiceTotals(targetInvoiceId, conn)
+    await conn.query('UPDATE invoices SET TotalAmount = ?, UpdatedAt = CURRENT_TIMESTAMP WHERE InvoiceId = ?', [targetTotals.totalAmount, targetInvoiceId])
+    await conn.query(
       "UPDATE invoices SET Status = 'Cancelled', TotalAmount = 0, UpdatedAt = CURRENT_TIMESTAMP WHERE InvoiceId = ?",
       [sourceInvoiceId],
     )
 
     if (sourceInvoice.tableId) {
-      await connection.query("UPDATE `tables` SET Status = 'Available' WHERE TableId = ?", [sourceInvoice.tableId])
+      await conn.query("UPDATE `tables` SET Status = 'Available' WHERE TableId = ?", [sourceInvoice.tableId])
     }
 
     if (targetInvoice.tableId) {
-      await connection.query("UPDATE `tables` SET Status = ? WHERE TableId = ?", [
+      await conn.query("UPDATE `tables` SET Status = ? WHERE TableId = ?", [
         targetInvoice.kitchenStatus === 'Waiting' || targetInvoice.kitchenStatus === 'InProgress' ? 'Preparing' : 'Occupied',
         targetInvoice.tableId,
       ])
     }
 
-    await connection.commit()
+    await conn.commit()
     return findById(targetInvoiceId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
 const markServed = async (invoiceId) => {
-  await connection.beginTransaction()
+  const conn = await db.promise().getConnection()
+  await conn.beginTransaction()
 
   try {
     const invoice = await findById(invoiceId)
@@ -748,17 +774,19 @@ const markServed = async (invoiceId) => {
       throw new Error('Chi duoc ra ban khi pha che da hoan thanh')
     }
 
-    await connection.query("UPDATE invoices SET Status = 'Completed', UpdatedAt = CURRENT_TIMESTAMP WHERE InvoiceId = ?", [invoiceId])
+    await conn.query("UPDATE invoices SET Status = 'Completed', UpdatedAt = CURRENT_TIMESTAMP WHERE InvoiceId = ?", [invoiceId])
 
     if (invoice.tableId) {
-      await connection.query("UPDATE `tables` SET Status = 'Occupied' WHERE TableId = ?", [invoice.tableId])
+      await conn.query("UPDATE `tables` SET Status = 'Occupied' WHERE TableId = ?", [invoice.tableId])
     }
 
-    await connection.commit()
+    await conn.commit()
     return findById(invoiceId)
   } catch (error) {
-    await connection.rollback()
+    await conn.rollback()
     throw error
+  } finally {
+    conn.release()
   }
 }
 
@@ -804,10 +832,8 @@ const setBaristaAccountId = async (invoiceId, baristaAccountId) => {
 }
 
 // Lịch sử đơn pha chế: trả về tất cả Completed + Cancelled theo ngày
-// Đồng bộ với nguồn dữ liệu hóa đơn chung của Admin
 const getKitchenHistory = async ({ startDate = '', endDate = '' } = {}) => {
   const conditions = [
-    // Đơn lịch sử: barista hoàn thành | đã ra bàn | bị hủy | đã thanh toán (trừ Draft chưa gửi pha chế)
     "(i.KitchenStatus = 'Completed' OR i.Status IN ('Completed', 'Cancelled') OR (i.Status = 'Paid' AND i.KitchenStatus <> 'Draft'))",
   ]
   const params = []
