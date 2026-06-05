@@ -1,8 +1,9 @@
 import { X } from 'lucide-react'
 import PropTypes from 'prop-types'
+import { createPortal } from 'react-dom'
 
 function ConfirmModal({ body, cancelLabel = 'Hủy', confirmLabel = 'Xác nhận', loading = false, loadingLabel = 'Đang xử lý...', onClose, onConfirm, title = 'Xác nhận thao tác' }) {
-  return (
+  return createPortal(
     <div className="confirm-modal-backdrop" role="presentation" onMouseDown={onClose}>
       <div className="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title" onMouseDown={(event) => event.stopPropagation()}>
         <div className="confirm-modal-header">
@@ -25,7 +26,8 @@ function ConfirmModal({ body, cancelLabel = 'Hủy', confirmLabel = 'Xác nhận
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
