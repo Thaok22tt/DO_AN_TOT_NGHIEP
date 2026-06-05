@@ -1358,7 +1358,7 @@ function Barista() {
                         <div key={item.id}>
                           <strong>{item.ingredientName}</strong>
                           <span>
-                            {item.quantity} {item.unit}
+                            {Number(item.quantity)} {item.unit}
                           </span>
                         </div>
                       ))
