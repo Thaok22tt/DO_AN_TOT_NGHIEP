@@ -4,11 +4,6 @@ const cloudinary = require('cloudinary').v2
 const categoryModel = require('../models/categoryModel')
 const productModel = require('../models/productModel')
 
-console.log('[cloudinary] config:', {
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY ? 'set' : 'NOT SET',
-  api_secret: process.env.CLOUDINARY_API_SECRET ? 'set' : 'NOT SET',
-})
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
