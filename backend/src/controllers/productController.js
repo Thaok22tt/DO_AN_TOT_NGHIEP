@@ -34,7 +34,7 @@ const buildProductPayload = (body, file, currentImage = null) => ({
   categoryId: Number(body.CategoryId ?? body.categoryId),
   price: Number(body.Price ?? body.price),
   description: normalizeOptionalText(body.Description ?? body.description),
-  image: file ? `/uploads/products/${file.filename}` : currentImage,
+  image: file ? (file.path || `/uploads/products/${file.filename}`) : currentImage,
   status: normalizeText(body.Status ?? body.status) || 'Active',
 })
 
